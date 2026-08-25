@@ -101,9 +101,9 @@
       .shamel-news__track span{padding-inline:2rem}
       @keyframes shamel-news{to{transform:translateX(33.333%)}}
       html[dir=ltr] .shamel-news__track{animation-direction:reverse}
-      .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:linear-gradient(135deg,#071a2f,#0f4c6b);color:#fff}
+      .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:var(--shamel-follow-bg,#071a2f);color:var(--shamel-follow-text,#fff)}
       .shamel-follow__inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
-      .shamel-follow__links{display:flex;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid rgba(255,255,255,.25);border-radius:.8rem;background:rgba(255,255,255,.1);color:#fff;font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:#fff;color:#0f4c6b}
+      .shamel-follow__links{display:flex;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid currentColor;border-radius:.8rem;background:rgba(255,255,255,.1);color:var(--shamel-follow-icon,#fff);font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:var(--shamel-follow-icon,#fff);color:var(--shamel-follow-bg,#071a2f)}
       .shamel-popup[hidden]{display:none}.shamel-popup{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
       .shamel-popup__card{position:relative;display:grid;grid-template-columns:minmax(14rem,.85fr) minmax(18rem,1fr);width:min(56rem,100%);overflow:hidden;border-radius:1.4rem;background:#fff;box-shadow:0 30px 80px rgba(2,6,23,.35)}
       .shamel-popup__image{min-height:30rem;background:#eef2f7 center/cover no-repeat}.shamel-popup__content{display:flex;flex-direction:column;justify-content:center;padding:2.4rem}
@@ -156,19 +156,20 @@
     {% block content %}{% endblock %}
     </main>
     {% if theme.settings.get('shamel_follow_enabled', true) %}
-      <section class="shamel-follow" aria-labelledby="shamel-follow-title">
+      <section class="shamel-follow" aria-labelledby="shamel-follow-title" style="--shamel-follow-bg:{{ theme.settings.get('shamel_follow_bg_color', '#071a2f') }};--shamel-follow-text:{{ theme.settings.get('shamel_follow_text_color', '#ffffff') }};--shamel-follow-icon:{{ theme.settings.get('shamel_follow_icon_color', '#ffffff') }}">
         <div class="container shamel-follow__inner">
           <div>
             <h2 id="shamel-follow-title">{{ theme.settings.get('shamel_follow_title', 'تابعنا وكن أول من يعرف') }}</h2>
             <p>{{ theme.settings.get('shamel_follow_description', 'اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل.') }}</p>
           </div>
           <nav class="shamel-follow__links" aria-label="تابع المتجر">
-            {% if theme.settings.get('shamel_instagram_enabled') and theme.settings.get('shamel_instagram_url') %}<a href="{{ theme.settings.get('shamel_instagram_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="sicon-instagram"></i></a>{% endif %}
-            {% if theme.settings.get('shamel_tiktok_enabled') and theme.settings.get('shamel_tiktok_url') %}<a href="{{ theme.settings.get('shamel_tiktok_url') }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><span>♪</span></a>{% endif %}
-            {% if theme.settings.get('shamel_snapchat_enabled') and theme.settings.get('shamel_snapchat_url') %}<a href="{{ theme.settings.get('shamel_snapchat_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="sicon-snapchat"></i></a>{% endif %}
-            {% if theme.settings.get('shamel_x_enabled') and theme.settings.get('shamel_x_url') %}<a href="{{ theme.settings.get('shamel_x_url') }}" target="_blank" rel="noopener noreferrer" aria-label="X"><span>X</span></a>{% endif %}
-            {% if theme.settings.get('shamel_youtube_enabled') and theme.settings.get('shamel_youtube_url') %}<a href="{{ theme.settings.get('shamel_youtube_url') }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="sicon-youtube"></i></a>{% endif %}
-            {% if theme.settings.get('shamel_facebook_enabled') and theme.settings.get('shamel_facebook_url') %}<a href="{{ theme.settings.get('shamel_facebook_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="sicon-facebook"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_whatsapp_enabled') and theme.settings.get('shamel_follow_whatsapp_url') %}<a href="{{ theme.settings.get('shamel_follow_whatsapp_url') }}" target="_blank" rel="noopener noreferrer" aria-label="قناة واتساب"><i class="sicon-whatsapp"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_instagram_enabled') and theme.settings.get('shamel_follow_instagram_url') %}<a href="{{ theme.settings.get('shamel_follow_instagram_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="sicon-instagram"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_tiktok_enabled') and theme.settings.get('shamel_follow_tiktok_url') %}<a href="{{ theme.settings.get('shamel_follow_tiktok_url') }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><span>♪</span></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_snapchat_enabled') and theme.settings.get('shamel_follow_snapchat_url') %}<a href="{{ theme.settings.get('shamel_follow_snapchat_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="sicon-snapchat"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_x_enabled') and theme.settings.get('shamel_follow_x_url') %}<a href="{{ theme.settings.get('shamel_follow_x_url') }}" target="_blank" rel="noopener noreferrer" aria-label="X"><span>X</span></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_youtube_enabled') and theme.settings.get('shamel_follow_youtube_url') %}<a href="{{ theme.settings.get('shamel_follow_youtube_url') }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="sicon-youtube"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_facebook_enabled') and theme.settings.get('shamel_follow_facebook_url') %}<a href="{{ theme.settings.get('shamel_follow_facebook_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="sicon-facebook"></i></a>{% endif %}
           </nav>
         </div>
       </section>
