@@ -12,7 +12,7 @@
       {% set shamel_news_speed = shamel_news_speed_raw is iterable ? (shamel_news_speed_raw|first).value : shamel_news_speed_raw %}
       <div class="shamel-news-wrap container">
         <aside class="shamel-news shamel-news--{{ shamel_news_speed }}" aria-label="إعلانات المتجر ووسائل الدفع">
-          <div class="shamel-news__row"><div class="shamel-news__viewport"><div class="shamel-news__track">
+          <div class="shamel-news__row"><span class="shamel-news__label"><i class="sicon-megaphone"></i><span>جديد المتجر</span></span><div class="shamel-news__viewport"><div class="shamel-news__track">
               <span class="shamel-news__sequence">
                 <span class="shamel-news__message">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
                 {% if theme.settings.get('shamel_custom_payments', [])|length %}<span class="shamel-news__payment-set">
