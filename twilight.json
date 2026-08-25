@@ -65,6 +65,44 @@
       ]
     },
     {
+      "id": "shamel_industry_preset",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "هوية مجال المتجر",
+      "description": "يضبط نسب الصور والبطاقات وطريقة إبراز المعلومات، ويمكنك تخصيص الألوان بعد اختياره.",
+      "icon": "sicon-store",
+      "required": true,
+      "selected": [
+        {
+          "label": "عام — يناسب جميع المتاجر",
+          "value": "universal",
+          "key": "shamel-industry-universal"
+        }
+      ],
+      "options": [
+        {
+          "label": "عام — يناسب جميع المتاجر",
+          "value": "universal",
+          "key": "shamel-industry-universal"
+        },
+        {
+          "label": "عطور — فاخر وهادئ",
+          "value": "perfumes",
+          "key": "shamel-industry-perfumes"
+        },
+        {
+          "label": "عبايات وأزياء — صور طولية",
+          "value": "abayas",
+          "key": "shamel-industry-abayas"
+        },
+        {
+          "label": "إلكترونيات — مواصفات وأسعار واضحة",
+          "value": "electronics",
+          "key": "shamel-industry-electronics"
+        }
+      ]
+    },
+    {
       "id": "shamel_ui_style",
       "type": "items",
       "format": "dropdown-list",
