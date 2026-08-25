@@ -109,17 +109,21 @@
       .shamel-header-main__brand,.shamel-header-main__actions{display:flex;align-items:center}
       .shamel-header-main__brand{justify-content:flex-start;gap:.65rem}
       .shamel-header-main__brand .navbar-brand{margin:0;max-width:8rem}
-      .shamel-header-main__menu{display:flex;align-items:center;justify-content:center;min-width:0;overflow:hidden;padding:.38rem .65rem;border:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 9%,transparent);border-radius:999px;background:var(--sp-categories-bg,#f8fafc)}
+      .shamel-header-main__menu{display:flex;align-items:center;justify-content:center;min-width:0;overflow:visible;padding:0;border:0;border-radius:0;background:transparent}
       .shamel-header-main__menu custom-main-menu{display:block;width:100%;min-width:0}
-      .shamel-header-main__menu .main-menu{display:flex!important;align-items:center;justify-content:center;flex-wrap:nowrap!important;gap:.2rem;white-space:nowrap}
-      .shamel-header-main__menu .main-menu>li>a{padding-inline:.65rem;font-weight:700}
+      .shamel-header-main__menu .main-menu{display:flex!important;align-items:center;justify-content:center;flex-wrap:nowrap!important;gap:.38rem;white-space:nowrap;background:transparent!important}
+      .shamel-header-main__menu .main-menu>li{position:relative}
+      .shamel-header-main__menu .main-menu>li>a{display:flex;align-items:center;min-height:2.6rem;padding:.55rem .9rem!important;border:1px solid transparent;border-radius:.72rem;background:transparent;color:var(--sp-header-text,#0f172a);font-weight:800;transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+      .shamel-header-main__menu .main-menu>li>a:hover,.shamel-header-main__menu .main-menu>li:hover>a,.shamel-header-main__menu .main-menu>li.active>a,.shamel-header-main__menu .main-menu>li.is-active>a{background:var(--sp-categories-bg,#f1f5f9);border-color:color-mix(in srgb,var(--sp-primary,#0f4c6b) 22%,transparent);color:var(--sp-primary,#0f4c6b);box-shadow:0 7px 18px rgba(15,23,42,.08);transform:translateY(-1px)}
       .shamel-header-main__actions{justify-content:flex-end;gap:.55rem;white-space:nowrap}
       .shamel-header-search-trigger{display:flex;align-items:center;width:2.75rem;height:2.75rem;overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 28%,transparent);border-radius:999px;background:color-mix(in srgb,var(--sp-header-bg,#fff) 88%,var(--sp-header-text,#0f172a));transition:width .28s ease,border-color .2s,box-shadow .2s;position:relative;z-index:4}
       .shamel-header-search-trigger:hover,.shamel-header-search-trigger:focus-within{width:min(17rem,34vw);border-color:var(--sp-primary,#0f4c6b);box-shadow:0 8px 24px rgba(2,6,23,.12)}
       .shamel-header-search-trigger salla-search{display:block;width:100%!important;min-width:2.75rem;--color-primary:var(--sp-header-text,#0f172a);--color-text:var(--sp-header-text,#0f172a)}
       body.shamel-dark-mode .shamel-header-search-trigger{border-color:rgba(255,255,255,.5)!important;background:#172033!important;color:#fff!important;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
       body.shamel-dark-mode .shamel-header-search-trigger salla-search{color:#fff!important;--color-primary:#fff}
-      body.shamel-dark-mode .shamel-header-main__menu{background:var(--sp-categories-dark-bg,#111827)!important;border-color:rgba(255,255,255,.14)!important}
+      body.shamel-dark-mode .shamel-header-main__menu{background:transparent!important;border-color:transparent!important}
+      body.shamel-dark-mode .shamel-header-main__menu .main-menu>li>a{background:transparent!important;color:#f8fafc!important}
+      body.shamel-dark-mode .shamel-header-main__menu .main-menu>li>a:hover,body.shamel-dark-mode .shamel-header-main__menu .main-menu>li:hover>a,body.shamel-dark-mode .shamel-header-main__menu .main-menu>li.active>a,body.shamel-dark-mode .shamel-header-main__menu .main-menu>li.is-active>a{background:var(--sp-categories-dark-bg,#1e293b)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;box-shadow:0 8px 20px rgba(0,0,0,.28)}
       body.shamel-dark-mode .shamel-header-main__actions salla-search,
       body.shamel-dark-mode .shamel-header-main__actions salla-user-menu,
       body.shamel-dark-mode .shamel-header-main__actions salla-cart-summary{color:#fff!important;--color-primary:#fff!important;--color-text:#fff!important;--color-gray-700:#fff!important}
