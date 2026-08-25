@@ -13,11 +13,24 @@
       <div class="container">
         <div class="shamel-pro-header-shell">
           <div class="shamel-header-main__grid shamel-header-main__grid--drawer">
-            <div class="shamel-header-main__account" aria-label="السلة والحساب والبحث">
+            <div class="shamel-header-main__account" aria-label="اللغة والعملة والسلة والحساب">
+              {% if store.settings.is_multilingual %}
+                <div class="shamel-header-localization" title="اللغة والعملة">
+                  <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
+                </div>
+              {% endif %}
               <salla-cart-summary data-testid="store-header-cart">
                 <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
               </salla-cart-summary>
               <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
+            </div>
+
+            <a data-testid="store-header-logo" class="navbar-brand shamel-header-main__brand" href="{{ store.url }}">
+              <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(300) }}" alt="{{ store.name }} logo">
+              {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
+            </a>
+
+            <div class="shamel-header-main__tools" aria-label="البحث والوضع الليلي وأقسام المنتجات">
               <div class="shamel-header-search-trigger" data-shamel-header-search>
                 <button type="button" class="shamel-header-icon-button shamel-header-search-button" data-shamel-header-search-button aria-label="فتح البحث" aria-expanded="false">
                   <i class="sicon-search" aria-hidden="true"></i>
@@ -26,19 +39,6 @@
                   <salla-search data-testid="store-header-search" inline oval height="48" aria-label="البحث عن المنتجات"></salla-search>
                 </div>
               </div>
-            </div>
-
-            <a data-testid="store-header-logo" class="navbar-brand shamel-header-main__brand" href="{{ store.url }}">
-              <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(300) }}" alt="{{ store.name }} logo">
-              {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
-            </a>
-
-            <div class="shamel-header-main__tools" aria-label="أدوات العرض والتنقل">
-              {% if store.settings.is_multilingual %}
-                <div class="shamel-header-localization" title="اللغة والعملة">
-                  <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
-                </div>
-              {% endif %}
               {% if theme.settings.get('shamel_dark_mode_enabled', true) %}
                 <button type="button" class="shamel-header-icon-button shamel-header-dark-toggle" data-shamel-dark-toggle aria-pressed="false" title="الوضع الليلي" aria-label="تبديل الوضع الليلي">
                   <i class="sicon-moon" aria-hidden="true"></i>
@@ -79,12 +79,6 @@
         </div>
       </section>
 
-      <section class="shamel-drawer-group shamel-drawer-filters" data-shamel-drawer-group data-shamel-drawer-filters hidden>
-        <button type="button" class="shamel-drawer-group__toggle" data-shamel-drawer-group-toggle aria-expanded="false">
-          <span>فلترة المنتجات</span><b aria-hidden="true">+</b>
-        </button>
-        <div class="shamel-drawer-group__content" data-shamel-drawer-filter-slot></div>
-      </section>
     </aside>
   {% endif %}
 </header>
