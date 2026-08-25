@@ -343,15 +343,14 @@
 {% set shamel_product_density_raw = theme.settings.get('shamel_product_density', 'comfortable') %}
 {% set shamel_announcement_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
 {% set shamel_popup_capture_raw = theme.settings.get('shamel_popup_capture_type', 'email') %}
-{# Twilight may return dropdown values as a string, an object, or a one-item array. #}
-{% set shamel_store_mode = shamel_store_mode_raw.value|default(shamel_store_mode_raw is iterable ? (shamel_store_mode_raw|first).value|default('general') : shamel_store_mode_raw) %}
-{% set shamel_industry = shamel_industry_raw.value|default(shamel_industry_raw is iterable ? (shamel_industry_raw|first).value|default('universal') : shamel_industry_raw) %}
-{% set shamel_ui_style = shamel_ui_style_raw.value|default(shamel_ui_style_raw is iterable ? (shamel_ui_style_raw|first).value|default('modern') : shamel_ui_style_raw) %}
-{% set shamel_header_layout = shamel_header_layout_raw.value|default(shamel_header_layout_raw is iterable ? (shamel_header_layout_raw|first).value|default('classic') : shamel_header_layout_raw) %}
-{% set shamel_surface_radius = shamel_surface_radius_raw.value|default(shamel_surface_radius_raw is iterable ? (shamel_surface_radius_raw|first).value|default('soft') : shamel_surface_radius_raw) %}
-{% set shamel_product_density = shamel_product_density_raw.value|default(shamel_product_density_raw is iterable ? (shamel_product_density_raw|first).value|default('comfortable') : shamel_product_density_raw) %}
-{% set shamel_announcement_speed = shamel_announcement_speed_raw.value|default(shamel_announcement_speed_raw is iterable ? (shamel_announcement_speed_raw|first).value|default('normal') : shamel_announcement_speed_raw) %}
-{% set shamel_popup_capture = shamel_popup_capture_raw.value|default(shamel_popup_capture_raw is iterable ? (shamel_popup_capture_raw|first).value|default('email') : shamel_popup_capture_raw) %}
+{% set shamel_store_mode = shamel_store_mode_raw is iterable ? (shamel_store_mode_raw|first).value : shamel_store_mode_raw %}
+{% set shamel_industry = shamel_industry_raw is iterable ? (shamel_industry_raw|first).value : shamel_industry_raw %}
+{% set shamel_ui_style = shamel_ui_style_raw is iterable ? (shamel_ui_style_raw|first).value : shamel_ui_style_raw %}
+{% set shamel_header_layout = shamel_header_layout_raw is iterable ? (shamel_header_layout_raw|first).value : shamel_header_layout_raw %}
+{% set shamel_surface_radius = shamel_surface_radius_raw is iterable ? (shamel_surface_radius_raw|first).value : shamel_surface_radius_raw %}
+{% set shamel_product_density = shamel_product_density_raw is iterable ? (shamel_product_density_raw|first).value : shamel_product_density_raw %}
+{% set shamel_announcement_speed = shamel_announcement_speed_raw is iterable ? (shamel_announcement_speed_raw|first).value : shamel_announcement_speed_raw %}
+{% set shamel_popup_capture = shamel_popup_capture_raw is iterable ? (shamel_popup_capture_raw|first).value : shamel_popup_capture_raw %}
 <body id="app" class="theme-raed shamel-pro shamel-mode-{{ shamel_store_mode }} shamel-industry-{{ shamel_industry }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
