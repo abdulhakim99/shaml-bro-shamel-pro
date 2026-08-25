@@ -2,6 +2,7 @@
 | Header is intentionally connected to Salla Navigation:
 | merchants manage main/sub categories from the store navigation screen.
 #}
+{% set shamel_show_header_categories = theme.settings.get('shamel_header_categories_enabled', true) %}
 <header data-testid="store-header" class="store-header shamel-store-header">
   <div class="lg:hidden">
     <salla-bullet-delivery-tag></salla-bullet-delivery-tag>
@@ -9,7 +10,7 @@
   <div id="mainnav" class="main-nav-container shadow-default bg-white shamel-header-main">
     <div class="inner bg-inherit w-full">
       <div class="container">
-        <div class="shamel-header-main__grid">
+        <div class="shamel-header-main__grid{{ shamel_show_header_categories ? '' : ' shamel-header-main__grid--no-menu' }}">
           <div class="shamel-header-main__brand">
             <a data-testid="store-header-mobile-toggle" class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu" aria-label="فتح الأقسام">
               <i class="sicon-menu text-primary text-2xl"></i>
@@ -19,9 +20,11 @@
               {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
             </a>
           </div>
-          <nav class="shamel-header-main__menu" aria-label="أقسام المتجر">
-            <custom-main-menu></custom-main-menu>
-          </nav>
+          {% if shamel_show_header_categories %}
+            <nav class="shamel-header-main__menu" aria-label="أقسام المتجر">
+              <custom-main-menu></custom-main-menu>
+            </nav>
+          {% endif %}
           <div class="shamel-header-main__actions">
             <div class="shamel-header-search-trigger" title="البحث عن المنتجات">
               <salla-search data-testid="store-header-search" inline oval height="44" aria-label="البحث عن المنتجات"></salla-search>
