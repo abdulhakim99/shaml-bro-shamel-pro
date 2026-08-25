@@ -787,6 +787,79 @@
       "placeholder": "شحن سريع | عروض حصرية"
     },
     {
+      "type": "boolean",
+      "label": "إظهار وسائل الدفع داخل الشريط",
+      "description": "فعّل فقط الوسائل المتاحة فعلًا في متجرك.",
+      "id": "shamel_announcement_payments_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار مدى",
+      "id": "shamel_payment_mada",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار Visa",
+      "id": "shamel_payment_visa",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار Mastercard",
+      "id": "shamel_payment_mastercard",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار Apple Pay",
+      "id": "shamel_payment_applepay",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار STC Pay",
+      "id": "shamel_payment_stcpay",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار تابي",
+      "id": "shamel_payment_tabby",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار تمارا",
+      "id": "shamel_payment_tamara",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
       "id": "shamel_announcement_speed",
       "type": "items",
       "format": "dropdown-list",
