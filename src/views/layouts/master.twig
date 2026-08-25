@@ -182,7 +182,10 @@
       .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:var(--shamel-follow-bg,#071a2f);color:var(--shamel-follow-text,#fff)}
       .shamel-follow__inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;text-align:center}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
       .shamel-follow__links{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid currentColor;border-radius:.8rem;background:rgba(255,255,255,.1);color:var(--shamel-follow-icon,#fff);font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:var(--shamel-follow-icon,#fff);color:var(--shamel-follow-bg,#071a2f)}
-      .shamel-social-svg{display:block;width:1.4rem;height:1.4rem;fill:currentColor}
+      .shamel-social-svg{display:block;width:1.5rem;height:1.5rem;overflow:visible;fill:currentColor;filter:drop-shadow(0 1px 1px rgba(0,0,0,.12));transform:translateZ(0)}
+      .shamel-social-svg path{shape-rendering:geometricPrecision}
+      .shamel-follow__links a[class*="shamel-social--"],.shamel-contact__link[class*="shamel-social--"]{isolation:isolate;background:var(--shamel-brand);color:var(--shamel-brand-icon);border-color:rgba(255,255,255,.82);box-shadow:0 8px 22px rgba(15,23,42,.22),inset 0 1px 0 rgba(255,255,255,.28)}
+      .shamel-follow__links a[class*="shamel-social--"]:focus-visible,.shamel-contact__link[class*="shamel-social--"]:focus-visible{outline:3px solid rgba(56,189,248,.7);outline-offset:3px}
       .shamel-social--whatsapp{--shamel-brand:#25D366;--shamel-brand-icon:#fff}
       .shamel-social--instagram{--shamel-brand:linear-gradient(135deg,#833AB4,#FD1D1D,#FCAF45);--shamel-brand-icon:#fff}
       .shamel-social--tiktok{--shamel-brand:#010101;--shamel-brand-icon:#fff}
