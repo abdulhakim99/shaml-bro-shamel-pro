@@ -768,7 +768,8 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار أداة مقارنة المنتجات",
+      "label": "إظهار المقارنة داخل بطاقات المنتجات",
+      "description": "يضيف زر مقارنة واضحًا داخل كل بطاقة منتج، ويمكن إيقافه بالكامل.",
       "id": "shamel_compare_enabled",
       "format": "switch",
       "required": false,
@@ -789,7 +790,8 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار رابط المفضلة",
+      "label": "إظهار المفضلة داخل بطاقات المنتجات",
+      "description": "يضيف زر القلب داخل كل بطاقة منتج، ويمكن إيقافه بالكامل.",
       "id": "shamel_side_wishlist_enabled",
       "format": "switch",
       "required": false,
