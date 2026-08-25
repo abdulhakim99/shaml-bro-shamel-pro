@@ -10,13 +10,31 @@
     {% if theme.settings.get('shamel_announcement_enabled', true) and theme.settings.get('shamel_announcement_text') %}
         {% set shamel_news_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
         {% set shamel_news_speed = shamel_news_speed_raw is iterable ? (shamel_news_speed_raw|first).value : shamel_news_speed_raw %}
-        <aside class="shamel-news shamel-news--{{ shamel_news_speed }}" aria-label="إعلانات المتجر">
-            <div class="shamel-news__track">
-                <span>{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
-                <span aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
-                <span aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+        <div class="shamel-news-wrap container">
+          <aside class="shamel-news shamel-news--{{ shamel_news_speed }}" aria-label="إعلانات المتجر ووسائل الدفع">
+            <div class="shamel-news__row">
+              <div class="shamel-news__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 9.4 7.3 4 8l4 3.9-1 5.5 5-2.7 5 2.7-1-5.5L20 8l-5.4-.7L12 2Z"/></svg><span>جديد المتجر</span></div>
+              <div class="shamel-news__viewport">
+                <div class="shamel-news__track">
+                  <span class="shamel-news__message">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
+                  <span class="shamel-news__message" aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
+                  <span class="shamel-news__message" aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
+                </div>
+              </div>
+              {% if theme.settings.get('shamel_announcement_payments_enabled', true) %}
+                <div class="shamel-news__payments" aria-label="وسائل الدفع المتاحة">
+                  {% if theme.settings.get('shamel_payment_mada', true) %}<span class="shamel-pay-logo shamel-pay-logo--mada" title="مدى">mada</span>{% endif %}
+                  {% if theme.settings.get('shamel_payment_visa', true) %}<span class="shamel-pay-logo shamel-pay-logo--visa" title="Visa">VISA</span>{% endif %}
+                  {% if theme.settings.get('shamel_payment_mastercard', true) %}<span class="shamel-pay-logo shamel-pay-logo--mastercard" title="Mastercard"><span></span></span>{% endif %}
+                  {% if theme.settings.get('shamel_payment_applepay', true) %}<span class="shamel-pay-logo shamel-pay-logo--apple" title="Apple Pay">● Pay</span>{% endif %}
+                  {% if theme.settings.get('shamel_payment_stcpay') %}<span class="shamel-pay-logo shamel-pay-logo--stc" title="STC Pay">stc pay</span>{% endif %}
+                  {% if theme.settings.get('shamel_payment_tabby') %}<span class="shamel-pay-logo shamel-pay-logo--tabby" title="تابي">tabby</span>{% endif %}
+                  {% if theme.settings.get('shamel_payment_tamara') %}<span class="shamel-pay-logo shamel-pay-logo--tamara" title="تمارا">tamara</span>{% endif %}
+                </div>
+              {% endif %}
             </div>
-        </aside>
+          </aside>
+        </div>
     {% endif %}
     {% component home %}
 {% endblock %}
