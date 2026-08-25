@@ -718,6 +718,17 @@
       "selected": true
     },
     {
+      "type": "boolean",
+      "icon": "sicon-moon",
+      "label": "إظهار زر الوضع الليلي",
+      "description": "يسمح للعميل بالتبديل بين الوضع الفاتح والليلي مع حفظ اختياره.",
+      "id": "shamel_dark_mode_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
       "id": "shamel_side_tools_position",
       "type": "items",
       "format": "dropdown-list",
