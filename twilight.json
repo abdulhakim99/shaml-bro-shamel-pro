@@ -1,10 +1,10 @@
 {
     "name": {
-        "ar": "رائد",
-        "en": "Theme Raed"
+        "ar": "شامل برو – Shamel Pro",
+        "en": "شامل برو – Shamel Pro"
     },
-    "repository": "https://github.com/SallaApp/theme-raed",
-    "author_email": "support@salla.sa",
+    "repository": "https://github.com/abdulhakim99/shaml-bro-shamel-pro",
+    "author_email": "abdulhakim.s.99p@gmail.com",
     "features": [
         "mega-menu",
         "fonts",
@@ -1129,10 +1129,9 @@
             ]
         }
     ],
-    "support_url": "https://salla.com/",
+    "support_url": null,
     "description": {
-        "ar": "مجموعة كبيرة من المزايا لدعم تجارتك وتقديم تجربة تسوق مثيرة لعملائك",
-        "en": "A wide range of features to support your business and provide an exciting shopping experience for your customers"
+        "ar": "",
+        "en": ""
     }
 }
-
