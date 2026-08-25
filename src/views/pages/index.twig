@@ -7,6 +7,17 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
+    {% if theme.settings.get('shamel_announcement_enabled', true) and theme.settings.get('shamel_announcement_text') %}
+        {% set shamel_news_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
+        {% set shamel_news_speed = shamel_news_speed_raw is iterable ? (shamel_news_speed_raw|first).value : shamel_news_speed_raw %}
+        <aside class="shamel-news shamel-news--{{ shamel_news_speed }}" aria-label="إعلانات المتجر">
+            <div class="shamel-news__track">
+                <span>{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+                <span aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+                <span aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+            </div>
+        </aside>
+    {% endif %}
     {% component home %}
 {% endblock %}
 {% block scripts %}
