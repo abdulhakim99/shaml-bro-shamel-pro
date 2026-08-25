@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^8.0.0",
     "animejs": "^3.2.2",
-    "fslightbox": "^3.7.5",
+    "fslightbox": "^3.7.6",
     "lite-youtube-embed": "^0.3.4",
     "mmenu-light": "^3.2.2",
     "sweetalert2": "^11.26.25"
