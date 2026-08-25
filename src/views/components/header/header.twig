@@ -1,50 +1,17 @@
 {#
-| Variable         | Type    | Description                     |
-|------------------|---------|---------------------------------|
-| cart             | object  |                                 |
-| cart.items_count | int     |                                 |
-| cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
+| Header is intentionally connected to Salla Navigation:
+| merchants manage main/sub categories from the store navigation screen.
 #}
-{% set important_links = theme.settings.get('important_links') %}
 <header data-testid="store-header" class="store-header shamel-store-header">
   <div class="lg:hidden">
     <salla-bullet-delivery-tag></salla-bullet-delivery-tag>
   </div>
-
-  {# شريط خدمات نحيف: التواصل في جهة، والروابط واللغة في الجهة المقابلة #}
-  <div class="top-navbar shamel-header-topbar">
-    <div class="container shamel-header-topbar__inner">
-      <div class="shamel-header-topbar__contact">
-        <salla-contacts data-testid="store-header-contacts" is-header></salla-contacts>
-      </div>
-      <div class="shamel-header-topbar__utilities">
-        {% if important_links %}
-          <salla-menu data-testid="store-header-topnav" source="footer" topnav></salla-menu>
-        {% endif %}
-        <div class="header-buttons">
-          {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-            <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
-          {% endif %}
-        </div>
-        <div class="hidden lg:block">
-          <salla-bullet-delivery-tag></salla-bullet-delivery-tag>
-        </div>
-        {% if store.scope %}
-          <button class="btn--rounded-gray" onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-            <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ store.scope.name }}
-          </button>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-
-  {# الهيدر الرئيسي: الشعار، الأقسام، ثم البحث وأدوات العميل #}
   <div id="mainnav" class="main-nav-container shadow-default bg-white shamel-header-main">
     <div class="inner bg-inherit w-full">
       <div class="container">
         <div class="shamel-header-main__grid">
           <div class="shamel-header-main__brand">
-            <a data-testid="store-header-mobile-toggle" class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu" aria-label="فتح القائمة">
+            <a data-testid="store-header-mobile-toggle" class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu" aria-label="فتح الأقسام">
               <i class="sicon-menu text-primary text-2xl"></i>
             </a>
             <a data-testid="store-header-logo" class="navbar-brand" href="{{ store.url }}">
@@ -52,18 +19,18 @@
               {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
             </a>
           </div>
-
           <nav class="shamel-header-main__menu" aria-label="أقسام المتجر">
             <custom-main-menu></custom-main-menu>
           </nav>
-
           <div class="shamel-header-main__actions">
-            <div class="header-search shamel-header-search hidden lg:block">
-              <salla-search data-testid="store-header-search" inline oval height="40"></salla-search>
+            <div class="shamel-header-search-trigger" title="البحث">
+              <salla-search data-testid="store-header-search"></salla-search>
             </div>
-            <div class="lg:hidden shamel-header-search-mobile">
-              <salla-search data-testid="store-header-search-mobile"></salla-search>
-            </div>
+            {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+              <div class="shamel-header-localization">
+                <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
+              </div>
+            {% endif %}
             <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
             <salla-cart-summary data-testid="store-header-cart">
               <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
