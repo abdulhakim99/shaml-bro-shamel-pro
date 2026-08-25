@@ -95,7 +95,13 @@
         }
     </style>
     <style>
-      .shamel-news{overflow:hidden;background:linear-gradient(90deg,#071a2f,#0f4c6b,#071a2f);color:#fff;padding:.58rem 0;font-size:.84rem;font-weight:700;white-space:nowrap}
+      .shamel-pro{background:var(--sp-page-bg,#fff);color:var(--sp-text,#334155)}
+      .shamel-pro h1,.shamel-pro h2,.shamel-pro h3,.shamel-pro h4{color:var(--sp-heading,#0f172a)}
+      .shamel-pro .main-nav-container,.shamel-pro .top-navbar{background:var(--sp-header-bg,#fff);color:var(--sp-header-text,#0f172a)}
+      .shamel-pro .s-product-card-entry{background:var(--sp-card-bg,#fff)}
+      .shamel-pro .store-footer,.shamel-pro .store-footer__inner{background:var(--sp-footer-bg,#0f172a);color:var(--sp-footer-text,#fff)}
+      .shamel-pro .btn--primary,.shamel-pro salla-button[color=primary]{--color-primary:var(--sp-primary,#0f4c6b);--color-primary-reverse:var(--sp-button-text,#fff)}
+      .shamel-news{overflow:hidden;background:var(--sp-news-bg,#071a2f);color:var(--sp-news-text,#fff);padding:.58rem 0;font-size:.84rem;font-weight:700;white-space:nowrap}
       .shamel-news__track{display:flex;width:max-content;gap:4rem;animation:shamel-news 24s linear infinite}
       .shamel-news--slow .shamel-news__track{animation-duration:36s}.shamel-news--fast .shamel-news__track{animation-duration:15s}
       .shamel-news__track span{padding-inline:2rem}
@@ -105,11 +111,11 @@
       .shamel-follow__inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
       .shamel-follow__links{display:flex;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid currentColor;border-radius:.8rem;background:rgba(255,255,255,.1);color:var(--shamel-follow-icon,#fff);font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:var(--shamel-follow-icon,#fff);color:var(--shamel-follow-bg,#071a2f)}
       .shamel-popup[hidden]{display:none}.shamel-popup{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
-      .shamel-popup__card{position:relative;display:grid;grid-template-columns:minmax(14rem,.85fr) minmax(18rem,1fr);width:min(56rem,100%);overflow:hidden;border-radius:1.4rem;background:#fff;box-shadow:0 30px 80px rgba(2,6,23,.35)}
+      .shamel-popup__card{position:relative;display:grid;grid-template-columns:minmax(14rem,.85fr) minmax(18rem,1fr);width:min(56rem,100%);overflow:hidden;border-radius:1.4rem;background:var(--sp-popup-bg,#fff);color:var(--sp-popup-text,#0f172a);box-shadow:0 30px 80px rgba(2,6,23,.35)}
       .shamel-popup__image{min-height:30rem;background:#eef2f7 center/cover no-repeat}.shamel-popup__content{display:flex;flex-direction:column;justify-content:center;padding:2.4rem}
       .shamel-popup__close{position:absolute;top:.8rem;right:.8rem;z-index:2;width:2.4rem;height:2.4rem;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#0f172a;font-size:1.35rem;cursor:pointer}
-      .shamel-popup__eyebrow{color:#b45309;font-weight:800}.shamel-popup h2{margin:.65rem 0;font-size:2rem;line-height:1.3;font-weight:900;color:#0f172a}.shamel-popup p{color:#64748b;line-height:1.8}
-      .shamel-popup form{display:grid;gap:.75rem;margin-top:1rem}.shamel-popup input{min-height:3.2rem;padding:.8rem 1rem;border:1px solid #cbd5e1;border-radius:.8rem}.shamel-popup button[type=submit]{min-height:3.2rem;border:0;border-radius:.8rem;background:#0f4c6b;color:#fff;font-weight:800;cursor:pointer}.shamel-popup__privacy{font-size:.72rem;color:#94a3b8}
+      .shamel-popup__eyebrow{color:#b45309;font-weight:800}.shamel-popup h2{margin:.65rem 0;font-size:2rem;line-height:1.3;font-weight:900;color:var(--sp-popup-text,#0f172a)}.shamel-popup p{color:#64748b;line-height:1.8}
+      .shamel-popup form{display:grid;gap:.75rem;margin-top:1rem}.shamel-popup input{min-height:3.2rem;padding:.8rem 1rem;border:1px solid #cbd5e1;border-radius:.8rem}.shamel-popup button[type=submit]{min-height:3.2rem;border:0;border-radius:.8rem;background:var(--sp-primary,#0f4c6b);color:var(--sp-button-text,#fff);font-weight:800;cursor:pointer}.shamel-popup__privacy{font-size:.72rem;color:#94a3b8}
       @media(max-width:640px){.shamel-follow__inner{align-items:flex-start;flex-direction:column}.shamel-popup__card{display:block;max-height:92vh;overflow:auto}.shamel-popup__image{min-height:13rem}.shamel-popup__content{padding:1.5rem}.shamel-popup h2{font-size:1.55rem}}
       @media(prefers-reduced-motion:reduce){.shamel-news__track,.shamel-contact__link--whatsapp,.shamel-contact__link--whatsapp:before,.shamel-contact__link--whatsapp:after{animation:none}}
     </style>
@@ -134,7 +140,7 @@
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-  ">
+  " style="--sp-primary:{{ theme.settings.get('shamel_color_primary', '#0f4c6b') }};--sp-button-text:{{ theme.settings.get('shamel_color_button_text', '#ffffff') }};--sp-page-bg:{{ theme.settings.get('shamel_color_page_bg', '#ffffff') }};--sp-text:{{ theme.settings.get('shamel_color_text', '#334155') }};--sp-heading:{{ theme.settings.get('shamel_color_heading', '#0f172a') }};--sp-card-bg:{{ theme.settings.get('shamel_color_card_bg', '#ffffff') }};--sp-header-bg:{{ theme.settings.get('shamel_color_header_bg', '#ffffff') }};--sp-header-text:{{ theme.settings.get('shamel_color_header_text', '#0f172a') }};--sp-news-bg:{{ theme.settings.get('shamel_color_news_bg', '#071a2f') }};--sp-news-text:{{ theme.settings.get('shamel_color_news_text', '#ffffff') }};--sp-footer-bg:{{ theme.settings.get('shamel_color_footer_bg', '#0f172a') }};--sp-footer-text:{{ theme.settings.get('shamel_color_footer_text', '#ffffff') }};--sp-popup-bg:{{ theme.settings.get('shamel_color_popup_bg', '#ffffff') }};--sp-popup-text:{{ theme.settings.get('shamel_color_popup_text', '#0f172a') }};--sp-social-bg:{{ theme.settings.get('shamel_color_social_bg', '#0f4c6b') }};--sp-social-icon:{{ theme.settings.get('shamel_color_social_icon', '#ffffff') }};--sp-whatsapp:{{ theme.settings.get('shamel_color_whatsapp', '#22c55e') }};--color-primary:var(--sp-primary);--color-primary-reverse:var(--sp-button-text)">
 <noscript>
     To get full functionality of this site you need to enable JavaScript. Here is how
     <a href="https://www.enable-javascript.com/" rel="noreferrer"
@@ -241,10 +247,10 @@
     .shamel-contact--left .shamel-contact__promo:after{content:"";position:absolute;left:-.38rem;top:50%;width:.72rem;height:.72rem;background:#fff;border-bottom:1px solid rgba(148,163,184,.22);border-left:1px solid rgba(148,163,184,.22);transform:translateY(-50%) rotate(45deg)}
     .shamel-contact__menu{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:.5rem;max-width:13rem}
     .shamel-contact--left .shamel-contact__menu{justify-content:flex-start}
-    .shamel-contact__link{position:relative;display:grid;place-items:center;width:3.35rem;height:3.35rem;padding:0;border:3px solid rgba(255,255,255,.95);border-radius:50%;background:#0f4c6b;color:#fff;text-decoration:none;box-shadow:0 10px 26px rgba(15,76,107,.28);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+    .shamel-contact__link{position:relative;display:grid;place-items:center;width:3.35rem;height:3.35rem;padding:0;border:3px solid rgba(255,255,255,.95);border-radius:50%;background:var(--sp-social-bg,#0f4c6b);color:var(--sp-social-icon,#fff);text-decoration:none;box-shadow:0 10px 26px rgba(15,76,107,.28);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
     .shamel-contact__link:hover{background:#123f59;transform:translateY(-3px) scale(1.04);box-shadow:0 14px 30px rgba(15,76,107,.34)}
     .shamel-contact__link i,.shamel-contact__glyph{width:auto;text-align:center;font-size:1.45rem;color:inherit}
-    .shamel-contact__link--whatsapp{isolation:isolate;width:3.8rem;height:3.8rem;background:linear-gradient(145deg,#39e56f,#16a34a);box-shadow:0 12px 30px rgba(34,197,94,.42),inset 0 1px 0 rgba(255,255,255,.45);animation:shamel-whatsapp-float 2.7s ease-in-out infinite}
+    .shamel-contact__link--whatsapp{isolation:isolate;width:3.8rem;height:3.8rem;background:var(--sp-whatsapp,#22c55e);box-shadow:0 12px 30px rgba(34,197,94,.42),inset 0 1px 0 rgba(255,255,255,.45);animation:shamel-whatsapp-float 2.7s ease-in-out infinite}
     .shamel-contact__link--whatsapp:before{content:"";position:absolute;z-index:-1;inset:-.42rem;border:2px solid rgba(34,197,94,.38);border-radius:50%;animation:shamel-whatsapp-pulse 2.2s ease-out infinite}
     .shamel-contact__link--whatsapp:after{content:"";position:absolute;inset:3px;border-radius:50%;background:linear-gradient(120deg,transparent 22%,rgba(255,255,255,.55) 42%,transparent 61%);transform:translateX(-120%);animation:shamel-whatsapp-shine 3.2s ease-in-out infinite;pointer-events:none}
     .shamel-contact__link--whatsapp i{font-size:1.75rem;text-shadow:0 2px 5px rgba(0,0,0,.14)}
