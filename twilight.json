@@ -544,7 +544,7 @@
     {
       "type": "boolean",
       "format": "switch",
-      "id": "shamel_header_categories_enabled",
+      "id": "shamel_header_categories_enabled_v2",
       "label": "إظهار أقسام المتجر في رأس الصفحة",
       "description": "عند التعطيل تختفي قائمة الأقسام العلوية فقط، ويبقى الشعار والبحث والحساب والسلة.",
       "value": true,
