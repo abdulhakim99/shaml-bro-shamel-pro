@@ -18,6 +18,7 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
+	{% set shamel_filters_in_header_drawer = theme.settings.get('shamel_header_categories_enabled_v2', true) and theme.settings.get('shamel_drawer_native_filters_enabled', true) %}
 	{% if theme.settings.get('product_index_show_breadcrumbs', true) %}
 		<div
 			class="container container--breadcrumbs">
@@ -36,16 +37,16 @@
 	<div class="s-blocks-wrapper s-before-products-list !mt-0">{% hook 'product.index.before_products_group_with_filter' %}</div>
 
 	<div class="container container--products-list flex items-start flex-col md:flex-row">
-		{% if filters %}
+		{% if filters and not shamel_filters_in_header_drawer %}
 			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
 			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-20 flex-none" id="filters-menu"></salla-filters>
 		{% endif %}
 
-		<div class="main-content flex-1 w-full {{ filters ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
+		<div class="main-content flex-1 w-full {{ filters and not shamel_filters_in_header_drawer ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
 			<div class="mb-4 sm:mb-6 flex justify-between items-center">
 				<h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3" id="page-main-title">{{ page.title|raw }}</h1>
 				<div class="flex items-center space-x-2 rtl:space-x-reverse">
-					{% if filters %}
+					{% if filters and not shamel_filters_in_header_drawer %}
 						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger bg-border-color text-primary lg:hidden mt-2">
 							<i class="sicon-filter text-gray-text text-2xl me-2.5"></i>
 						</a>
