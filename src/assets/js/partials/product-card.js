@@ -296,7 +296,7 @@ class ProductCard extends HTMLElement {
 
               ${window.shamel_compare_enabled ? `
                 <button type="button" class="shamel-compare-add" aria-label="أضف المنتج للمقارنة" title="أضف للمقارنة">
-                  <i class="sicon-compare"></i>
+                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7 3h2v14h3l-4 4-4-4h3V3Zm10 18h-2V7h-3l4-4 4 4h-3v14Z"/></svg>
                 </button>` : ``}
               
               ${this.horizontal || this.fullImage ?
