@@ -101,6 +101,39 @@
       .shamel-pro{background:var(--sp-page-bg,#fff);color:var(--sp-text,#334155)}
       .shamel-pro h1,.shamel-pro h2,.shamel-pro h3,.shamel-pro h4{color:var(--sp-heading,#0f172a)}
       .shamel-pro .main-nav-container,.shamel-pro .top-navbar{background:var(--sp-header-bg,#fff);color:var(--sp-header-text,#0f172a)}
+      /* Shamel Pro — professional, balanced store header */
+      .shamel-header-topbar{min-height:2.35rem;border-bottom:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 10%,transparent);font-size:.76rem}
+      .shamel-header-topbar__inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:2.35rem}
+      .shamel-header-topbar__contact,.shamel-header-topbar__utilities{display:flex;align-items:center;gap:.75rem;min-width:0}
+      .shamel-header-topbar__utilities{margin-inline-start:auto}
+      .shamel-header-main{min-height:5.25rem;border-bottom:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 9%,transparent)}
+      .shamel-header-main__grid{display:grid;grid-template-columns:minmax(7.5rem,auto) minmax(18rem,1fr) minmax(20rem,34rem);align-items:center;gap:1.25rem;min-height:5.25rem}
+      .shamel-header-main__brand,.shamel-header-main__actions{display:flex;align-items:center}
+      .shamel-header-main__brand{justify-content:flex-start;gap:.75rem}
+      .shamel-header-main__brand .navbar-brand{margin:0;max-width:9rem}
+      .shamel-header-main__menu{display:flex;align-items:center;justify-content:center;min-width:0}
+      .shamel-header-main__menu custom-main-menu{width:100%}
+      .shamel-header-main__actions{justify-content:flex-end;gap:.75rem;min-width:0}
+      .shamel-header-search{flex:1;min-width:12rem;max-width:24rem}
+      .shamel-header-main salla-cart-summary{margin:0!important}
+      @media(max-width:1023px){
+        .shamel-header-topbar__contact{display:none}
+        .shamel-header-topbar__inner{justify-content:center}
+        .shamel-header-topbar__utilities{width:100%;justify-content:center;margin:0}
+        .shamel-header-topbar salla-menu{display:none}
+        .shamel-header-main{min-height:4.35rem}
+        .shamel-header-main__grid{grid-template-columns:1fr auto;gap:.65rem;min-height:4.35rem}
+        .shamel-header-main__brand{gap:.6rem}
+        .shamel-header-main__brand .navbar-brand{max-width:7rem}
+        .shamel-header-main__menu{display:none}
+        .shamel-header-main__actions{gap:.45rem}
+      }
+      @media(max-width:480px){
+        .shamel-header-topbar{font-size:.7rem}
+        .shamel-header-topbar__utilities{gap:.35rem}
+        .shamel-header-main__brand .navbar-brand{max-width:5.8rem}
+      }
+
       .shamel-pro .s-product-card-entry{background:var(--sp-card-bg,#fff)}
       .shamel-pro .store-footer,.shamel-pro .store-footer__inner{background:var(--sp-footer-bg,#0f172a);color:var(--sp-footer-text,#fff)}
       .shamel-pro .btn--primary,.shamel-pro salla-button[color=primary]{--color-primary:var(--sp-primary,#0f4c6b);--color-primary-reverse:var(--sp-button-text,#fff)}
