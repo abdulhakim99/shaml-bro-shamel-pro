@@ -103,6 +103,32 @@
       .shamel-pro .s-product-card-entry{background:var(--sp-card-bg,#fff)}
       .shamel-pro .store-footer,.shamel-pro .store-footer__inner{background:var(--sp-footer-bg,#0f172a);color:var(--sp-footer-text,#fff)}
       .shamel-pro .btn--primary,.shamel-pro salla-button[color=primary]{--color-primary:var(--sp-primary,#0f4c6b);--color-primary-reverse:var(--sp-button-text,#fff)}
+
+      /* Shamel Pro: conversion-focused product cards */
+      .shamel-pro .s-product-card-entry{overflow:hidden;border:1px solid rgba(148,163,184,.22);border-radius:var(--s-radius,.75rem);box-shadow:0 4px 16px rgba(15,23,42,.05);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+      .shamel-pro .s-product-card-entry:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--sp-primary,#0f4c6b) 35%,transparent);box-shadow:0 16px 34px rgba(15,23,42,.11)}
+      .shamel-pro .s-product-card-image{overflow:hidden;background:#f8fafc}
+      .shamel-pro .s-product-card-image img{transition:transform .35s ease}
+      .shamel-pro .s-product-card-entry:hover .s-product-card-image img{transform:scale(1.035)}
+      .shamel-pro .s-product-card-content{padding-bottom:.85rem}
+      .shamel-pro .s-product-card-content-title{font-weight:800;line-height:1.55}
+      .shamel-pro .s-product-card-content-title a{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+      .shamel-pro .s-product-card-content-sub{align-items:center;min-height:2.4rem}
+      .shamel-pro .s-product-card-price,.shamel-pro .s-product-card-sale-price h4{color:var(--sp-primary,#0f4c6b);font-size:1.08rem;font-weight:900}
+      .shamel-pro .s-product-card-sale-price span{text-decoration-thickness:1.5px;color:#94a3b8}
+      .shamel-pro .s-product-card-rating{display:inline-flex;align-items:center;gap:.25rem;padding:.22rem .45rem;border-radius:999px;background:#fff7ed;color:#9a3412;font-weight:800}
+      .shamel-pro .s-product-card-content-footer salla-add-product-button{flex:1}
+      .shamel-pro .s-product-card-content-footer salla-add-product-button::part(button){min-height:2.85rem;border-radius:.72rem;font-weight:800}
+      .shamel-pro .s-product-card-wishlist-btn{transition:transform .18s ease}
+      .shamel-pro .s-product-card-wishlist-btn:hover{transform:scale(1.08)}
+      @media(max-width:640px){
+        .shamel-pro .s-product-card-entry:hover{transform:none}
+        .shamel-pro .s-product-card-content{padding-bottom:.65rem}
+        .shamel-pro .s-product-card-content-title{font-size:.9rem}
+        .shamel-pro .s-product-card-price,.shamel-pro .s-product-card-sale-price h4{font-size:1rem}
+        .is-sticky-product-bar .product-form{padding-bottom:max(.35rem,env(safe-area-inset-bottom))}
+      }
+
       .shamel-card-badges{position:absolute;z-index:3;top:.7rem;right:.7rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;pointer-events:none}
       html[dir=ltr] .shamel-card-badges{right:auto;left:.7rem}
       .shamel-card-badge{display:inline-flex;align-items:center;min-height:1.65rem;padding:.25rem .55rem;border-radius:999px;color:#fff;font-size:.7rem;font-weight:800;line-height:1;box-shadow:0 5px 14px rgba(15,23,42,.18)}
