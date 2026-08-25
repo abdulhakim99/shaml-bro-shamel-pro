@@ -479,6 +479,148 @@
       "format": "line"
     },
     {
+      "type": "static",
+      "format": "title",
+      "id": "shamel_marketing_title",
+      "value": "<div class='rounded-lg' style='background-color:#0b1f3a;display:flex;justify-content:center;align-items:center;padding:15px;margin-bottom:20px!important'><h6 style='color:#fff;font-size:15px;font-weight:bold'>أدوات التسويق</h6></div>",
+      "variant": "h6"
+    },
+    {
+      "type": "boolean",
+      "label": "تفعيل شريط الأخبار المتحرك",
+      "id": "shamel_announcement_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "string",
+      "label": "رسائل شريط الأخبار",
+      "description": "افصل بين الرسائل بعلامة |",
+      "id": "shamel_announcement_text",
+      "format": "text",
+      "required": false,
+      "value": "شحن سريع وآمن | عروض حصرية طوال الأسبوع | تسوق بثقة مع شامل برو",
+      "placeholder": "شحن سريع | عروض حصرية"
+    },
+    {
+      "id": "shamel_announcement_speed",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "سرعة شريط الأخبار",
+      "required": true,
+      "selected": [{"label":"متوسطة","value":"normal","key":"shamel-news-normal"}],
+      "options": [
+        {"label":"بطيئة","value":"slow","key":"shamel-news-slow"},
+        {"label":"متوسطة","value":"normal","key":"shamel-news-normal"},
+        {"label":"سريعة","value":"fast","key":"shamel-news-fast"}
+      ]
+    },
+    {
+      "type": "boolean",
+      "label": "تفعيل نافذة التسويق عند الدخول",
+      "description": "لن تظهر للعملاء إلا بعد إضافة رابط استقبال الاشتراكات.",
+      "id": "shamel_popup_enabled",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "id": "shamel_popup_capture_type",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "طريقة التسجيل",
+      "required": true,
+      "selected": [{"label":"البريد الإلكتروني","value":"email","key":"shamel-popup-email"}],
+      "options": [
+        {"label":"البريد الإلكتروني","value":"email","key":"shamel-popup-email"},
+        {"label":"رقم الجوال","value":"phone","key":"shamel-popup-phone"}
+      ]
+    },
+    {
+      "type": "string",
+      "label": "صورة النافذة التسويقية",
+      "id": "shamel_popup_image",
+      "format": "image",
+      "required": false,
+      "value": null
+    },
+    {
+      "type": "string",
+      "label": "العنوان الصغير",
+      "id": "shamel_popup_eyebrow",
+      "format": "text",
+      "required": false,
+      "value": "خصم خاص"
+    },
+    {
+      "type": "string",
+      "label": "عنوان النافذة",
+      "id": "shamel_popup_title",
+      "format": "text",
+      "required": false,
+      "value": "احصل على خصم على أول طلب لك"
+    },
+    {
+      "type": "string",
+      "label": "وصف النافذة",
+      "id": "shamel_popup_description",
+      "format": "text",
+      "required": false,
+      "value": "سجّل بياناتك لتصلك أحدث العروض والإصدارات."
+    },
+    {
+      "type": "string",
+      "label": "نص زر التسجيل",
+      "id": "shamel_popup_button",
+      "format": "text",
+      "required": false,
+      "value": "احصل على العرض"
+    },
+    {
+      "type": "string",
+      "label": "رابط استقبال الاشتراكات",
+      "description": "رابط آمن من خدمة التسويق أو التطبيق المسؤول عن حفظ الاشتراكات.",
+      "id": "shamel_popup_action_url",
+      "format": "text",
+      "required": false,
+      "value": ""
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "id": "shamel_follow_title_block",
+      "value": "<div class='rounded-lg' style='background-color:#0b1f3a;display:flex;justify-content:center;align-items:center;padding:15px;margin-bottom:20px!important'><h6 style='color:#fff;font-size:15px;font-weight:bold'>قسم تابعنا أسفل المتجر</h6></div>",
+      "variant": "h6"
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار قسم تابعنا",
+      "id": "shamel_follow_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "string",
+      "label": "عنوان قسم تابعنا",
+      "id": "shamel_follow_title",
+      "format": "text",
+      "required": false,
+      "value": "تابعنا وكن أول من يعرف"
+    },
+    {
+      "type": "string",
+      "label": "وصف قسم تابعنا",
+      "id": "shamel_follow_description",
+      "format": "text",
+      "required": false,
+      "value": "اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل."
+    },
+    {
       "id": "squar_photo_bg_image_size",
       "type": "items",
       "format": "dropdown-list",
