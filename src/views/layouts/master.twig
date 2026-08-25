@@ -150,6 +150,27 @@
       }
       @media(max-width:420px){.shamel-header-main__brand .navbar-brand{max-width:5.4rem}}
       .shamel-pro .s-product-card-entry{background:var(--sp-card-bg,#fff)}
+
+      /* Shamel Pro — industry presets. Merchant colors and typography remain in control. */
+      .shamel-industry-perfumes .s-product-card-entry{overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-primary,#0f4c6b) 14%,transparent);border-radius:1.15rem;box-shadow:0 12px 32px rgba(15,23,42,.07)}
+      .shamel-industry-perfumes .s-product-card-image{aspect-ratio:4/5;padding:1rem;background:color-mix(in srgb,var(--sp-card-bg,#fff) 92%,#f5efe6)}
+      .shamel-industry-perfumes .s-product-card-image img{object-fit:contain!important}
+      .shamel-industry-perfumes .s-product-card-content{padding:1rem 1.05rem 1.15rem}
+      .shamel-industry-perfumes .s-product-card-content-title{font-weight:800;letter-spacing:.01em}
+
+      .shamel-industry-abayas .s-product-card-entry{overflow:hidden;border-radius:1rem;box-shadow:0 10px 28px rgba(15,23,42,.07)}
+      .shamel-industry-abayas .s-product-card-image{aspect-ratio:3/4;background:color-mix(in srgb,var(--sp-card-bg,#fff) 94%,#f8f3ef)}
+      .shamel-industry-abayas .s-product-card-image img{width:100%;height:100%;object-fit:cover!important;object-position:center top}
+      .shamel-industry-abayas .s-product-card-content{padding:.9rem 1rem 1.05rem}
+
+      .shamel-industry-electronics .s-product-card-entry{overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-text,#334155) 13%,transparent);border-radius:.8rem;box-shadow:0 8px 22px rgba(15,23,42,.06)}
+      .shamel-industry-electronics .s-product-card-image{aspect-ratio:1/1;padding:1rem;background:#fff}
+      .shamel-industry-electronics .s-product-card-image img{object-fit:contain!important}
+      .shamel-industry-electronics .s-product-card-content{padding:.85rem .95rem 1rem}
+      .shamel-industry-electronics .s-product-card-content-title{font-weight:850;line-height:1.55}
+      body.shamel-dark-mode.shamel-industry-electronics .s-product-card-image{background:#f8fafc}
+      @media(max-width:640px){.shamel-industry-perfumes .s-product-card-image{aspect-ratio:1/1.15}.shamel-industry-abayas .s-product-card-image{aspect-ratio:3/4}}
+
       .shamel-pro main>.s-block:nth-of-type(odd),.shamel-pro main>section:nth-of-type(odd){background-color:var(--sp-section-bg,#fff)}
       .shamel-pro main>.s-block:nth-of-type(even),.shamel-pro main>section:nth-of-type(even){background-color:var(--sp-section-alt-bg,#f8fafc)}
 
@@ -272,6 +293,7 @@
     {% hook 'head:end' %}
 </head>
 {% set shamel_store_mode_raw = theme.settings.get('shamel_store_mode', 'general') %}
+{% set shamel_industry_raw = theme.settings.get('shamel_industry_preset', 'universal') %}
 {% set shamel_ui_style_raw = theme.settings.get('shamel_ui_style', 'modern') %}
 {% set shamel_header_layout_raw = theme.settings.get('shamel_header_layout', 'classic') %}
 {% set shamel_surface_radius_raw = theme.settings.get('shamel_surface_radius', 'soft') %}
@@ -279,13 +301,14 @@
 {% set shamel_announcement_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
 {% set shamel_popup_capture_raw = theme.settings.get('shamel_popup_capture_type', 'email') %}
 {% set shamel_store_mode = shamel_store_mode_raw is iterable ? (shamel_store_mode_raw|first).value : shamel_store_mode_raw %}
+{% set shamel_industry = shamel_industry_raw is iterable ? (shamel_industry_raw|first).value : shamel_industry_raw %}
 {% set shamel_ui_style = shamel_ui_style_raw is iterable ? (shamel_ui_style_raw|first).value : shamel_ui_style_raw %}
 {% set shamel_header_layout = shamel_header_layout_raw is iterable ? (shamel_header_layout_raw|first).value : shamel_header_layout_raw %}
 {% set shamel_surface_radius = shamel_surface_radius_raw is iterable ? (shamel_surface_radius_raw|first).value : shamel_surface_radius_raw %}
 {% set shamel_product_density = shamel_product_density_raw is iterable ? (shamel_product_density_raw|first).value : shamel_product_density_raw %}
 {% set shamel_announcement_speed = shamel_announcement_speed_raw is iterable ? (shamel_announcement_speed_raw|first).value : shamel_announcement_speed_raw %}
 {% set shamel_popup_capture = shamel_popup_capture_raw is iterable ? (shamel_popup_capture_raw|first).value : shamel_popup_capture_raw %}
-<body id="app" class="theme-raed shamel-pro shamel-mode-{{ shamel_store_mode }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
+<body id="app" class="theme-raed shamel-pro shamel-mode-{{ shamel_store_mode }} shamel-industry-{{ shamel_industry }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
