@@ -118,6 +118,17 @@
       .shamel-header-search-trigger salla-search{width:2.65rem}
       body.shamel-dark-mode .shamel-header-search-trigger{border-color:rgba(255,255,255,.5)!important;background:#172033!important;color:#fff!important;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
       body.shamel-dark-mode .shamel-header-search-trigger salla-search{color:#fff!important;--color-primary:#fff}
+      body.shamel-dark-mode .shamel-header-main__actions salla-search,
+      body.shamel-dark-mode .shamel-header-main__actions salla-user-menu,
+      body.shamel-dark-mode .shamel-header-main__actions salla-cart-summary{color:#fff!important;--color-primary:#fff!important;--color-text:#fff!important;--color-gray-700:#fff!important}
+      body.shamel-dark-mode .shamel-header-main__actions .header-btn__icon,
+      body.shamel-dark-mode .shamel-header-main__actions i,
+      body.shamel-dark-mode .shamel-header-main__actions svg,
+      body.shamel-dark-mode .shamel-header-main__actions button{color:#fff!important;stroke:#fff!important}
+      body.shamel-dark-mode .shamel-header-main__actions salla-search::part(trigger),
+      body.shamel-dark-mode .shamel-header-main__actions salla-user-menu::part(trigger),
+      body.shamel-dark-mode .shamel-header-main__actions salla-cart-summary::part(trigger){color:#fff!important}
+
       .shamel-header-main salla-cart-summary{margin:0!important}
       @media(max-width:1023px){
         .shamel-header-main{min-height:4.25rem}
@@ -129,13 +140,16 @@
       }
       @media(max-width:420px){.shamel-header-main__brand .navbar-brand{max-width:5.4rem}}
       .shamel-pro .s-product-card-entry{background:var(--sp-card-bg,#fff)}
+      .shamel-pro main>.s-block:nth-of-type(odd),.shamel-pro main>section:nth-of-type(odd){background-color:var(--sp-section-bg,#fff)}
+      .shamel-pro main>.s-block:nth-of-type(even),.shamel-pro main>section:nth-of-type(even){background-color:var(--sp-section-alt-bg,#f8fafc)}
+
       .shamel-pro .store-footer,.shamel-pro .store-footer__inner{background:var(--sp-footer-bg,#0f172a);color:var(--sp-footer-text,#fff)}
       .shamel-pro .btn--primary,.shamel-pro salla-button[color=primary]{--color-primary:var(--sp-primary,#0f4c6b);--color-primary-reverse:var(--sp-button-text,#fff)}
 
 
       .shamel-compare-add{display:grid;place-items:center;flex:0 0 2.85rem;width:2.85rem;height:2.85rem;border:1px solid #cbd5e1;border-radius:.72rem;background:#fff;color:var(--sp-primary,#0f4c6b);cursor:pointer;transition:.18s}
       .shamel-compare-add:hover{border-color:var(--sp-primary,#0f4c6b);background:var(--sp-primary,#0f4c6b);color:#fff;transform:translateY(-2px)}
-      body.shamel-dark-mode{--sp-page-bg:#070b14!important;--sp-text:#cbd5e1!important;--sp-heading:#f8fafc!important;--sp-card-bg:#111827!important;--sp-header-bg:#0b1120!important;--sp-header-text:#f8fafc!important;background:#070b14!important;color:#cbd5e1!important;color-scheme:dark}
+      body.shamel-dark-mode{--sp-page-bg:#070b14!important;--sp-text:#cbd5e1!important;--sp-heading:#f8fafc!important;--sp-card-bg:#111827!important;--sp-section-bg:#0b1120!important;--sp-section-alt-bg:#111827!important;--sp-header-bg:#0b1120!important;--sp-header-text:#f8fafc!important;background:#070b14!important;color:#cbd5e1!important;color-scheme:dark}
       body.shamel-dark-mode header,body.shamel-dark-mode .navbar,body.shamel-dark-mode .main-menu,body.shamel-dark-mode .s-block,body.shamel-dark-mode .product-entry,body.shamel-dark-mode .product-card,body.shamel-dark-mode .s-product-card-entry,body.shamel-dark-mode .shamel-compare-drawer{background-color:var(--sp-card-bg,#111827)!important;color:var(--sp-text,#cbd5e1)!important}
       body.shamel-dark-mode h1,body.shamel-dark-mode h2,body.shamel-dark-mode h3,body.shamel-dark-mode h4,body.shamel-dark-mode h5,body.shamel-dark-mode h6,body.shamel-dark-mode a:not(.shamel-contact__link):not(.shamel-side-tools a){color:var(--sp-heading,#f8fafc)}
       body.shamel-dark-mode input,body.shamel-dark-mode select,body.shamel-dark-mode textarea{background:#172033!important;border-color:#334155!important;color:#f8fafc!important}
@@ -265,7 +279,7 @@
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-  " style="--sp-primary:{{ theme.settings.get('shamel_color_primary', '#0f4c6b') }};--sp-button-text:{{ theme.settings.get('shamel_color_button_text', '#ffffff') }};--sp-page-bg:{{ theme.settings.get('shamel_color_page_bg', '#ffffff') }};--sp-text:{{ theme.settings.get('shamel_color_text', '#334155') }};--sp-heading:{{ theme.settings.get('shamel_color_heading', '#0f172a') }};--sp-card-bg:{{ theme.settings.get('shamel_color_card_bg', '#ffffff') }};--sp-header-bg:{{ theme.settings.get('shamel_color_header_bg', '#ffffff') }};--sp-header-text:{{ theme.settings.get('shamel_color_header_text', '#0f172a') }};--sp-news-bg:{{ theme.settings.get('shamel_color_news_bg', '#071a2f') }};--sp-news-text:{{ theme.settings.get('shamel_color_news_text', '#ffffff') }};--sp-footer-bg:{{ theme.settings.get('shamel_color_footer_bg', '#0f172a') }};--sp-footer-text:{{ theme.settings.get('shamel_color_footer_text', '#ffffff') }};--sp-popup-bg:{{ theme.settings.get('shamel_color_popup_bg', '#ffffff') }};--sp-popup-text:{{ theme.settings.get('shamel_color_popup_text', '#0f172a') }};--sp-social-bg:{{ theme.settings.get('shamel_color_social_bg', '#0f4c6b') }};--sp-social-icon:{{ theme.settings.get('shamel_color_social_icon', '#ffffff') }};--sp-whatsapp:{{ theme.settings.get('shamel_color_whatsapp', '#22c55e') }};--color-primary:var(--sp-primary);--color-primary-reverse:var(--sp-button-text)">
+  " style="--sp-primary:{{ theme.settings.get('shamel_color_primary', '#0f4c6b') }};--sp-button-text:{{ theme.settings.get('shamel_color_button_text', '#ffffff') }};--sp-page-bg:{{ theme.settings.get('shamel_color_page_bg', '#ffffff') }};--sp-text:{{ theme.settings.get('shamel_color_text', '#334155') }};--sp-heading:{{ theme.settings.get('shamel_color_heading', '#0f172a') }};--sp-card-bg:{{ theme.settings.get('shamel_color_card_bg', '#ffffff') }};--sp-section-bg:{{ theme.settings.get('shamel_color_section_bg', '#ffffff') }};--sp-section-alt-bg:{{ theme.settings.get('shamel_color_section_alt_bg', '#f8fafc') }};--sp-header-bg:{{ theme.settings.get('shamel_color_header_bg', '#ffffff') }};--sp-header-text:{{ theme.settings.get('shamel_color_header_text', '#0f172a') }};--sp-news-bg:{{ theme.settings.get('shamel_color_news_bg', '#071a2f') }};--sp-news-text:{{ theme.settings.get('shamel_color_news_text', '#ffffff') }};--sp-footer-bg:{{ theme.settings.get('shamel_color_footer_bg', '#0f172a') }};--sp-footer-text:{{ theme.settings.get('shamel_color_footer_text', '#ffffff') }};--sp-popup-bg:{{ theme.settings.get('shamel_color_popup_bg', '#ffffff') }};--sp-popup-text:{{ theme.settings.get('shamel_color_popup_text', '#0f172a') }};--sp-social-bg:{{ theme.settings.get('shamel_color_social_bg', '#0f4c6b') }};--sp-social-icon:{{ theme.settings.get('shamel_color_social_icon', '#ffffff') }};--sp-whatsapp:{{ theme.settings.get('shamel_color_whatsapp', '#22c55e') }};--color-primary:var(--sp-primary);--color-primary-reverse:var(--sp-button-text)">
 <noscript>
     To get full functionality of this site you need to enable JavaScript. Here is how
     <a href="https://www.enable-javascript.com/" rel="noreferrer"
