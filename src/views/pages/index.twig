@@ -15,46 +15,26 @@
           <div class="shamel-news__row"><div class="shamel-news__viewport"><div class="shamel-news__track">
               <span class="shamel-news__sequence">
                 <span class="shamel-news__message">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
-                {% if theme.settings.get('shamel_announcement_payments_enabled', true) %}<span class="shamel-news__payment-set">
-                    {% if theme.settings.get('shamel_payment_mada', true) %}<span class="shamel-pay-logo shamel-pay-logo--mada" title="مدى">mada</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_visa', true) %}<span class="shamel-pay-logo shamel-pay-logo--visa" title="Visa">VISA</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_mastercard', true) %}<span class="shamel-pay-logo shamel-pay-logo--mastercard" title="Mastercard"><span></span></span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_applepay', true) %}<span class="shamel-pay-logo shamel-pay-logo--apple" title="Apple Pay">● Pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_googlepay') %}<span class="shamel-pay-logo shamel-pay-logo--google" title="Google Pay"><b>G</b>&nbsp;Pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_stcpay') %}<span class="shamel-pay-logo shamel-pay-logo--stc" title="STC Pay">stc pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_tabby') %}<span class="shamel-pay-logo shamel-pay-logo--tabby" title="تابي">tabby</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_tamara') %}<span class="shamel-pay-logo shamel-pay-logo--tamara" title="تمارا">tamara</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_mispay') %}<span class="shamel-pay-logo shamel-pay-logo--mispay" title="MIS Pay">MIS Pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_madfu') %}<span class="shamel-pay-logo shamel-pay-logo--madfu" title="مدفوع">madfu</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_emkan') %}<span class="shamel-pay-logo shamel-pay-logo--emkan" title="إمكان">إمكان</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_bank_transfer') %}<span class="shamel-pay-logo shamel-pay-logo--bank" title="تحويل بنكي">تحويل بنكي</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_sarie') %}<span class="shamel-pay-logo shamel-pay-logo--sarie" title="سريع">سريع</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_cod') %}<span class="shamel-pay-logo shamel-pay-logo--cod" title="الدفع عند الاستلام">عند الاستلام</span>{% endif %}
-                    {% for payment in theme.settings.get('shamel_custom_payments', []) %}
-                      {% if payment['shamel_custom_payments.logo'] %}<span class="shamel-pay-logo shamel-pay-logo--custom" title="{{ payment['shamel_custom_payments.name'] }}"><img src="{{ payment['shamel_custom_payments.logo'] }}" alt="{{ payment['shamel_custom_payments.name'] }}"></span>{% endif %}
-                    {% endfor %}
+                {% if theme.settings.get('shamel_custom_payments', [])|length %}<span class="shamel-news__payment-set">
+                  {% for payment in theme.settings.get('shamel_custom_payments', []) %}
+                    {% if payment['shamel_custom_payments.logo'] %}
+                      <span class="shamel-pay-logo shamel-pay-logo--custom" title="{{ payment['shamel_custom_payments.name'] }}">
+                        <img src="{{ payment['shamel_custom_payments.logo'] }}" alt="{{ payment['shamel_custom_payments.name'] }}">
+                      </span>
+                    {% endif %}
+                  {% endfor %}
                 </span>{% endif %}
               </span>
               <span class="shamel-news__sequence" aria-hidden="true">
                 <span class="shamel-news__message">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
-                {% if theme.settings.get('shamel_announcement_payments_enabled', true) %}<span class="shamel-news__payment-set">
-                    {% if theme.settings.get('shamel_payment_mada', true) %}<span class="shamel-pay-logo shamel-pay-logo--mada" title="مدى">mada</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_visa', true) %}<span class="shamel-pay-logo shamel-pay-logo--visa" title="Visa">VISA</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_mastercard', true) %}<span class="shamel-pay-logo shamel-pay-logo--mastercard" title="Mastercard"><span></span></span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_applepay', true) %}<span class="shamel-pay-logo shamel-pay-logo--apple" title="Apple Pay">● Pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_googlepay') %}<span class="shamel-pay-logo shamel-pay-logo--google" title="Google Pay"><b>G</b>&nbsp;Pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_stcpay') %}<span class="shamel-pay-logo shamel-pay-logo--stc" title="STC Pay">stc pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_tabby') %}<span class="shamel-pay-logo shamel-pay-logo--tabby" title="تابي">tabby</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_tamara') %}<span class="shamel-pay-logo shamel-pay-logo--tamara" title="تمارا">tamara</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_mispay') %}<span class="shamel-pay-logo shamel-pay-logo--mispay" title="MIS Pay">MIS Pay</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_madfu') %}<span class="shamel-pay-logo shamel-pay-logo--madfu" title="مدفوع">madfu</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_emkan') %}<span class="shamel-pay-logo shamel-pay-logo--emkan" title="إمكان">إمكان</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_bank_transfer') %}<span class="shamel-pay-logo shamel-pay-logo--bank" title="تحويل بنكي">تحويل بنكي</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_sarie') %}<span class="shamel-pay-logo shamel-pay-logo--sarie" title="سريع">سريع</span>{% endif %}
-                    {% if theme.settings.get('shamel_payment_cod') %}<span class="shamel-pay-logo shamel-pay-logo--cod" title="الدفع عند الاستلام">عند الاستلام</span>{% endif %}
-                    {% for payment in theme.settings.get('shamel_custom_payments', []) %}
-                      {% if payment['shamel_custom_payments.logo'] %}<span class="shamel-pay-logo shamel-pay-logo--custom" title="{{ payment['shamel_custom_payments.name'] }}"><img src="{{ payment['shamel_custom_payments.logo'] }}" alt="{{ payment['shamel_custom_payments.name'] }}"></span>{% endif %}
-                    {% endfor %}
+                {% if theme.settings.get('shamel_custom_payments', [])|length %}<span class="shamel-news__payment-set">
+                  {% for payment in theme.settings.get('shamel_custom_payments', []) %}
+                    {% if payment['shamel_custom_payments.logo'] %}
+                      <span class="shamel-pay-logo shamel-pay-logo--custom" title="{{ payment['shamel_custom_payments.name'] }}">
+                        <img src="{{ payment['shamel_custom_payments.logo'] }}" alt="{{ payment['shamel_custom_payments.name'] }}">
+                      </span>
+                    {% endif %}
+                  {% endfor %}
                 </span>{% endif %}
               </span>
           </div></div></div>
