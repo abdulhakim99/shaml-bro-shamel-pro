@@ -677,6 +677,74 @@
       "placeholder": "تجربة شراء سهلة"
     },
     {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "تفعيل شريط الأدوات الجانبي",
+      "id": "shamel_side_tools_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "إظهار أداة مقارنة المنتجات",
+      "id": "shamel_compare_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "إظهار أداة النشرة البريدية",
+      "description": "تظهر عند تفعيل النافذة التسويقية وإضافة رابط استقبال حقيقي.",
+      "id": "shamel_side_newsletter_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "إظهار رابط المفضلة",
+      "id": "shamel_side_wishlist_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "shamel_side_tools_position",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "مكان شريط الأدوات الجانبي",
+      "icon": "sicon-list",
+      "required": true,
+      "selected": [
+        {
+          "label": "يسار الشاشة",
+          "value": "left",
+          "key": "shamel-tools-left"
+        }
+      ],
+      "options": [
+        {
+          "label": "يسار الشاشة",
+          "value": "left",
+          "key": "shamel-tools-left"
+        },
+        {
+          "label": "يمين الشاشة",
+          "value": "right",
+          "key": "shamel-tools-right"
+        }
+      ]
+    },
+    {
       "type": "static",
       "id": "shamel_product_sales_line",
       "format": "line"
