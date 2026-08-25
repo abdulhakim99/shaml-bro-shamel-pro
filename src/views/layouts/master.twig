@@ -94,6 +94,25 @@
             --s-radius: .75rem;
         }
     </style>
+    <style>
+      .shamel-news{overflow:hidden;background:linear-gradient(90deg,#071a2f,#0f4c6b,#071a2f);color:#fff;padding:.58rem 0;font-size:.84rem;font-weight:700;white-space:nowrap}
+      .shamel-news__track{display:flex;width:max-content;gap:4rem;animation:shamel-news 24s linear infinite}
+      .shamel-news--slow .shamel-news__track{animation-duration:36s}.shamel-news--fast .shamel-news__track{animation-duration:15s}
+      .shamel-news__track span{padding-inline:2rem}
+      @keyframes shamel-news{to{transform:translateX(33.333%)}}
+      html[dir=ltr] .shamel-news__track{animation-direction:reverse}
+      .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:linear-gradient(135deg,#071a2f,#0f4c6b);color:#fff}
+      .shamel-follow__inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
+      .shamel-follow__links{display:flex;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid rgba(255,255,255,.25);border-radius:.8rem;background:rgba(255,255,255,.1);color:#fff;font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:#fff;color:#0f4c6b}
+      .shamel-popup[hidden]{display:none}.shamel-popup{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
+      .shamel-popup__card{position:relative;display:grid;grid-template-columns:minmax(14rem,.85fr) minmax(18rem,1fr);width:min(56rem,100%);overflow:hidden;border-radius:1.4rem;background:#fff;box-shadow:0 30px 80px rgba(2,6,23,.35)}
+      .shamel-popup__image{min-height:30rem;background:#eef2f7 center/cover no-repeat}.shamel-popup__content{display:flex;flex-direction:column;justify-content:center;padding:2.4rem}
+      .shamel-popup__close{position:absolute;top:.8rem;right:.8rem;z-index:2;width:2.4rem;height:2.4rem;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#0f172a;font-size:1.35rem;cursor:pointer}
+      .shamel-popup__eyebrow{color:#b45309;font-weight:800}.shamel-popup h2{margin:.65rem 0;font-size:2rem;line-height:1.3;font-weight:900;color:#0f172a}.shamel-popup p{color:#64748b;line-height:1.8}
+      .shamel-popup form{display:grid;gap:.75rem;margin-top:1rem}.shamel-popup input{min-height:3.2rem;padding:.8rem 1rem;border:1px solid #cbd5e1;border-radius:.8rem}.shamel-popup button[type=submit]{min-height:3.2rem;border:0;border-radius:.8rem;background:#0f4c6b;color:#fff;font-weight:800;cursor:pointer}.shamel-popup__privacy{font-size:.72rem;color:#94a3b8}
+      @media(max-width:640px){.shamel-follow__inner{align-items:flex-start;flex-direction:column}.shamel-popup__card{display:block;max-height:92vh;overflow:auto}.shamel-popup__image{min-height:13rem}.shamel-popup__content{padding:1.5rem}.shamel-popup h2{font-size:1.55rem}}
+      @media(prefers-reduced-motion:reduce){.shamel-news__track{animation:none}}
+    </style>
     {# tracking services, custom css feature. #}
     {% hook 'head:end' %}
 </head>
@@ -102,11 +121,15 @@
 {% set shamel_header_layout_raw = theme.settings.get('shamel_header_layout', 'classic') %}
 {% set shamel_surface_radius_raw = theme.settings.get('shamel_surface_radius', 'soft') %}
 {% set shamel_product_density_raw = theme.settings.get('shamel_product_density', 'comfortable') %}
+{% set shamel_announcement_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
+{% set shamel_popup_capture_raw = theme.settings.get('shamel_popup_capture_type', 'email') %}
 {% set shamel_store_mode = shamel_store_mode_raw is iterable ? (shamel_store_mode_raw|first).value : shamel_store_mode_raw %}
 {% set shamel_ui_style = shamel_ui_style_raw is iterable ? (shamel_ui_style_raw|first).value : shamel_ui_style_raw %}
 {% set shamel_header_layout = shamel_header_layout_raw is iterable ? (shamel_header_layout_raw|first).value : shamel_header_layout_raw %}
 {% set shamel_surface_radius = shamel_surface_radius_raw is iterable ? (shamel_surface_radius_raw|first).value : shamel_surface_radius_raw %}
 {% set shamel_product_density = shamel_product_density_raw is iterable ? (shamel_product_density_raw|first).value : shamel_product_density_raw %}
+{% set shamel_announcement_speed = shamel_announcement_speed_raw is iterable ? (shamel_announcement_speed_raw|first).value : shamel_announcement_speed_raw %}
+{% set shamel_popup_capture = shamel_popup_capture_raw is iterable ? (shamel_popup_capture_raw|first).value : shamel_popup_capture_raw %}
 <body id="app" class="theme-raed shamel-pro shamel-mode-{{ shamel_store_mode }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
@@ -117,12 +140,39 @@
     <a href="https://www.enable-javascript.com/" rel="noreferrer"
        target="_blank">To enable JavaScript on webpage</a>.
 </noscript>
+{% if theme.settings.get('shamel_announcement_enabled', true) and theme.settings.get('shamel_announcement_text') %}
+  <aside class="shamel-news shamel-news--{{ shamel_announcement_speed }}" aria-label="إعلانات المتجر">
+    <div class="shamel-news__track">
+      <span>{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+      <span aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+      <span aria-hidden="true">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' ✦ '}) }}</span>
+    </div>
+  </aside>
+{% endif %}
 <div class="app-inner flex flex-col min-h-full">
     {% hook 'body:start' %}
     {% component 'header.header' %}
     <main id="main-content" role="main"{{ (page.slug == 'product.single' or page.slug starts with 'product.index') ? ' class="flex flex-col space-y-8 sm:space-y-16"' : '' }}>
     {% block content %}{% endblock %}
     </main>
+    {% if theme.settings.get('shamel_follow_enabled', true) %}
+      <section class="shamel-follow" aria-labelledby="shamel-follow-title">
+        <div class="container shamel-follow__inner">
+          <div>
+            <h2 id="shamel-follow-title">{{ theme.settings.get('shamel_follow_title', 'تابعنا وكن أول من يعرف') }}</h2>
+            <p>{{ theme.settings.get('shamel_follow_description', 'اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل.') }}</p>
+          </div>
+          <nav class="shamel-follow__links" aria-label="تابع المتجر">
+            {% if theme.settings.get('shamel_instagram_enabled') and theme.settings.get('shamel_instagram_url') %}<a href="{{ theme.settings.get('shamel_instagram_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="sicon-instagram"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_tiktok_enabled') and theme.settings.get('shamel_tiktok_url') %}<a href="{{ theme.settings.get('shamel_tiktok_url') }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><span>♪</span></a>{% endif %}
+            {% if theme.settings.get('shamel_snapchat_enabled') and theme.settings.get('shamel_snapchat_url') %}<a href="{{ theme.settings.get('shamel_snapchat_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="sicon-snapchat"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_x_enabled') and theme.settings.get('shamel_x_url') %}<a href="{{ theme.settings.get('shamel_x_url') }}" target="_blank" rel="noopener noreferrer" aria-label="X"><span>X</span></a>{% endif %}
+            {% if theme.settings.get('shamel_youtube_enabled') and theme.settings.get('shamel_youtube_url') %}<a href="{{ theme.settings.get('shamel_youtube_url') }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="sicon-youtube"></i></a>{% endif %}
+            {% if theme.settings.get('shamel_facebook_enabled') and theme.settings.get('shamel_facebook_url') %}<a href="{{ theme.settings.get('shamel_facebook_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="sicon-facebook"></i></a>{% endif %}
+          </nav>
+        </div>
+      </section>
+    {% endif %}
     {% component 'footer.footer' %}
 </div>
 {% hook 'body:end' %}
@@ -200,5 +250,42 @@
   </style>
 {% endif %}
 
+{% if theme.settings.get('shamel_popup_enabled') and theme.settings.get('shamel_popup_action_url') %}
+  <div id="shamel-marketing-popup" class="shamel-popup" hidden role="dialog" aria-modal="true" aria-labelledby="shamel-popup-title">
+    <div class="shamel-popup__card">
+      <button type="button" class="shamel-popup__close" aria-label="إغلاق">×</button>
+      <div class="shamel-popup__image"{% if theme.settings.get('shamel_popup_image') %} style="background-image:url('{{ theme.settings.get('shamel_popup_image') }}')"{% endif %}></div>
+      <div class="shamel-popup__content">
+        <span class="shamel-popup__eyebrow">{{ theme.settings.get('shamel_popup_eyebrow', 'خصم خاص') }}</span>
+        <h2 id="shamel-popup-title">{{ theme.settings.get('shamel_popup_title', 'احصل على خصم على أول طلب لك') }}</h2>
+        <p>{{ theme.settings.get('shamel_popup_description', 'سجّل بياناتك لتصلك أحدث العروض والإصدارات.') }}</p>
+        <form action="{{ theme.settings.get('shamel_popup_action_url') }}" method="post" target="shamel-popup-target">
+          {% if shamel_popup_capture == 'phone' %}
+            <input type="tel" name="phone" autocomplete="tel" required placeholder="أدخل رقم الجوال">
+          {% else %}
+            <input type="email" name="email" autocomplete="email" required placeholder="أدخل بريدك الإلكتروني">
+          {% endif %}
+          <button type="submit">{{ theme.settings.get('shamel_popup_button', 'احصل على العرض') }}</button>
+          <small class="shamel-popup__privacy">بالتسجيل أنت توافق على استلام الرسائل التسويقية، ويمكنك إلغاء الاشتراك لاحقًا.</small>
+        </form>
+        <iframe name="shamel-popup-target" title="استقبال التسجيل" hidden></iframe>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var popup = document.getElementById('shamel-marketing-popup');
+      if (!popup) return;
+      var key = 'shamel_popup_hidden_until';
+      var hiddenUntil = Number(localStorage.getItem(key) || 0);
+      if (Date.now() < hiddenUntil) return;
+      window.setTimeout(function(){ popup.hidden = false; }, 1600);
+      function closePopup(){ popup.hidden = true; localStorage.setItem(key, String(Date.now() + 604800000)); }
+      popup.querySelector('.shamel-popup__close').addEventListener('click', closePopup);
+      popup.addEventListener('click', function(e){ if(e.target === popup) closePopup(); });
+      popup.querySelector('form').addEventListener('submit', function(){ window.setTimeout(closePopup, 250); });
+    });
+  </script>
+{% endif %}
 </body>
 </html>
