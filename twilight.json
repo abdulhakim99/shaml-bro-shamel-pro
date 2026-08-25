@@ -621,6 +621,136 @@
       "value": "اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل."
     },
     {
+      "type": "string",
+      "label": "لون خلفية قسم تابعنا",
+      "id": "shamel_follow_bg_color",
+      "format": "color",
+      "required": false,
+      "value": "#071a2f"
+    },
+    {
+      "type": "string",
+      "label": "لون النص في قسم تابعنا",
+      "id": "shamel_follow_text_color",
+      "format": "color",
+      "required": false,
+      "value": "#ffffff"
+    },
+    {
+      "type": "string",
+      "label": "لون أيقونات قسم تابعنا",
+      "id": "shamel_follow_icon_color",
+      "format": "color",
+      "required": false,
+      "value": "#ffffff"
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار قناة واتساب في تابعنا",
+      "id": "shamel_follow_whatsapp_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط قناة واتساب",
+      "description": "ألصق رابط القناة كاملًا.",
+      "id": "shamel_follow_whatsapp_url",
+      "format": "text",
+      "value": ""
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار Instagram في تابعنا",
+      "id": "shamel_follow_instagram_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط Instagram لقسم تابعنا",
+      "id": "shamel_follow_instagram_url",
+      "format": "text",
+      "value": ""
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار TikTok في تابعنا",
+      "id": "shamel_follow_tiktok_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط TikTok لقسم تابعنا",
+      "id": "shamel_follow_tiktok_url",
+      "format": "text",
+      "value": ""
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار Snapchat في تابعنا",
+      "id": "shamel_follow_snapchat_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط Snapchat لقسم تابعنا",
+      "id": "shamel_follow_snapchat_url",
+      "format": "text",
+      "value": ""
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار X في تابعنا",
+      "id": "shamel_follow_x_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط X لقسم تابعنا",
+      "id": "shamel_follow_x_url",
+      "format": "text",
+      "value": ""
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار YouTube في تابعنا",
+      "id": "shamel_follow_youtube_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط YouTube لقسم تابعنا",
+      "id": "shamel_follow_youtube_url",
+      "format": "text",
+      "value": ""
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار Facebook في تابعنا",
+      "id": "shamel_follow_facebook_enabled",
+      "format": "switch",
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "label": "رابط Facebook لقسم تابعنا",
+      "id": "shamel_follow_facebook_url",
+      "format": "text",
+      "value": ""
+    },
+    {
       "id": "squar_photo_bg_image_size",
       "type": "items",
       "format": "dropdown-list",
