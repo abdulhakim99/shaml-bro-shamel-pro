@@ -589,6 +589,17 @@
       "required": false
     },
     {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "تفعيل فلترة السعر داخل قائمة الأقسام",
+      "description": "يعرض بحثًا ونطاقات سعر جاهزة وحدًا أدنى وأقصى داخل القائمة الجانبية.",
+      "id": "shamel_drawer_price_filter_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
       "type": "string",
       "format": "color",
       "id": "shamel_color_categories_bg",
