@@ -550,6 +550,15 @@
     },
     {
       "type": "string",
+      "format": "color",
+      "id": "shamel_color_header_dark_bg",
+      "label": "خلفية رأس الأقسام في الوضع الليلي",
+      "description": "لون مساحة الشعار والأقسام والبحث في أعلى المتجر عند تشغيل الوضع الليلي.",
+      "value": "#0b1120",
+      "required": true
+    },
+    {
+      "type": "string",
       "label": "لون نصوص الهيدر",
       "id": "shamel_color_header_text",
       "format": "color",
