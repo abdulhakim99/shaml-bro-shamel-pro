@@ -12,19 +12,24 @@
     <div class="inner bg-inherit w-full">
       <div class="container">
         <div class="shamel-header-main__grid shamel-header-main__grid--drawer">
-          <div class="shamel-header-main__brand">
-            {% if shamel_show_header_categories %}
-              <button type="button" class="shamel-categories-toggle" data-shamel-categories-open aria-controls="shamel-categories-drawer" aria-expanded="false" aria-label="فتح أقسام المنتجات">
-                <span></span><span></span><span></span>
-              </button>
+          <div class="shamel-header-main__account" aria-label="الحساب والسلة">
+            {% if store.settings.is_multilingual %}
+              <div class="shamel-header-localization" title="اللغة والعملة">
+                <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
+              </div>
             {% endif %}
-            <a data-testid="store-header-logo" class="navbar-brand" href="{{ store.url }}">
-              <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(175) }}" alt="{{ store.name }} logo">
-              {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
-            </a>
+            <salla-cart-summary data-testid="store-header-cart">
+              <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+            </salla-cart-summary>
+            <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
           </div>
 
-          <div class="shamel-header-main__actions">
+          <a data-testid="store-header-logo" class="navbar-brand shamel-header-main__brand" href="{{ store.url }}">
+            <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(175) }}" alt="{{ store.name }} logo">
+            {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
+          </a>
+
+          <div class="shamel-header-main__tools" aria-label="أدوات المتجر">
             <div class="shamel-header-search-trigger" title="البحث عن المنتجات" data-shamel-header-search>
               <salla-search data-testid="store-header-search" inline oval height="44" aria-label="البحث عن المنتجات"></salla-search>
             </div>
@@ -34,15 +39,11 @@
                 <span class="sr-only" data-shamel-dark-label>الوضع الليلي</span>
               </button>
             {% endif %}
-            {% if store.settings.is_multilingual %}
-              <div class="shamel-header-localization" title="اللغة والعملة">
-                <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
-              </div>
+            {% if shamel_show_header_categories %}
+              <button type="button" class="shamel-categories-toggle" data-shamel-categories-open aria-controls="shamel-categories-drawer" aria-expanded="false" aria-label="فتح أقسام المنتجات">
+                <span></span><span></span><span></span>
+              </button>
             {% endif %}
-            <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
-            <salla-cart-summary data-testid="store-header-cart">
-              <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-            </salla-cart-summary>
           </div>
         </div>
       </div>
@@ -70,8 +71,12 @@
 </header>
 
 <style>
-  .shamel-header-main__grid--drawer{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:76px}
-  .shamel-header-main__brand{display:flex;align-items:center;gap:.75rem;min-width:0}
+  .shamel-header-main__grid--drawer{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"account brand tools";align-items:center;gap:1rem;min-height:76px}
+  .shamel-header-main__account{grid-area:account;display:flex;align-items:center;justify-self:start;gap:.45rem;min-width:0}
+  .shamel-header-main__brand{grid-area:brand;display:flex;align-items:center;justify-content:center;justify-self:center;min-width:0;margin:0}
+  .shamel-header-main__brand img{display:block;max-width:175px;max-height:58px;object-fit:contain}
+  .shamel-header-main__tools{grid-area:tools;display:flex;align-items:center;justify-self:end;gap:.45rem;min-width:0}
+  .shamel-header-main__account salla-cart-summary,.shamel-header-main__account salla-user-menu,.shamel-header-main__tools>button{flex:0 0 auto}
   .shamel-categories-toggle{display:grid;place-content:center;gap:4px;width:44px;height:44px;padding:0;border:1px solid rgba(148,163,184,.25);border-radius:14px;background:var(--sp-categories-bg,#0b1f3a);color:var(--sp-categories-text,#fff);box-shadow:0 8px 22px rgba(15,23,42,.12);transition:transform .18s ease,box-shadow .18s ease}
   .shamel-categories-toggle:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(15,23,42,.18)}
   .shamel-categories-toggle span{display:block;width:19px;height:2px;border-radius:99px;background:currentColor}
@@ -96,7 +101,20 @@
   body.shamel-dark-mode .shamel-categories-drawer__eyebrow{color:#94a3b8}
   body.shamel-dark-mode .shamel-categories-drawer__close{background:rgba(255,255,255,.09);color:#fff}
   body.shamel-dark-mode .shamel-categories-drawer__nav .main-menu>li>a,body.shamel-dark-mode .shamel-categories-drawer__nav .sub-menu{border-color:rgba(255,255,255,.1)!important;background:rgba(255,255,255,.055)!important;color:#fff!important}
-  @media(max-width:640px){.shamel-header-main__grid--drawer{min-height:66px}.shamel-categories-toggle{width:40px;height:40px;border-radius:12px}.shamel-header-main__actions{gap:.3rem}}
+  @media(max-width:640px){
+    .shamel-header-main__grid--drawer{grid-template-columns:minmax(74px,1fr) auto minmax(106px,1fr);gap:.35rem;min-height:66px}
+    .shamel-header-main__account,.shamel-header-main__tools{gap:.15rem}
+    .shamel-header-main__brand img{max-width:112px;max-height:48px}
+    .shamel-categories-toggle{width:38px;height:38px;border-radius:12px}
+    .shamel-header-dark-toggle{width:38px;height:38px}
+    .shamel-header-search-trigger{max-width:38px}
+    .shamel-header-search-trigger.is-open{position:absolute;z-index:20;inset-inline:12px;max-width:none}
+    .shamel-header-localization{display:none}
+  }
+  @media(max-width:390px){
+    .shamel-header-main__grid--drawer{grid-template-columns:minmax(64px,1fr) auto minmax(96px,1fr)}
+    .shamel-header-main__brand img{max-width:92px}
+  }
 </style>
 
 <script>
