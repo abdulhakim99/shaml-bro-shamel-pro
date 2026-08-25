@@ -405,7 +405,7 @@
 
 
 {% if theme.settings.get('shamel_side_tools_enabled', true) %}
-  {% set shamel_tools_position_raw = theme.settings.get('shamel_side_tools_position', 'left') %}
+  {% set shamel_tools_position_raw = theme.settings.get('shamel_side_tools_position_v2', 'left') %}
   {% set shamel_tools_position = shamel_tools_position_raw is iterable ? (shamel_tools_position_raw|first).value : shamel_tools_position_raw %}
   <nav class="shamel-side-tools shamel-side-tools--{{ shamel_tools_position }}" aria-label="أدوات المتجر" data-shamel-side-tools>
     {% if theme.settings.get('shamel_compare_enabled', true) %}
