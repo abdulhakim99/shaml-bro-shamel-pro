@@ -26,9 +26,15 @@
             </nav>
           {% endif %}
           <div class="shamel-header-main__actions">
-            <div class="shamel-header-search-trigger" title="البحث عن المنتجات">
+            <div class="shamel-header-search-trigger" title="البحث عن المنتجات" data-shamel-header-search>
               <salla-search data-testid="store-header-search" inline oval height="44" aria-label="البحث عن المنتجات"></salla-search>
             </div>
+            {% if theme.settings.get('shamel_dark_mode_enabled', true) %}
+              <button type="button" class="shamel-header-dark-toggle" data-shamel-dark-toggle aria-pressed="false" title="الوضع الليلي" aria-label="تفعيل الوضع الليلي">
+                <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path fill="currentColor" d="M20.7 15.1A8.5 8.5 0 0 1 8.9 3.3 9 9 0 1 0 20.7 15Z"/></svg>
+                <span class="sr-only" data-shamel-dark-label>الوضع الليلي</span>
+              </button>
+            {% endif %}
             {% if store.settings.is_multilingual %}
               <div class="shamel-header-localization" title="اللغة والعملة">
                 <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
@@ -44,3 +50,28 @@
     </div>
   </div>
 </header>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var searchWrap = document.querySelector('[data-shamel-header-search]');
+    if (!searchWrap) return;
+    var searchComponent = searchWrap.querySelector('salla-search');
+    function openHeaderSearch() {
+      searchWrap.classList.add('is-open');
+      searchWrap.setAttribute('data-open', 'true');
+      window.setTimeout(function () {
+        if (searchComponent && searchComponent.shadowRoot) {
+          var field = searchComponent.shadowRoot.querySelector('input');
+          if (field) field.focus();
+        }
+      }, 80);
+    }
+    searchWrap.addEventListener('click', openHeaderSearch);
+    searchWrap.addEventListener('focusin', openHeaderSearch);
+    document.addEventListener('click', function (event) {
+      if (!searchWrap.contains(event.target)) {
+        searchWrap.classList.remove('is-open');
+        searchWrap.removeAttribute('data-open');
+      }
+    });
+  });
+</script>
