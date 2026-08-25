@@ -531,11 +531,27 @@
       var drawer=document.querySelector('[data-shamel-compare-drawer]');
       var list=document.querySelector('[data-shamel-compare-items]');
       function safe(value){var div=document.createElement('div');div.textContent=value||'';return div.innerHTML}
+      function cleanPrice(value){
+        var raw=String(value||''),decoder=document.createElement('textarea');
+        decoder.innerHTML=raw;
+        var text=decoder.value
+          .replace(/<\/?i\b[^>]*>/gi,' ')
+          .replace(/<?\/?i\b[^<>\n]*>?/gi,' ')
+          .replace(/\bclass\s*=\s*["']?sicon-[\w-]+["']?/gi,' ')
+          .replace(/[<>]+/g,' ')
+          .replace(/\s+/g,' ')
+          .trim();
+        var amounts=text.match(/[0-9٠-٩]+(?:[.,٬٫][0-9٠-٩]+)?/g);
+        if(amounts&&amounts.length){
+          return amounts.join(' / ')+(/ر\.?\s?س|SAR|ريال/i.test(text)?'':' ر.س');
+        }
+        return text;
+      }
       function render(){
         document.querySelectorAll('[data-shamel-compare-count]').forEach(function(el){el.textContent=items.length});
         if(!list)return;
         if(!items.length){list.innerHTML='<div class="shamel-compare-empty">أضف منتجات من بطاقات المتجر لتظهر هنا.</div>';return}
-        list.innerHTML=items.map(function(item,index){return '<article class="shamel-compare-item"><button type="button" class="shamel-compare-item__remove" data-remove="'+index+'" aria-label="إزالة">×</button><a href="'+safe(item.url)+'"><img src="'+safe(item.image)+'" alt="'+safe(item.name)+'"><h3>'+safe(item.name)+'</h3></a><strong>'+safe(item.price)+'</strong></article>'}).join('');
+        list.innerHTML=items.map(function(item,index){return '<article class="shamel-compare-item"><button type="button" class="shamel-compare-item__remove" data-remove="'+index+'" aria-label="إزالة">×</button><a href="'+safe(item.url)+'"><img src="'+safe(item.image)+'" alt="'+safe(item.name)+'"><h3>'+safe(item.name)+'</h3></a><strong>'+safe(cleanPrice(item.price))+'</strong></article>'}).join('');
         list.querySelectorAll('[data-remove]').forEach(function(btn){btn.addEventListener('click',function(){items.splice(Number(btn.dataset.remove),1);localStorage.setItem(key,JSON.stringify(items));render()})});
       }
       window.addEventListener('shamel:compare:add',function(e){
