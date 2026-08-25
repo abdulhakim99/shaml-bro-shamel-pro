@@ -142,7 +142,7 @@
       </summary>
       <nav class="shamel-contact__menu" aria-label="وسائل التواصل">
         {% if theme.settings.get('shamel_whatsapp_enabled', true) and shamel_whatsapp %}
-          <a class="shamel-contact__link shamel-contact__link--whatsapp" href="https://wa.me/{{ shamel_whatsapp }}?text={{ theme.settings.get('shamel_whatsapp_message', 'مرحبًا، لدي استفسار عن أحد المنتجات.')|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+          <a class="shamel-contact__link shamel-contact__link--whatsapp" href="https://wa.me/{{ shamel_whatsapp }}" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
             <i class="sicon-whatsapp" aria-hidden="true"></i><span>واتساب</span>
           </a>
         {% endif %}
