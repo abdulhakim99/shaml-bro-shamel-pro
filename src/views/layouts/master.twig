@@ -173,12 +173,23 @@
       .shamel-product-trust__item i{color:var(--sp-primary,#0f4c6b);font-size:1.15rem}
       @media(max-width:640px){.shamel-product-trust{grid-template-columns:1fr}.shamel-product-trust__item{justify-content:flex-start}}
 
-      .shamel-news{overflow:hidden;background:var(--sp-news-bg,#071a2f);color:var(--sp-news-text,#fff);padding:.58rem 0;font-size:.84rem;font-weight:700;white-space:nowrap}
-      .shamel-news__track{display:flex;width:max-content;gap:4rem;animation:shamel-news 24s linear infinite}
+      .shamel-news-wrap{position:relative;margin:1.25rem auto 1.75rem;padding:0 .75rem}
+      .shamel-news{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:1rem;background:linear-gradient(110deg,var(--sp-news-bg,#071a2f),color-mix(in srgb,var(--sp-news-bg,#071a2f) 72%,var(--sp-primary,#0f4c6b)));color:var(--sp-news-text,#fff);box-shadow:0 16px 38px rgba(2,6,23,.2),inset 0 1px 0 rgba(255,255,255,.12);white-space:nowrap}
+      .shamel-news:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.12) 42%,transparent 62%);transform:translateX(-100%);animation:shamel-news-shine 7s ease-in-out infinite;pointer-events:none}
+      .shamel-news__row{display:flex;align-items:center;min-height:4.2rem}
+      .shamel-news__badge{position:relative;z-index:2;display:flex;align-items:center;gap:.5rem;align-self:stretch;padding:0 1.15rem;background:rgba(255,255,255,.1);font-size:.82rem;font-weight:900;backdrop-filter:blur(8px)}
+      .shamel-news__badge svg{width:1.15rem;height:1.15rem}
+      .shamel-news__viewport{min-width:0;flex:1;overflow:hidden}
+      .shamel-news__track{display:flex;width:max-content;align-items:center;gap:4rem;font-size:.88rem;font-weight:800;animation:shamel-news 24s linear infinite}
       .shamel-news--slow .shamel-news__track{animation-duration:36s}.shamel-news--fast .shamel-news__track{animation-duration:15s}
-      .shamel-news__track span{padding-inline:2rem}
-      @keyframes shamel-news{to{transform:translateX(33.333%)}}
+      .shamel-news__message{display:inline-flex;align-items:center;gap:.65rem;padding-inline:2rem}.shamel-news__message:before{content:"✦";color:#fbbf24}
+      .shamel-news__payments{position:relative;z-index:2;display:flex;align-items:center;gap:.42rem;align-self:stretch;padding:0 .75rem;background:rgba(2,6,23,.22);backdrop-filter:blur(8px)}
+      .shamel-pay-logo{display:grid;place-items:center;min-width:3.15rem;height:1.85rem;padding:0 .5rem;border:1px solid rgba(255,255,255,.78);border-radius:.48rem;background:#fff;color:#111827;box-shadow:0 4px 10px rgba(2,6,23,.15);font:900 .68rem/1 Arial,sans-serif;letter-spacing:-.02em}
+      .shamel-pay-logo--mada{color:#14a37f}.shamel-pay-logo--visa{color:#1434CB;font-size:.8rem;font-style:italic}.shamel-pay-logo--apple{font-size:.72rem}.shamel-pay-logo--stc{color:#4f008c}.shamel-pay-logo--tabby{background:#3ee6c4;color:#111}.shamel-pay-logo--tamara{background:#f6b8c8;color:#111}
+      .shamel-pay-logo--mastercard{min-width:2.6rem}.shamel-pay-logo--mastercard span{position:relative;width:1.65rem;height:1rem}.shamel-pay-logo--mastercard span:before,.shamel-pay-logo--mastercard span:after{content:"";position:absolute;top:0;width:1rem;height:1rem;border-radius:50%}.shamel-pay-logo--mastercard span:before{left:0;background:#eb001b}.shamel-pay-logo--mastercard span:after{right:0;background:#f79e1b;mix-blend-mode:multiply}
+      @keyframes shamel-news{to{transform:translateX(33.333%)}}@keyframes shamel-news-shine{0%,35%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}
       html[dir=ltr] .shamel-news__track{animation-direction:reverse}
+      @media(max-width:720px){.shamel-news-wrap{padding:0 .5rem}.shamel-news__row{min-height:3.65rem}.shamel-news__badge span{display:none}.shamel-news__badge{padding:0 .7rem}.shamel-news__payments{max-width:48%;overflow-x:auto;padding:.4rem .55rem}.shamel-pay-logo{min-width:2.8rem;height:1.7rem}.shamel-news__track{font-size:.8rem}}
       .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:var(--shamel-follow-bg,#071a2f);color:var(--shamel-follow-text,#fff)}
       .shamel-follow__inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;text-align:center}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
       .shamel-follow__links{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid currentColor;border-radius:.8rem;background:rgba(255,255,255,.1);color:var(--shamel-follow-icon,#fff);font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:var(--shamel-follow-icon,#fff);color:var(--shamel-follow-bg,#071a2f)}
