@@ -227,6 +227,17 @@
       "selected": true
     },
     {
+      "type": "string",
+      "icon": "sicon-format-text-alt",
+      "label": "العبارة التسويقية بجوار زر التواصل",
+      "description": "اكتب عبارة قصيرة تشجع العميل على التواصل.",
+      "id": "shamel_contact_promo",
+      "format": "text",
+      "required": false,
+      "value": "سؤال سريع؟ نحن هنا لمساعدتك",
+      "placeholder": "سؤال سريع؟ نحن هنا لمساعدتك"
+    },
+    {
       "id": "shamel_social_position",
       "type": "items",
       "format": "dropdown-list",
