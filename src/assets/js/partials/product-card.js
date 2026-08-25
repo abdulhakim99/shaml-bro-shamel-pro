@@ -67,6 +67,20 @@ class ProductCard extends HTMLElement {
     return '';
   }
 
+
+  getShamelBadges() {
+    const badges = [];
+    if (window.shamel_card_discount_badge && this.product.is_on_sale && this.product.discount_percentage) {
+      badges.push(`<span class="shamel-card-badge shamel-card-badge--sale">خصم ${this.escapeHTML(this.product.discount_percentage)}</span>`);
+    }
+    if (window.shamel_card_type_badge && ['digital', 'codes'].includes(this.product.type)) {
+      badges.push('<span class="shamel-card-badge shamel-card-badge--digital">تسليم رقمي</span>');
+    } else if (window.shamel_card_type_badge && ['service', 'booking'].includes(this.product.type)) {
+      badges.push('<span class="shamel-card-badge shamel-card-badge--service">خدمة</span>');
+    }
+    return badges.length ? `<div class="shamel-card-badges">${badges.join('')}</div>` : '';
+  }
+
   getPriceFormat(price) {
     if (!price || price == 0) {
       return salla.config.get('store.settings.product.show_price_as_dash')?'-':'';
@@ -194,6 +208,7 @@ class ProductCard extends HTMLElement {
               loading="lazy"
             />
             ${!this.fullImage && !this.minimal ? this.getProductBadge() : ''}
+            ${this.getShamelBadges()}
           </a>
           ${this.fullImage ? `<a href="${this.product?.url}" aria-label=${this.product.name} class="s-product-card-overlay"></a>`:''}
           ${!this.horizontal && !this.fullImage ?
