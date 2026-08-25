@@ -481,6 +481,35 @@
     {
       "type": "static",
       "format": "title",
+      "id": "shamel_colors_title",
+      "value": "<div class='rounded-lg' style='background-color:#0b1f3a;display:flex;justify-content:center;align-items:center;padding:15px;margin-bottom:20px!important'><h6 style='color:#fff;font-size:15px;font-weight:bold'>ألوان شامل برو</h6></div>",
+      "variant": "h6"
+    },
+    {"type":"string","label":"اللون الرئيسي والأزرار","id":"shamel_color_primary","format":"color","value":"#0f4c6b"},
+    {"type":"string","label":"لون نص الأزرار","id":"shamel_color_button_text","format":"color","value":"#ffffff"},
+    {"type":"string","label":"خلفية صفحات المتجر","id":"shamel_color_page_bg","format":"color","value":"#ffffff"},
+    {"type":"string","label":"لون النصوص العامة","id":"shamel_color_text","format":"color","value":"#334155"},
+    {"type":"string","label":"لون العناوين","id":"shamel_color_heading","format":"color","value":"#0f172a"},
+    {"type":"string","label":"خلفية بطاقات المنتجات","id":"shamel_color_card_bg","format":"color","value":"#ffffff"},
+    {"type":"string","label":"خلفية الهيدر","id":"shamel_color_header_bg","format":"color","value":"#ffffff"},
+    {"type":"string","label":"لون نصوص الهيدر","id":"shamel_color_header_text","format":"color","value":"#0f172a"},
+    {"type":"string","label":"خلفية الشريط الإخباري","id":"shamel_color_news_bg","format":"color","value":"#071a2f"},
+    {"type":"string","label":"لون نص الشريط الإخباري","id":"shamel_color_news_text","format":"color","value":"#ffffff"},
+    {"type":"string","label":"خلفية الفوتر","id":"shamel_color_footer_bg","format":"color","value":"#0f172a"},
+    {"type":"string","label":"لون نص الفوتر","id":"shamel_color_footer_text","format":"color","value":"#ffffff"},
+    {"type":"string","label":"خلفية النافذة التسويقية","id":"shamel_color_popup_bg","format":"color","value":"#ffffff"},
+    {"type":"string","label":"لون نص النافذة التسويقية","id":"shamel_color_popup_text","format":"color","value":"#0f172a"},
+    {"type":"string","label":"لون أيقونات التواصل العائمة","id":"shamel_color_social_bg","format":"color","value":"#0f4c6b"},
+    {"type":"string","label":"لون رمز أيقونات التواصل","id":"shamel_color_social_icon","format":"color","value":"#ffffff"},
+    {"type":"string","label":"لون فقاعة واتساب العائمة","id":"shamel_color_whatsapp","format":"color","value":"#22c55e"},
+    {
+      "type": "static",
+      "id": "shamel_colors_line",
+      "format": "line"
+    },
+    {
+      "type": "static",
+      "format": "title",
       "id": "shamel_marketing_title",
       "value": "<div class='rounded-lg' style='background-color:#0b1f3a;display:flex;justify-content:center;align-items:center;padding:15px;margin-bottom:20px!important'><h6 style='color:#fff;font-size:15px;font-weight:bold'>أدوات التسويق</h6></div>",
       "variant": "h6"
