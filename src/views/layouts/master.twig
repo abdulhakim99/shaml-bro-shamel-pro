@@ -76,7 +76,8 @@
         window.notify_when_available_in_card = "{{ theme.settings.get('notify_when_available_in_card', true) }}"
         window.shamel_card_discount_badge = {{ theme.settings.get('shamel_card_discount_badge', true) ? 'true' : 'false' }}
         window.shamel_card_type_badge = {{ theme.settings.get('shamel_card_type_badge', true) ? 'true' : 'false' }}
-        window.shamel_compare_enabled = {{ theme.settings.get('shamel_side_tools_enabled', true) and theme.settings.get('shamel_compare_enabled', true) ? 'true' : 'false' }}
+        window.shamel_compare_enabled = {{ theme.settings.get('shamel_compare_enabled', true) ? 'true' : 'false' }}
+        window.shamel_wishlist_enabled = {{ theme.settings.get('shamel_side_wishlist_enabled', true) ? 'true' : 'false' }}
     </script>
     
     {% hook 'head:start' %}
@@ -477,14 +478,8 @@
   {% set shamel_tools_position_raw = theme.settings.get('shamel_side_tools_position_v2', 'left') %}
   {% set shamel_tools_position = shamel_tools_position_raw is iterable ? (shamel_tools_position_raw|first).value : shamel_tools_position_raw %}
   <nav class="shamel-side-tools shamel-side-tools--{{ shamel_tools_position }}" aria-label="أدوات المتجر" data-shamel-side-tools>
-    {% if theme.settings.get('shamel_compare_enabled', true) %}
-      <button type="button" data-shamel-compare-open title="مقارنة المنتجات"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M7 3h2v14h3l-4 4-4-4h3V3Zm10 18h-2V7h-3l4-4 4 4h-3v14Z"/></svg><span class="shamel-side-tools__label">المقارنة</span><span class="shamel-side-tools__count" data-shamel-compare-count>0</span></button>
-    {% endif %}
     {% if theme.settings.get('shamel_side_newsletter_enabled', true) %}
       <button type="button" data-shamel-newsletter-open title="اشترك في نشرتنا البريدية"><i class="sicon-mail" aria-hidden="true"></i><span class="shamel-side-tools__label">اشترك في نشرتنا</span></button>
-    {% endif %}
-    {% if theme.settings.get('shamel_side_wishlist_enabled', true) %}
-      <a href="{{ link('wishlist') }}" title="المفضلة"><i class="sicon-heart" aria-hidden="true"></i><span class="shamel-side-tools__label">المفضلة</span></a>
     {% endif %}
     <button type="button" data-shamel-tools-close aria-label="طي شريط الأدوات" title="طي الأدوات">×</button>
     <button type="button" data-shamel-tools-open aria-label="فتح شريط الأدوات" title="فتح الأدوات"><span class="shamel-side-tools__open-left">›</span><span class="shamel-side-tools__open-right">‹</span></button>
@@ -548,6 +543,7 @@
         var exists=items.findIndex(function(x){return String(x.id)===String(product.id)});
         if(exists>=0){items.splice(exists,1)}else if(items.length<4){items.push(product)}else{if(window.salla&&salla.notify)salla.notify.warning('يمكن مقارنة 4 منتجات كحد أقصى');return}
         localStorage.setItem(key,JSON.stringify(items));render();
+        if(exists<0&&drawer)drawer.hidden=false;
         if(window.salla&&salla.notify)salla.notify.success(exists>=0?'تمت إزالة المنتج من المقارنة':'تمت إضافة المنتج للمقارنة');
       });
       document.querySelectorAll('[data-shamel-compare-open]').forEach(function(btn){btn.addEventListener('click',function(){if(drawer)drawer.hidden=false})});
