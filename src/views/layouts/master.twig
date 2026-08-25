@@ -117,9 +117,13 @@
       .shamel-header-main__menu .main-menu>li>a:hover,.shamel-header-main__menu .main-menu>li:hover>a,.shamel-header-main__menu .main-menu>li.active>a,.shamel-header-main__menu .main-menu>li.is-active>a{background:var(--sp-categories-bg,#f1f5f9);border-color:color-mix(in srgb,var(--sp-primary,#0f4c6b) 22%,transparent);color:var(--sp-primary,#0f4c6b);box-shadow:0 7px 18px rgba(15,23,42,.08);transform:translateY(-1px)}
       .shamel-header-main__actions{justify-content:flex-end;gap:.55rem;white-space:nowrap}
       .shamel-header-search-trigger{display:flex;align-items:center;width:2.75rem;height:2.75rem;overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 28%,transparent);border-radius:999px;background:color-mix(in srgb,var(--sp-header-bg,#fff) 88%,var(--sp-header-text,#0f172a));transition:width .28s ease,border-color .2s,box-shadow .2s;position:relative;z-index:4}
-      .shamel-header-search-trigger:hover,.shamel-header-search-trigger:focus-within{width:min(17rem,34vw);border-color:var(--sp-primary,#0f4c6b);box-shadow:0 8px 24px rgba(2,6,23,.12)}
+      .shamel-header-search-trigger:hover,.shamel-header-search-trigger:focus-within,.shamel-header-search-trigger.is-open{width:min(17rem,34vw);border-color:var(--sp-primary,#0f4c6b);box-shadow:0 8px 24px rgba(2,6,23,.12)}
       .shamel-header-search-trigger salla-search{display:block;width:100%!important;min-width:2.75rem;--color-primary:var(--sp-header-text,#0f172a);--color-text:var(--sp-header-text,#0f172a)}
+      .shamel-header-dark-toggle{display:grid;place-items:center;flex:0 0 2.75rem;width:2.75rem;height:2.75rem;padding:0;border:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 28%,transparent);border-radius:50%;background:color-mix(in srgb,var(--sp-header-bg,#fff) 90%,var(--sp-header-text,#0f172a));color:var(--sp-header-text,#0f172a);cursor:pointer;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
+      .shamel-header-dark-toggle:hover{transform:translateY(-2px);background:var(--sp-primary,#0f4c6b);color:#fff;box-shadow:0 8px 20px rgba(15,76,107,.22)}
+      .shamel-header-dark-toggle[aria-pressed="true"]{background:#f8fafc;color:#0f172a}
       body.shamel-dark-mode .shamel-header-search-trigger{border-color:rgba(255,255,255,.5)!important;background:#172033!important;color:#fff!important;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+      body.shamel-dark-mode .shamel-header-dark-toggle{border-color:rgba(255,255,255,.45);background:#f8fafc;color:#0f172a}
       body.shamel-dark-mode .shamel-header-search-trigger salla-search{color:#fff!important;--color-primary:#fff}
       body.shamel-dark-mode .shamel-header-main__menu{background:transparent!important;border-color:transparent!important}
       body.shamel-dark-mode .shamel-header-main__menu .main-menu>li>a{background:transparent!important;color:#f8fafc!important}
@@ -160,7 +164,6 @@
       body.shamel-dark-mode h1,body.shamel-dark-mode h2,body.shamel-dark-mode h3,body.shamel-dark-mode h4,body.shamel-dark-mode h5,body.shamel-dark-mode h6,body.shamel-dark-mode a:not(.shamel-contact__link):not(.shamel-side-tools a){color:var(--sp-heading,#f8fafc)}
       body.shamel-dark-mode input,body.shamel-dark-mode select,body.shamel-dark-mode textarea{background:#172033!important;border-color:#334155!important;color:#f8fafc!important}
       body.shamel-dark-mode .shamel-compare-item{border-color:#334155;background:#111827}body.shamel-dark-mode .shamel-compare-item img{background:#172033}
-      .shamel-side-tools [data-shamel-dark-toggle][aria-pressed="true"]{background:var(--sp-primary,#0f4c6b)}
       .shamel-side-tools[hidden]{display:none!important}
       .shamel-newsletter-drawer[hidden]{display:none!important}.shamel-newsletter-drawer{position:fixed;inset:0;z-index:101;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
       .shamel-newsletter-drawer__card{position:relative;width:min(31rem,100%);padding:2rem;border-radius:1rem;background:var(--sp-card-bg,#fff);color:var(--sp-text,#334155);box-shadow:0 30px 90px rgba(2,6,23,.4);text-align:center}
@@ -417,9 +420,6 @@
     {% if theme.settings.get('shamel_side_wishlist_enabled', true) %}
       <a href="{{ link('wishlist') }}" title="المفضلة"><i class="sicon-heart" aria-hidden="true"></i><span class="shamel-side-tools__label">المفضلة</span></a>
     {% endif %}
-    {% if theme.settings.get('shamel_dark_mode_enabled', true) %}
-      <button type="button" data-shamel-dark-toggle aria-pressed="false" title="الوضع الليلي"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.7 15.1A8.5 8.5 0 0 1 8.9 3.3 9 9 0 1 0 20.7 15Z"/></svg><span class="shamel-side-tools__label" data-shamel-dark-label>الوضع الليلي</span></button>
-    {% endif %}
     <button type="button" data-shamel-tools-close aria-label="طي شريط الأدوات" title="طي الأدوات">×</button>
     <button type="button" data-shamel-tools-open aria-label="فتح شريط الأدوات" title="فتح الأدوات"><span class="shamel-side-tools__open-left">›</span><span class="shamel-side-tools__open-right">‹</span></button>
   </nav>
@@ -445,8 +445,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function(){
       var toolsBar=document.querySelector('[data-shamel-side-tools]');
-      if(!toolsBar)return;
-      var darkButton=toolsBar.querySelector('[data-shamel-dark-toggle]');
+      var darkButton=document.querySelector('.shamel-header-dark-toggle[data-shamel-dark-toggle]');
       var darkKey='shamel_dark_mode';
       function applyDarkMode(enabled){
         document.body.classList.toggle('shamel-dark-mode',enabled);
@@ -465,6 +464,7 @@
         localStorage.setItem(darkKey,darkEnabled?'dark':'light');
         applyDarkMode(darkEnabled);
       });
+      if(!toolsBar)return;
       var key='shamel_compare_products',items=[];
       try{items=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){items=[]}
       var drawer=document.querySelector('[data-shamel-compare-drawer]');
