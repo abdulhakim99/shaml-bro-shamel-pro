@@ -1,30 +1,29 @@
 {#
-| Header is intentionally connected to Salla Navigation:
-| merchants manage main/sub categories from the store navigation screen.
+| Header is connected to Salla Navigation.
+| Merchants manage main/sub categories once from the store navigation screen.
 #}
 {% set shamel_show_header_categories = theme.settings.get('shamel_header_categories_enabled_v2', true) %}
 <header data-testid="store-header" class="store-header shamel-store-header">
   <div class="lg:hidden">
     <salla-bullet-delivery-tag></salla-bullet-delivery-tag>
   </div>
+
   <div id="mainnav" class="main-nav-container shadow-default bg-white shamel-header-main">
     <div class="inner bg-inherit w-full">
       <div class="container">
-        <div class="shamel-header-main__grid{{ shamel_show_header_categories ? '' : ' shamel-header-main__grid--no-menu' }}">
+        <div class="shamel-header-main__grid shamel-header-main__grid--drawer">
           <div class="shamel-header-main__brand">
-            <a data-testid="store-header-mobile-toggle" class="lg:hidden mburger mburger--collapse leading-none" href="#mobile-menu" aria-label="فتح الأقسام">
-              <i class="sicon-menu text-primary text-2xl"></i>
-            </a>
+            {% if shamel_show_header_categories %}
+              <button type="button" class="shamel-categories-toggle" data-shamel-categories-open aria-controls="shamel-categories-drawer" aria-expanded="false" aria-label="فتح أقسام المنتجات">
+                <span></span><span></span><span></span>
+              </button>
+            {% endif %}
             <a data-testid="store-header-logo" class="navbar-brand" href="{{ store.url }}">
               <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(175) }}" alt="{{ store.name }} logo">
               {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
             </a>
           </div>
-          {% if shamel_show_header_categories %}
-            <nav class="shamel-header-main__menu" aria-label="أقسام المتجر">
-              <custom-main-menu></custom-main-menu>
-            </nav>
-          {% endif %}
+
           <div class="shamel-header-main__actions">
             <div class="shamel-header-search-trigger" title="البحث عن المنتجات" data-shamel-header-search>
               <salla-search data-testid="store-header-search" inline oval height="44" aria-label="البحث عن المنتجات"></salla-search>
@@ -49,29 +48,115 @@
       </div>
     </div>
   </div>
+
+  {% if shamel_show_header_categories %}
+    <div class="shamel-categories-overlay" data-shamel-categories-overlay hidden></div>
+    <aside id="shamel-categories-drawer" class="shamel-categories-drawer" data-shamel-categories-drawer aria-hidden="true" aria-label="أقسام المنتجات">
+      <div class="shamel-categories-drawer__head">
+        <div>
+          <span class="shamel-categories-drawer__eyebrow">تصفّح المتجر</span>
+          <h2>أقسام المنتجات</h2>
+        </div>
+        <button type="button" class="shamel-categories-drawer__close" data-shamel-categories-close aria-label="إغلاق قائمة الأقسام">×</button>
+      </div>
+      <div class="shamel-categories-drawer__search">
+        <salla-search inline oval height="46" aria-label="ابحث داخل المتجر"></salla-search>
+      </div>
+      <nav class="shamel-categories-drawer__nav" aria-label="الأقسام الرئيسية والفرعية">
+        <custom-main-menu></custom-main-menu>
+      </nav>
+    </aside>
+  {% endif %}
 </header>
+
+<style>
+  .shamel-header-main__grid--drawer{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:76px}
+  .shamel-header-main__brand{display:flex;align-items:center;gap:.75rem;min-width:0}
+  .shamel-categories-toggle{display:grid;place-content:center;gap:4px;width:44px;height:44px;padding:0;border:1px solid rgba(148,163,184,.25);border-radius:14px;background:var(--sp-categories-bg,#0b1f3a);color:var(--sp-categories-text,#fff);box-shadow:0 8px 22px rgba(15,23,42,.12);transition:transform .18s ease,box-shadow .18s ease}
+  .shamel-categories-toggle:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(15,23,42,.18)}
+  .shamel-categories-toggle span{display:block;width:19px;height:2px;border-radius:99px;background:currentColor}
+  .shamel-categories-overlay{position:fixed;inset:0;z-index:998;background:rgba(2,6,23,.56);backdrop-filter:blur(3px);opacity:0;transition:opacity .25s ease}
+  .shamel-categories-overlay.is-open{opacity:1}
+  .shamel-categories-drawer{position:fixed;z-index:999;top:0;right:0;width:min(390px,92vw);height:100dvh;padding:1.2rem;background:#fff;color:#0f172a;box-shadow:-24px 0 60px rgba(2,6,23,.25);transform:translateX(105%);transition:transform .28s cubic-bezier(.22,1,.36,1);overflow:auto}
+  .shamel-categories-drawer.is-open{transform:translateX(0)}
+  .shamel-categories-drawer__head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.35rem .2rem 1rem;border-bottom:1px solid #e2e8f0}
+  .shamel-categories-drawer__eyebrow{display:block;margin-bottom:.25rem;color:#64748b;font-size:.76rem;font-weight:700}
+  .shamel-categories-drawer__head h2{margin:0;font-size:1.25rem;font-weight:800}
+  .shamel-categories-drawer__close{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:12px;background:#f1f5f9;color:#0f172a;font-size:1.5rem;line-height:1}
+  .shamel-categories-drawer__search{margin:1rem 0}
+  .shamel-categories-drawer__nav{padding:.25rem 0}
+  .shamel-categories-drawer__nav custom-main-menu{display:block;min-height:0}
+  .shamel-categories-drawer__nav .main-menu{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;gap:.35rem!important}
+  .shamel-categories-drawer__nav .main-menu>li{display:block!important;width:100%!important}
+  .shamel-categories-drawer__nav .main-menu>li>a{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;padding:.85rem 1rem!important;border:1px solid #e2e8f0!important;border-radius:14px!important;background:#f8fafc!important;color:#0f172a!important;font-weight:700!important}
+  .shamel-categories-drawer__nav .sub-menu{position:static!important;width:100%!important;margin-top:.35rem!important;padding:.35rem!important;border:0!important;border-radius:12px!important;box-shadow:none!important;background:#f8fafc!important}
+  body.shamel-categories-locked{overflow:hidden}
+  body.shamel-dark-mode .shamel-categories-drawer{background:#071a2f;color:#fff}
+  body.shamel-dark-mode .shamel-categories-drawer__head{border-color:rgba(255,255,255,.1)}
+  body.shamel-dark-mode .shamel-categories-drawer__eyebrow{color:#94a3b8}
+  body.shamel-dark-mode .shamel-categories-drawer__close{background:rgba(255,255,255,.09);color:#fff}
+  body.shamel-dark-mode .shamel-categories-drawer__nav .main-menu>li>a,body.shamel-dark-mode .shamel-categories-drawer__nav .sub-menu{border-color:rgba(255,255,255,.1)!important;background:rgba(255,255,255,.055)!important;color:#fff!important}
+  @media(max-width:640px){.shamel-header-main__grid--drawer{min-height:66px}.shamel-categories-toggle{width:40px;height:40px;border-radius:12px}.shamel-header-main__actions{gap:.3rem}}
+</style>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var searchWrap = document.querySelector('[data-shamel-header-search]');
-    if (!searchWrap) return;
-    var searchComponent = searchWrap.querySelector('salla-search');
-    function openHeaderSearch() {
-      searchWrap.classList.add('is-open');
-      searchWrap.setAttribute('data-open', 'true');
-      window.setTimeout(function () {
-        if (searchComponent && searchComponent.shadowRoot) {
-          var field = searchComponent.shadowRoot.querySelector('input');
-          if (field) field.focus();
-        }
-      }, 80);
-    }
-    searchWrap.addEventListener('click', openHeaderSearch);
-    searchWrap.addEventListener('focusin', openHeaderSearch);
-    document.addEventListener('click', function (event) {
-      if (!searchWrap.contains(event.target)) {
-        searchWrap.classList.remove('is-open');
-        searchWrap.removeAttribute('data-open');
+    if (searchWrap) {
+      var searchComponent = searchWrap.querySelector('salla-search');
+      function openHeaderSearch() {
+        searchWrap.classList.add('is-open');
+        searchWrap.setAttribute('data-open', 'true');
+        window.setTimeout(function () {
+          if (searchComponent && searchComponent.shadowRoot) {
+            var field = searchComponent.shadowRoot.querySelector('input');
+            if (field) field.focus();
+          }
+        }, 80);
       }
+      searchWrap.addEventListener('click', openHeaderSearch);
+      searchWrap.addEventListener('focusin', openHeaderSearch);
+      document.addEventListener('click', function (event) {
+        if (!searchWrap.contains(event.target)) {
+          searchWrap.classList.remove('is-open');
+          searchWrap.removeAttribute('data-open');
+        }
+      });
+    }
+
+    var drawer = document.querySelector('[data-shamel-categories-drawer]');
+    var overlay = document.querySelector('[data-shamel-categories-overlay]');
+    var openButton = document.querySelector('[data-shamel-categories-open]');
+    var closeButton = document.querySelector('[data-shamel-categories-close]');
+    if (!drawer || !overlay || !openButton) return;
+
+    function openCategories() {
+      overlay.hidden = false;
+      window.requestAnimationFrame(function () {
+        overlay.classList.add('is-open');
+        drawer.classList.add('is-open');
+      });
+      drawer.setAttribute('aria-hidden', 'false');
+      openButton.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('shamel-categories-locked');
+      if (closeButton) closeButton.focus();
+    }
+    function closeCategories() {
+      overlay.classList.remove('is-open');
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      openButton.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('shamel-categories-locked');
+      window.setTimeout(function () { overlay.hidden = true; }, 260);
+    }
+    openButton.addEventListener('click', openCategories);
+    if (closeButton) closeButton.addEventListener('click', closeCategories);
+    overlay.addEventListener('click', closeCategories);
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && drawer.classList.contains('is-open')) closeCategories();
+    });
+    drawer.addEventListener('click', function (event) {
+      if (event.target.closest('a')) closeCategories();
     });
   });
 </script>
