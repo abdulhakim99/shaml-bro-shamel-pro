@@ -13,24 +13,7 @@
       <div class="container">
         <div class="shamel-pro-header-shell">
           <div class="shamel-header-main__grid shamel-header-main__grid--drawer">
-            <div class="shamel-header-main__account" aria-label="الحساب والسلة والعملة">
-              {% if store.settings.is_multilingual %}
-                <div class="shamel-header-localization" title="اللغة والعملة">
-                  <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
-                </div>
-              {% endif %}
-              <salla-cart-summary data-testid="store-header-cart">
-                <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-              </salla-cart-summary>
-              <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
-            </div>
-
-            <a data-testid="store-header-logo" class="navbar-brand shamel-header-main__brand" href="{{ store.url }}">
-              <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(300) }}" alt="{{ store.name }} logo">
-              {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
-            </a>
-
-            <div class="shamel-header-main__tools" aria-label="أدوات المتجر">
+            <div class="shamel-header-main__account" aria-label="البحث والسلة والعملة">
               <div class="shamel-header-search-trigger" data-shamel-header-search>
                 <button type="button" class="shamel-header-icon-button shamel-header-search-button" data-shamel-header-search-button aria-label="فتح البحث" aria-expanded="false">
                   <i class="sicon-search" aria-hidden="true"></i>
@@ -39,6 +22,23 @@
                   <salla-search data-testid="store-header-search" inline oval height="48" aria-label="البحث عن المنتجات"></salla-search>
                 </div>
               </div>
+              <salla-cart-summary data-testid="store-header-cart">
+                <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+              </salla-cart-summary>
+              {% if store.settings.is_multilingual %}
+                <div class="shamel-header-localization" title="اللغة والعملة">
+                  <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
+                </div>
+              {% endif %}
+            </div>
+
+            <a data-testid="store-header-logo" class="navbar-brand shamel-header-main__brand" href="{{ store.url }}">
+              <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(300) }}" alt="{{ store.name }} logo">
+              {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
+            </a>
+
+            <div class="shamel-header-main__tools" aria-label="الحساب وأدوات المتجر">
+              <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
               {% if theme.settings.get('shamel_dark_mode_enabled', true) %}
                 <button type="button" class="shamel-header-icon-button shamel-header-dark-toggle" data-shamel-dark-toggle aria-pressed="false" title="الوضع الليلي" aria-label="تبديل الوضع الليلي">
                   <i class="sicon-moon" aria-hidden="true"></i>
@@ -54,16 +54,6 @@
     </div>
   </div>
 
-  {% if shamel_show_header_categories %}
-              <button type="button" class="shamel-categories-toggle" data-shamel-categories-open aria-controls="shamel-categories-drawer" aria-expanded="false" aria-label="فتح أقسام المنتجات">
-                <span></span><span></span><span></span>
-              </button>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   {% if shamel_show_header_categories %}
     <div class="shamel-categories-overlay" data-shamel-categories-overlay hidden></div>
@@ -217,7 +207,7 @@
   }
   .shamel-header-icon-button,
   .shamel-header-main__account > salla-cart-summary,
-  .shamel-header-main__account > salla-user-menu,
+  .shamel-header-main__tools > salla-user-menu,
   .shamel-header-localization{
     position:relative;
     display:inline-flex!important;
@@ -238,7 +228,7 @@
   .shamel-header-localization{width:auto!important;min-width:64px!important;padding:0 10px!important}
   .shamel-header-icon-button:hover,
   .shamel-header-main__account > salla-cart-summary:hover,
-  .shamel-header-main__account > salla-user-menu:hover,
+  .shamel-header-main__tools > salla-user-menu:hover,
   .shamel-header-localization:hover{
     transform:translateY(-2px);
     color:#fff!important;
@@ -270,7 +260,7 @@
     visibility:hidden;
     pointer-events:none;
     transform:translateY(-8px) scale(.98);
-    transform-origin:top right;
+    transform-origin:top left;
     transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
   }
   .shamel-header-search-trigger.is-open .shamel-header-search-panel{
@@ -294,7 +284,7 @@
     .shamel-header-main__account,.shamel-header-main__tools{gap:4px!important}
     .shamel-header-icon-button,
     .shamel-header-main__account > salla-cart-summary,
-    .shamel-header-main__account > salla-user-menu,
+    .shamel-header-main__tools > salla-user-menu,
     .shamel-header-localization{
       width:38px!important;min-width:38px!important;height:38px!important;border-radius:12px!important
     }
@@ -307,7 +297,7 @@
   }
   @media (max-width:390px){
     .shamel-header-main__grid--drawer{grid-template-columns:82px minmax(72px,1fr) 122px!important}
-    .shamel-header-main__account > salla-user-menu{display:none!important}
+    .shamel-header-main__tools > salla-user-menu{display:none!important}
   }
 
 </style>
