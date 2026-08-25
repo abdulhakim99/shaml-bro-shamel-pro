@@ -129,5 +129,64 @@
     <salla-scopes data-testid="store-scopes" selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
 {% block scripts %}{% endblock %}
+
+{# Shamel Pro: merchant-controlled floating contact hub #}
+{% if theme.settings.get('shamel_social_enabled', true) %}
+  {% set shamel_whatsapp = theme.settings.get('shamel_whatsapp_number') %}
+  {% set shamel_position = theme.settings.get('shamel_social_position', 'right') %}
+  <div class="shamel-contact shamel-contact--{{ shamel_position }}" data-testid="shamel-contact">
+    <details class="shamel-contact__details">
+      <summary class="shamel-contact__trigger" aria-label="فتح وسائل التواصل">
+        <i class="sicon-chat-bubbles" aria-hidden="true"></i>
+        <span>تواصل معنا</span>
+      </summary>
+      <nav class="shamel-contact__menu" aria-label="وسائل التواصل">
+        {% if theme.settings.get('shamel_whatsapp_enabled', true) and shamel_whatsapp %}
+          <a class="shamel-contact__link shamel-contact__link--whatsapp" href="https://wa.me/{{ shamel_whatsapp }}?text={{ theme.settings.get('shamel_whatsapp_message', 'مرحبًا، لدي استفسار عن أحد المنتجات.')|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+            <i class="sicon-whatsapp" aria-hidden="true"></i><span>واتساب</span>
+          </a>
+        {% endif %}
+        {% if theme.settings.get('shamel_instagram_enabled') and theme.settings.get('shamel_instagram_url') %}
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_instagram_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_tiktok_enabled') and theme.settings.get('shamel_tiktok_url') %}
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_tiktok_url') }}" target="_blank" rel="noopener noreferrer"><span class="shamel-contact__glyph">♪</span><span>TikTok</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_snapchat_enabled') and theme.settings.get('shamel_snapchat_url') %}
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_snapchat_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-snapchat" aria-hidden="true"></i><span>Snapchat</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_x_enabled') and theme.settings.get('shamel_x_url') %}
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_x_url') }}" target="_blank" rel="noopener noreferrer"><span class="shamel-contact__glyph">X</span><span>X</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_youtube_enabled') and theme.settings.get('shamel_youtube_url') %}
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_youtube_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-youtube" aria-hidden="true"></i><span>YouTube</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_facebook_enabled') and theme.settings.get('shamel_facebook_url') %}
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_facebook_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-facebook" aria-hidden="true"></i><span>Facebook</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_email_enabled') and theme.settings.get('shamel_email') %}
+          <a class="shamel-contact__link" href="mailto:{{ theme.settings.get('shamel_email') }}"><i class="sicon-mail" aria-hidden="true"></i><span>البريد</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_phone_enabled') and theme.settings.get('shamel_phone') %}
+          <a class="shamel-contact__link" href="tel:{{ theme.settings.get('shamel_phone') }}"><i class="sicon-phone" aria-hidden="true"></i><span>اتصال</span></a>
+        {% endif %}
+      </nav>
+    </details>
+  </div>
+  <style>
+    .shamel-contact{position:fixed;bottom:max(1rem,env(safe-area-inset-bottom));z-index:90;font-family:var(--font-main)}
+    .shamel-contact--right{right:1rem}.shamel-contact--left{left:1rem}
+    .shamel-contact__details{position:relative}.shamel-contact__details summary{list-style:none}.shamel-contact__details summary::-webkit-details-marker{display:none}
+    .shamel-contact__trigger{display:flex;align-items:center;gap:.55rem;min-height:3.25rem;padding:.7rem 1rem;border-radius:999px;background:var(--color-primary);color:var(--color-primary-reverse);box-shadow:0 12px 32px rgba(15,23,42,.22);cursor:pointer;font-weight:700}
+    .shamel-contact__trigger i{font-size:1.3rem}
+    .shamel-contact__menu{position:absolute;bottom:calc(100% + .65rem);display:grid;gap:.4rem;min-width:10.5rem;padding:.55rem;border:1px solid rgba(148,163,184,.25);border-radius:1rem;background:#fff;box-shadow:0 18px 45px rgba(15,23,42,.2)}
+    .shamel-contact--right .shamel-contact__menu{right:0}.shamel-contact--left .shamel-contact__menu{left:0}
+    .shamel-contact__link{display:flex;align-items:center;gap:.65rem;padding:.65rem .75rem;border-radius:.7rem;color:#0f172a;text-decoration:none;transition:background .18s ease,transform .18s ease}
+    .shamel-contact__link:hover{background:#f1f5f9;transform:translateY(-1px)}.shamel-contact__link i,.shamel-contact__glyph{width:1.25rem;text-align:center;font-size:1.15rem}
+    .shamel-contact__link--whatsapp i{color:#16a34a}
+    @media(max-width:480px){.shamel-contact{bottom:max(.75rem,env(safe-area-inset-bottom))}.shamel-contact--right{right:.75rem}.shamel-contact--left{left:.75rem}.shamel-contact__trigger span{display:none}.shamel-contact__trigger{width:3.25rem;justify-content:center;padding:.7rem}}
+  </style>
+{% endif %}
+
 </body>
 </html>
