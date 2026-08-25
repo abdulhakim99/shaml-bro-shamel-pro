@@ -110,6 +110,7 @@
       .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:var(--shamel-follow-bg,#071a2f);color:var(--shamel-follow-text,#fff)}
       .shamel-follow__inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;text-align:center}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
       .shamel-follow__links{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid currentColor;border-radius:.8rem;background:rgba(255,255,255,.1);color:var(--shamel-follow-icon,#fff);font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:var(--shamel-follow-icon,#fff);color:var(--shamel-follow-bg,#071a2f)}
+      .shamel-social-svg{display:block;width:1.4rem;height:1.4rem;fill:currentColor}
       .shamel-popup[hidden]{display:none}.shamel-popup{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
       .shamel-popup__card{position:relative;display:grid;grid-template-columns:minmax(14rem,.85fr) minmax(18rem,1fr);width:min(56rem,100%);overflow:hidden;border-radius:1.4rem;background:var(--sp-popup-bg,#fff);color:var(--sp-popup-text,#0f172a);box-shadow:0 30px 80px rgba(2,6,23,.35)}
       .shamel-popup__image{min-height:30rem;background:#eef2f7 center/cover no-repeat}.shamel-popup__content{display:flex;flex-direction:column;justify-content:center;padding:2.4rem}
@@ -162,9 +163,9 @@
           <nav class="shamel-follow__links" aria-label="تابع المتجر">
             {% if theme.settings.get('shamel_follow_whatsapp_enabled') and theme.settings.get('shamel_follow_whatsapp_url') %}<a href="{{ theme.settings.get('shamel_follow_whatsapp_url') }}" target="_blank" rel="noopener noreferrer" aria-label="قناة واتساب"><i class="sicon-whatsapp"></i></a>{% endif %}
             {% if theme.settings.get('shamel_follow_instagram_enabled') and theme.settings.get('shamel_follow_instagram_url') %}<a href="{{ theme.settings.get('shamel_follow_instagram_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="sicon-instagram"></i></a>{% endif %}
-            {% if theme.settings.get('shamel_follow_tiktok_enabled') and theme.settings.get('shamel_follow_tiktok_url') %}<a href="{{ theme.settings.get('shamel_follow_tiktok_url') }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><span>♪</span></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_tiktok_enabled') and theme.settings.get('shamel_follow_tiktok_url') %}<a href="{{ theme.settings.get('shamel_follow_tiktok_url') }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.6 3c.4 2.3 1.8 3.8 4.1 4.2v3.2c-1.5 0-2.9-.5-4.1-1.3v6.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.2 2.9V3h3.2Z"/></svg></a>{% endif %}
             {% if theme.settings.get('shamel_follow_snapchat_enabled') and theme.settings.get('shamel_follow_snapchat_url') %}<a href="{{ theme.settings.get('shamel_follow_snapchat_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="sicon-snapchat"></i></a>{% endif %}
-            {% if theme.settings.get('shamel_follow_x_enabled') and theme.settings.get('shamel_follow_x_url') %}<a href="{{ theme.settings.get('shamel_follow_x_url') }}" target="_blank" rel="noopener noreferrer" aria-label="X"><span>X</span></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_x_enabled') and theme.settings.get('shamel_follow_x_url') %}<a href="{{ theme.settings.get('shamel_follow_x_url') }}" target="_blank" rel="noopener noreferrer" aria-label="X"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22H17l-4.9-6.4L6.5 22H3.3l7.3-8.4L2.8 2H9l4.4 5.8L18.9 2Zm-1.1 17.8h1.7L8 4.1H6.2l11.6 15.7Z"/></svg></a>{% endif %}
             {% if theme.settings.get('shamel_follow_youtube_enabled') and theme.settings.get('shamel_follow_youtube_url') %}<a href="{{ theme.settings.get('shamel_follow_youtube_url') }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="sicon-youtube"></i></a>{% endif %}
             {% if theme.settings.get('shamel_follow_facebook_enabled') and theme.settings.get('shamel_follow_facebook_url') %}<a href="{{ theme.settings.get('shamel_follow_facebook_url') }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="sicon-facebook"></i></a>{% endif %}
           </nav>
@@ -206,13 +207,13 @@
           <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_instagram_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-instagram" aria-hidden="true"></i><span>Instagram</span></a>
         {% endif %}
         {% if theme.settings.get('shamel_tiktok_enabled') and theme.settings.get('shamel_tiktok_url') %}
-          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_tiktok_url') }}" target="_blank" rel="noopener noreferrer"><span class="shamel-contact__glyph">♪</span><span>TikTok</span></a>
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_tiktok_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.6 3c.4 2.3 1.8 3.8 4.1 4.2v3.2c-1.5 0-2.9-.5-4.1-1.3v6.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.2 2.9V3h3.2Z"/></svg><span>TikTok</span></a>
         {% endif %}
         {% if theme.settings.get('shamel_snapchat_enabled') and theme.settings.get('shamel_snapchat_url') %}
           <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_snapchat_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-snapchat" aria-hidden="true"></i><span>Snapchat</span></a>
         {% endif %}
         {% if theme.settings.get('shamel_x_enabled') and theme.settings.get('shamel_x_url') %}
-          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_x_url') }}" target="_blank" rel="noopener noreferrer"><span class="shamel-contact__glyph">X</span><span>X</span></a>
+          <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_x_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22H17l-4.9-6.4L6.5 22H3.3l7.3-8.4L2.8 2H9l4.4 5.8L18.9 2Zm-1.1 17.8h1.7L8 4.1H6.2l11.6 15.7Z"/></svg><span>X</span></a>
         {% endif %}
         {% if theme.settings.get('shamel_youtube_enabled') and theme.settings.get('shamel_youtube_url') %}
           <a class="shamel-contact__link" href="{{ theme.settings.get('shamel_youtube_url') }}" target="_blank" rel="noopener noreferrer"><i class="sicon-youtube" aria-hidden="true"></i><span>YouTube</span></a>
