@@ -787,153 +787,15 @@
       "placeholder": "شحن سريع | عروض حصرية"
     },
     {
-      "type": "boolean",
-      "label": "إظهار وسائل الدفع داخل الشريط",
-      "description": "فعّل فقط الوسائل المتاحة فعلًا في متجرك.",
-      "id": "shamel_announcement_payments_enabled",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار مدى",
-      "id": "shamel_payment_mada",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار Visa",
-      "id": "shamel_payment_visa",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار Mastercard",
-      "id": "shamel_payment_mastercard",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار Apple Pay",
-      "id": "shamel_payment_applepay",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار STC Pay",
-      "id": "shamel_payment_stcpay",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار تابي",
-      "id": "shamel_payment_tabby",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار تمارا",
-      "id": "shamel_payment_tamara",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-
-    {
-      "type": "boolean",
-      "label": "إظهار Google Pay",
-      "id": "shamel_payment_googlepay",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار MIS Pay",
-      "id": "shamel_payment_mispay",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار مدفوع",
-      "id": "shamel_payment_madfu",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار إمكان",
-      "id": "shamel_payment_emkan",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار التحويل البنكي",
-      "id": "shamel_payment_bank_transfer",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار التحويل السريع (سريع)",
-      "id": "shamel_payment_sarie",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "label": "إظهار الدفع عند الاستلام",
-      "id": "shamel_payment_cod",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-
-    {
       "id": "shamel_custom_payments",
       "type": "collection",
       "format": "collection",
       "required": false,
       "minLength": 0,
       "maxLength": 12,
-      "label": "وسائل دفع إضافية مخصصة",
+      "label": "وسائل الدفع داخل الشريط",
       "item_label": "وسيلة دفع",
-      "description": "أضف أي وسيلة دفع جديدة وارفع شعارها. لن تظهر إلا داخل الشريط الإخباري.",
+      "description": "اضغط «إضافة وسيلة دفع»، ثم اكتب اسمها وارفع شعارها. يمكنك إضافة أي وسيلة جديدة.",
       "value": [],
       "fields": [
         {
