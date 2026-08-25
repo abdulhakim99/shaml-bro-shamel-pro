@@ -770,7 +770,7 @@
       "selected": true
     },
     {
-      "id": "shamel_side_tools_position",
+      "id": "shamel_side_tools_position_v2",
       "type": "items",
       "format": "dropdown-list",
       "label": "مكان شريط الأدوات الجانبي",
