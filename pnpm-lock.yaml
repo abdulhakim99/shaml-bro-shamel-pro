@@ -38,10 +38,10 @@ importers:
         version: 8.0.2(@babel/core@8.0.1)
       '@salla.sa/twilight':
         specifier: ^2.14.551
-        version: 2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(webpack@5.108.4)
+        version: 2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.108.4)
       '@salla.sa/twilight-components':
-        specifier: ^2.14.551
-        version: 2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(lit@3.3.3)(webpack@5.108.4)
+        specifier: ^2.14.552
+        version: 2.14.552(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.108.4)
       '@salla.sa/twilight-tailwind-theme':
         specifier: ^2.14.551
         version: 2.14.551
@@ -71,7 +71,7 @@ importers:
         version: 7.1.4(webpack@5.108.4)
       css-minimizer-webpack-plugin:
         specifier: ^8.0.0
-        version: 8.0.0(webpack@5.108.4)
+        version: 8.0.0(csso@5.0.5)(webpack@5.108.4)
       glob:
         specifier: ^13.0.6
         version: 13.0.6
@@ -101,7 +101,7 @@ importers:
         version: 3.4.19
       webpack:
         specifier: ^5.108.4
-        version: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+        version: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
       webpack-cli:
         specifier: ^7.2.1
         version: 7.2.1(js-yaml@4.3.0)(json5@2.2.3)(webpack@5.108.4)
@@ -1043,36 +1043,42 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@parcel/watcher-linux-arm-musl@2.5.6':
     resolution: {integrity: sha512-Ve3gUCG57nuUUSyjBq/MAM0CzArtuIOxsBdQ+ftz6ho8n7s1i9E1Nmk/xmP323r2YL0SONs1EuwqBp2u1k5fxg==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@parcel/watcher-linux-arm64-glibc@2.5.6':
     resolution: {integrity: sha512-f2g/DT3NhGPdBmMWYoxixqYr3v/UXcmLOYy16Bx0TM20Tchduwr4EaCbmxh1321TABqPGDpS8D/ggOTaljijOA==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@parcel/watcher-linux-arm64-musl@2.5.6':
     resolution: {integrity: sha512-qb6naMDGlbCwdhLj6hgoVKJl2odL34z2sqkC7Z6kzir8b5W65WYDpLB6R06KabvZdgoHI/zxke4b3zR0wAbDTA==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@parcel/watcher-linux-x64-glibc@2.5.6':
     resolution: {integrity: sha512-kbT5wvNQlx7NaGjzPFu8nVIW1rWqV780O7ZtkjuWaPUgpv2NMFpjYERVi0UYj1msZNyCzGlaCWEtzc+exjMGbQ==}
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@parcel/watcher-linux-x64-musl@2.5.6':
     resolution: {integrity: sha512-1JRFeC+h7RdXwldHzTsmdtYR/Ku8SylLgTU/reMuqdVD7CtLwf0VR1FqeprZ0eHQkO0vqsbvFLXUmYm/uNKJBg==}
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@parcel/watcher-win32-arm64@2.5.6':
     resolution: {integrity: sha512-3ukyebjc6eGlw9yRt678DxVF7rjXatWiHvTXqphZLvo7aC5NdEgFufVwjFfY51ijYEWpXbqF5jtrK275z52D4Q==}
@@ -1099,20 +1105,34 @@ packages:
   '@salla.sa/analytics@2.14.551':
     resolution: {integrity: sha512-EhKfaSplrWAeJ4OElS/02f4Jrs9L53UD4PnQ3T0mGMKCD6YARrt0aW9KauNvH7EdEhGLBneDcKdIP6yiqAHB4Q==}
 
-  '@salla.sa/applepay@2.14.551':
-    resolution: {integrity: sha512-GzZRHsYZpnwW1ySO9wak2vxqwszeAAEYYPqzEtc2z/gEV+0hDjZE0WUOKari0em9NgLanK8zv4mvt3xfhJugXA==}
+  '@salla.sa/analytics@2.14.552':
+    resolution: {integrity: sha512-hVnLNoyT/gNdkGZk89uLR7zRBCi91vo2kTrjFInw6S1LhRhKcqxtia/wo7NGZvWSecnYiX9noTT9vXnvQwzYQw==}
+
+  '@salla.sa/applepay@2.14.552':
+    resolution: {integrity: sha512-z7SyEh50dkdhIvmY+X6nYVXseeKnfydE7IOfagJcuYAoyQSoFja7oQ9j5POiRT+gyYtJaqso9fKk6ajnoeWyMQ==}
 
   '@salla.sa/base@2.14.551':
     resolution: {integrity: sha512-u6PhbswmF3Oyn4kVZDGFRPAUV+4N08N7gt3ICFAFmuVWp+nQLAmrE/bk6mivK8XygjSkO55BivcG9KAEs762SQ==}
 
-  '@salla.sa/twilight-components@2.14.551':
-    resolution: {integrity: sha512-Tr81wxaIhMuQ7FhiE5zu44hU6rM7Ooj8wZMRHekDQCn0Tg/gCO0xuxjfxBAlEUNiQJoioZgJ/LeGZ4mGfCsgnQ==}
+  '@salla.sa/base@2.14.552':
+    resolution: {integrity: sha512-m6qRMT3jaF1EghmNlbj02LtqhfIijuhbu6sbL8s1C2Zcxc7YHEGen6mCLsUDSqSFBVFR3fGlBR4QPJ2CYvkxwg==}
+
+  '@salla.sa/twilight-components@2.14.552':
+    resolution: {integrity: sha512-VVrEiPCj1nAJK2Zae8yAdejPilF2PptlNoTMmF7kNPcCC7/LoaSek6jTuor8ugwUXfptivjKAAQqgK8JZjUgHw==}
 
   '@salla.sa/twilight-tailwind-theme@2.14.551':
     resolution: {integrity: sha512-3KVdAOynyeVqvo7RoJId2iqqLXxKKE2UJ+o/7cxy2KK5RDvj3fKUk19FWu8JbdmCf2L7Qer1UL7y6KM4qhYELw==}
 
+  '@salla.sa/twilight-tailwind-theme@2.14.552':
+    resolution: {integrity: sha512-AIxYylm1wqHT6tHuhsKmKN7aorvNAOPR7L5RdyFq7lJarTysya+37ayJcGeKub5Zu4kv1HodJdLDtnvYmfiMSA==}
+
   '@salla.sa/twilight@2.14.551':
     resolution: {integrity: sha512-muiHUu6ZOwtYlh7+zssNv1aerRhUbJ9tfGYjmJEQoyz2dPJ5bRCeyztszk5ZMDAzO8/NrVexCv0VSc3RQlMV2A==}
+    peerDependencies:
+      webpack: ^4 || ^5
+
+  '@salla.sa/twilight@2.14.552':
+    resolution: {integrity: sha512-ZQCZk2mrro5uzGCg58bEG5oOA+SPYudn6cFrOsPcKaaV1kjCbjKbwPL5zmeQA/ewt5hsGOBb9CtzgjP0OXeMLg==}
     peerDependencies:
       webpack: ^4 || ^5
 
@@ -1329,6 +1349,9 @@ packages:
 
   axios@1.18.1:
     resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
+
+  axios@1.19.0:
+    resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
 
   babel-loader-exclude-node-modules-except@1.2.4:
     resolution: {integrity: sha512-rfoi0R9K9tORe4xfFtiqPoBzlMmX/wMxygjSSw5FYHxzoyxmVzxCzASXMTmwfh/3M4VD442TOu67xPNY7m7jEw==}
@@ -1750,8 +1773,8 @@ packages:
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
-  fast-equals@5.4.0:
-    resolution: {integrity: sha512-jt2DW/aNFNwke7AUd+Z+e6pz39KO5rzdbbFCg2sGafS4mk13MI7Z8O5z9cADNn5lhGODIgLwug6TZO2ctf7kcw==}
+  fast-equals@5.4.1:
+    resolution: {integrity: sha512-DjlFSM5Pk9cGcL0q5QXl66eGzx0N6szNgaswwc5ZphlBohjTVJSnGgI+rJVOgOi65qUoQnDZN4nDqi33udtydQ==}
     engines: {node: '>=6.0.0'}
 
   fast-glob@3.3.3:
@@ -3992,7 +4015,7 @@ snapshots:
   '@googlemaps/markerclusterer@2.6.2':
     dependencies:
       '@types/supercluster': 7.1.3
-      fast-equals: 5.4.0
+      fast-equals: 5.4.1
       supercluster: 8.0.1
 
   '@jest/pattern@30.4.0':
@@ -4128,9 +4151,16 @@ snapshots:
       - '@jitsu/protocols'
       - '@types/dlv'
 
-  '@salla.sa/applepay@2.14.551':
+  '@salla.sa/analytics@2.14.552(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)':
     dependencies:
-      axios: 1.18.1
+      '@jitsu/js': 1.11.0(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
+    transitivePeerDependencies:
+      - '@jitsu/protocols'
+      - '@types/dlv'
+
+  '@salla.sa/applepay@2.14.552(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)':
+    dependencies:
+      axios: 1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -4142,12 +4172,19 @@ snapshots:
       lodash: 4.18.1
       store: 2.0.12
 
-  '@salla.sa/twilight-components@2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(lit@3.3.3)(webpack@5.108.4)':
+  '@salla.sa/base@2.14.552':
+    dependencies:
+      '@types/applepayjs': 14.0.9
+      eventemitter2: 6.4.9
+      lodash: 4.18.1
+      store: 2.0.12
+
+  '@salla.sa/twilight-components@2.14.552(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.108.4)':
     dependencies:
       '@googlemaps/markerclusterer': 2.6.2
-      '@salla.sa/applepay': 2.14.551
-      '@salla.sa/twilight': 2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(webpack@5.108.4)
-      '@salla.sa/twilight-tailwind-theme': 2.14.551
+      '@salla.sa/applepay': 2.14.552(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      '@salla.sa/twilight': 2.14.552(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.108.4)
+      '@salla.sa/twilight-tailwind-theme': 2.14.552
       '@salla.sa/ui-address-autocomplete-widget': 1.2.1
       '@salla.sa/ui-google-map-render': 1.2.1(@googlemaps/markerclusterer@2.6.2)(@salla.sa/ui-address-autocomplete-widget@1.2.1)(lit@3.3.3)
       '@types/node': 20.19.43
@@ -4177,17 +4214,36 @@ snapshots:
 
   '@salla.sa/twilight-tailwind-theme@2.14.551': {}
 
-  '@salla.sa/twilight@2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(webpack@5.108.4)':
+  '@salla.sa/twilight-tailwind-theme@2.14.552': {}
+
+  '@salla.sa/twilight@2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.108.4)':
     dependencies:
       '@jitsu/js': 1.11.0(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
       '@salla.sa/analytics': 2.14.551(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
       '@salla.sa/base': 2.14.551
-      axios: 1.18.1
+      axios: 1.18.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       infinite-scroll: 4.0.1
       jwt-decode: 4.0.0
       lang.js: 1.1.14
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
-      websocket: 1.0.35
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
+      websocket: 1.0.35(supports-color@8.1.1)
+    transitivePeerDependencies:
+      - '@jitsu/protocols'
+      - '@types/dlv'
+      - debug
+      - supports-color
+
+  '@salla.sa/twilight@2.14.552(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.108.4)':
+    dependencies:
+      '@jitsu/js': 1.11.0(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
+      '@salla.sa/analytics': 2.14.552(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
+      '@salla.sa/base': 2.14.552
+      axios: 1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      infinite-scroll: 4.0.1
+      jwt-decode: 4.0.0
+      lang.js: 1.1.14
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
+      websocket: 1.0.35(supports-color@8.1.1)
     transitivePeerDependencies:
       - '@jitsu/protocols'
       - '@types/dlv'
@@ -4357,9 +4413,9 @@ snapshots:
 
   acorn@8.17.0: {}
 
-  agent-base@6.0.2:
+  agent-base@6.0.2(supports-color@8.1.1):
     dependencies:
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -4420,11 +4476,21 @@ snapshots:
       postcss: 8.5.16
       postcss-value-parser: 4.2.0
 
-  axios@1.18.1:
+  axios@1.18.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
-      follow-redirects: 1.16.0
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
       form-data: 4.0.6
-      https-proxy-agent: 5.0.1
+      https-proxy-agent: 5.0.1(supports-color@8.1.1)
+      proxy-from-env: 2.1.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  axios@1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+    dependencies:
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
+      form-data: 4.0.6
+      https-proxy-agent: 5.0.1(supports-color@8.1.1)
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
@@ -4437,7 +4503,7 @@ snapshots:
       '@babel/core': 8.0.1
       find-up: 5.0.0
     optionalDependencies:
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
 
   babel-plugin-polyfill-corejs3@1.0.0(@babel/core@8.0.1):
     dependencies:
@@ -4557,7 +4623,7 @@ snapshots:
       schema-utils: 4.3.3
       serialize-javascript: 7.0.7
       tinyglobby: 0.2.17
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
 
   core-js-compat@3.49.0:
     dependencies:
@@ -4603,9 +4669,9 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
 
-  css-minimizer-webpack-plugin@8.0.0(webpack@5.108.4):
+  css-minimizer-webpack-plugin@8.0.0(csso@5.0.5)(webpack@5.108.4):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       cssnano: 7.1.9(postcss@8.5.16)
@@ -4613,7 +4679,9 @@ snapshots:
       postcss: 8.5.16
       schema-utils: 4.3.3
       serialize-javascript: 7.0.7
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
+    optionalDependencies:
+      csso: 5.0.5
 
   css-prefers-color-scheme@11.0.0(postcss@8.5.16):
     dependencies:
@@ -4696,13 +4764,17 @@ snapshots:
       es5-ext: 0.10.64
       type: 2.7.3
 
-  debug@2.6.9:
+  debug@2.6.9(supports-color@8.1.1):
     dependencies:
       ms: 2.0.0
+    optionalDependencies:
+      supports-color: 8.1.1
 
-  debug@4.4.3:
+  debug@4.4.3(supports-color@8.1.1):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 8.1.1
 
   delayed-stream@1.0.0: {}
 
@@ -4832,7 +4904,7 @@ snapshots:
 
   fast-deep-equal@3.1.3: {}
 
-  fast-equals@5.4.0: {}
+  fast-equals@5.4.1: {}
 
   fast-glob@3.3.3:
     dependencies:
@@ -4898,7 +4970,9 @@ snapshots:
 
   flatpickr@4.6.13: {}
 
-  follow-redirects@1.16.0: {}
+  follow-redirects@1.16.0(debug@4.4.3(supports-color@8.1.1)):
+    optionalDependencies:
+      debug: 4.4.3(supports-color@8.1.1)
 
   form-data@4.0.6:
     dependencies:
@@ -4971,10 +5045,10 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  https-proxy-agent@5.0.1:
+  https-proxy-agent@5.0.1(supports-color@8.1.1):
     dependencies:
-      agent-base: 6.0.2
-      debug: 4.4.3
+      agent-base: 6.0.2(supports-color@8.1.1)
+      debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -5155,7 +5229,7 @@ snapshots:
     dependencies:
       schema-utils: 4.3.3
       tapable: 2.3.3
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
 
   mini-svg-data-uri@1.4.4: {}
 
@@ -5163,14 +5237,16 @@ snapshots:
     dependencies:
       brace-expansion: 5.0.7
 
-  minimizer-webpack-plugin@5.6.1(postcss@8.5.16)(webpack@5.108.4):
+  minimizer-webpack-plugin@5.6.1(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack@5.108.4):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
       terser: 5.48.0
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
     optionalDependencies:
+      cssnano: 7.1.9(postcss@8.5.16)
+      csso: 5.0.5
       postcss: 8.5.16
 
   minipass@7.1.3: {}
@@ -5437,7 +5513,7 @@ snapshots:
       postcss: 8.5.16
       semver: 7.8.5
     optionalDependencies:
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
     transitivePeerDependencies:
       - typescript
 
@@ -5792,7 +5868,7 @@ snapshots:
   sass-loader@17.0.0(sass@1.101.0)(webpack@5.108.4):
     optionalDependencies:
       sass: 1.101.0
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
 
   sass@1.101.0:
     dependencies:
@@ -5990,7 +6066,7 @@ snapshots:
       import-local: 3.2.0
       interpret: 3.1.1
       rechoir: 0.8.0
-      webpack: 5.108.4(postcss@8.5.16)(webpack-cli@7.2.1)
+      webpack: 5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1)
       webpack-merge: 6.0.1
     optionalDependencies:
       js-yaml: 4.3.0
@@ -6004,7 +6080,7 @@ snapshots:
 
   webpack-sources@3.5.1: {}
 
-  webpack@5.108.4(postcss@8.5.16)(webpack-cli@7.2.1):
+  webpack@5.108.4(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack-cli@7.2.1):
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
@@ -6022,7 +6098,7 @@ snapshots:
       graceful-fs: 4.2.11
       loader-runner: 4.3.2
       mime-db: 1.54.0
-      minimizer-webpack-plugin: 5.6.1(postcss@8.5.16)(webpack@5.108.4)
+      minimizer-webpack-plugin: 5.6.1(cssnano@7.1.9(postcss@8.5.16))(csso@5.0.5)(postcss@8.5.16)(webpack@5.108.4)
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.3
@@ -6044,10 +6120,10 @@ snapshots:
       - postcss
       - uglify-js
 
-  websocket@1.0.35:
+  websocket@1.0.35(supports-color@8.1.1):
     dependencies:
       bufferutil: 4.1.0
-      debug: 2.6.9
+      debug: 2.6.9(supports-color@8.1.1)
       es5-ext: 0.10.64
       typedarray-to-buffer: 3.1.5
       utf-8-validate: 5.0.10
