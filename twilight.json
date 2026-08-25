@@ -97,6 +97,113 @@
       ]
     },
     {
+      "id": "shamel_header_layout",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "شكل الهيدر",
+      "icon": "sicon-list",
+      "required": true,
+      "selected": [
+        {
+          "label": "كلاسيكي متوازن",
+          "value": "classic",
+          "key": "shamel-header-classic"
+        }
+      ],
+      "options": [
+        {
+          "label": "كلاسيكي متوازن",
+          "value": "classic",
+          "key": "shamel-header-classic"
+        },
+        {
+          "label": "شعار في المنتصف",
+          "value": "centered",
+          "key": "shamel-header-centered"
+        },
+        {
+          "label": "مضغوط للمتاجر الكبيرة",
+          "value": "compact",
+          "key": "shamel-header-compact"
+        }
+      ]
+    },
+    {
+      "id": "shamel_surface_radius",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "استدارة البطاقات والأزرار",
+      "icon": "sicon-list",
+      "required": true,
+      "selected": [
+        {
+          "label": "ناعمة وعصرية",
+          "value": "soft",
+          "key": "shamel-radius-soft"
+        }
+      ],
+      "options": [
+        {
+          "label": "ناعمة وعصرية",
+          "value": "soft",
+          "key": "shamel-radius-soft"
+        },
+        {
+          "label": "مربعة واحترافية",
+          "value": "square",
+          "key": "shamel-radius-square"
+        },
+        {
+          "label": "دائرية وودودة",
+          "value": "rounded",
+          "key": "shamel-radius-rounded"
+        }
+      ]
+    },
+    {
+      "id": "shamel_product_density",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "كثافة عرض المنتجات",
+      "icon": "sicon-list",
+      "required": true,
+      "selected": [
+        {
+          "label": "مريحة وواضحة",
+          "value": "comfortable",
+          "key": "shamel-density-comfortable"
+        }
+      ],
+      "options": [
+        {
+          "label": "مريحة وواضحة",
+          "value": "comfortable",
+          "key": "shamel-density-comfortable"
+        },
+        {
+          "label": "مضغوطة لعرض منتجات أكثر",
+          "value": "compact",
+          "key": "shamel-density-compact"
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "تفعيل الحركات الخفيفة",
+      "description": "حركات ظهور وتحويم محسنة مع احترام إعداد تقليل الحركة في جهاز العميل.",
+      "id": "shamel_motion_enabled",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "static",
+      "id": "shamel_visual_line",
+      "format": "line"
+    },
+    {
       "type": "static",
       "id": "shamel_identity_line",
       "format": "line"
