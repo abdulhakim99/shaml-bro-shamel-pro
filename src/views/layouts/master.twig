@@ -146,11 +146,8 @@
   {% set shamel_position_raw = theme.settings.get('shamel_social_position', 'right') %}
   {% set shamel_position = shamel_position_raw is iterable ? (shamel_position_raw|first).value : shamel_position_raw %}
   <div class="shamel-contact shamel-contact--{{ shamel_position }}" data-testid="shamel-contact">
-    <details class="shamel-contact__details">
-      <summary class="shamel-contact__trigger" aria-label="فتح واتساب ووسائل التواصل">
-        <span class="shamel-contact__promo">{{ theme.settings.get('shamel_contact_promo', 'سؤال سريع؟ نحن هنا لمساعدتك') }}</span>
-        <span class="shamel-contact__icon" aria-hidden="true"><i class="sicon-whatsapp"></i></span>
-      </summary>
+    <div class="shamel-contact__details">
+      <span class="shamel-contact__promo">{{ theme.settings.get('shamel_contact_promo', 'سؤال سريع؟ نحن هنا لمساعدتك') }}</span>
       <nav class="shamel-contact__menu" aria-label="وسائل التواصل">
         {% if theme.settings.get('shamel_whatsapp_enabled', true) and shamel_whatsapp %}
           <a class="shamel-contact__link shamel-contact__link--whatsapp" href="https://wa.me/{{ shamel_whatsapp }}" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
@@ -182,27 +179,24 @@
           <a class="shamel-contact__link" href="tel:{{ theme.settings.get('shamel_phone') }}"><i class="sicon-phone" aria-hidden="true"></i><span>اتصال</span></a>
         {% endif %}
       </nav>
-    </details>
+    </div>
   </div>
   <style>
     .shamel-contact{position:fixed;bottom:max(1rem,env(safe-area-inset-bottom));z-index:90;font-family:var(--font-main)}
     .shamel-contact--right{right:1rem}.shamel-contact--left{left:1rem}
-    .shamel-contact__details{position:relative}.shamel-contact__details summary{list-style:none}.shamel-contact__details summary::-webkit-details-marker{display:none}
-    .shamel-contact__trigger{display:flex;align-items:center;gap:.7rem;cursor:pointer;filter:drop-shadow(0 12px 24px rgba(15,23,42,.18))}
+    .shamel-contact__details{display:flex;align-items:center;gap:.7rem;filter:drop-shadow(0 12px 24px rgba(15,23,42,.14))}
+    .shamel-contact--left .shamel-contact__details{flex-direction:row-reverse}
     .shamel-contact__promo{position:relative;max-width:15rem;padding:.72rem 1rem;border:1px solid rgba(148,163,184,.22);border-radius:1rem;background:#fff;color:#0f172a;font-size:.86rem;font-weight:700;line-height:1.45;box-shadow:0 10px 28px rgba(15,23,42,.12)}
     .shamel-contact--right .shamel-contact__promo:after{content:"";position:absolute;right:-.38rem;top:50%;width:.72rem;height:.72rem;background:#fff;border-top:1px solid rgba(148,163,184,.22);border-right:1px solid rgba(148,163,184,.22);transform:translateY(-50%) rotate(45deg)}
-    .shamel-contact--left .shamel-contact__trigger{flex-direction:row-reverse}.shamel-contact--left .shamel-contact__promo:after{content:"";position:absolute;left:-.38rem;top:50%;width:.72rem;height:.72rem;background:#fff;border-bottom:1px solid rgba(148,163,184,.22);border-left:1px solid rgba(148,163,184,.22);transform:translateY(-50%) rotate(45deg)}
-    .shamel-contact__icon{display:grid;place-items:center;flex:0 0 3.65rem;width:3.65rem;height:3.65rem;border:3px solid rgba(255,255,255,.95);border-radius:50%;background:#22c55e;color:#fff;box-shadow:0 12px 30px rgba(34,197,94,.35);transition:transform .18s ease,box-shadow .18s ease}
-    .shamel-contact__trigger:hover .shamel-contact__icon{transform:translateY(-2px) scale(1.04);box-shadow:0 16px 34px rgba(34,197,94,.42)}
-    .shamel-contact__icon i{font-size:1.75rem}
-    .shamel-contact__menu{position:absolute;bottom:calc(100% + .7rem);display:grid;grid-template-columns:repeat(3,2.85rem);gap:.5rem;width:max-content;padding:.7rem;border:1px solid rgba(148,163,184,.25);border-radius:1rem;background:#fff;box-shadow:0 18px 45px rgba(15,23,42,.2)}
-    .shamel-contact--right .shamel-contact__menu{right:0}.shamel-contact--left .shamel-contact__menu{left:0}
-    .shamel-contact__link{position:relative;display:grid;place-items:center;width:2.85rem;height:2.85rem;padding:0;border-radius:.75rem;background:#0f4c6b;color:#fff;text-decoration:none;box-shadow:0 7px 18px rgba(15,76,107,.2);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
-    .shamel-contact__link:hover{background:#123f59;transform:translateY(-3px);box-shadow:0 11px 24px rgba(15,76,107,.28)}
-    .shamel-contact__link i,.shamel-contact__glyph{width:auto;text-align:center;font-size:1.25rem;color:inherit}
+    .shamel-contact--left .shamel-contact__promo:after{content:"";position:absolute;left:-.38rem;top:50%;width:.72rem;height:.72rem;background:#fff;border-bottom:1px solid rgba(148,163,184,.22);border-left:1px solid rgba(148,163,184,.22);transform:translateY(-50%) rotate(45deg)}
+    .shamel-contact__menu{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:.5rem;max-width:13rem}
+    .shamel-contact--left .shamel-contact__menu{justify-content:flex-start}
+    .shamel-contact__link{position:relative;display:grid;place-items:center;width:3.35rem;height:3.35rem;padding:0;border:3px solid rgba(255,255,255,.95);border-radius:50%;background:#0f4c6b;color:#fff;text-decoration:none;box-shadow:0 10px 26px rgba(15,76,107,.28);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+    .shamel-contact__link:hover{background:#123f59;transform:translateY(-3px) scale(1.04);box-shadow:0 14px 30px rgba(15,76,107,.34)}
+    .shamel-contact__link i,.shamel-contact__glyph{width:auto;text-align:center;font-size:1.45rem;color:inherit}
     .shamel-contact__link--whatsapp{background:#22c55e}.shamel-contact__link--whatsapp:hover{background:#16a34a}
     .shamel-contact__link>span:last-child:not(.shamel-contact__glyph){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    @media(max-width:480px){.shamel-contact{bottom:max(.75rem,env(safe-area-inset-bottom))}.shamel-contact--right{right:.75rem}.shamel-contact--left{left:.75rem}.shamel-contact__promo{max-width:11rem;padding:.6rem .75rem;font-size:.76rem}.shamel-contact__icon{flex-basis:3.35rem;width:3.35rem;height:3.35rem}.shamel-contact__icon i{font-size:1.55rem}}
+    @media(max-width:480px){.shamel-contact{bottom:max(.75rem,env(safe-area-inset-bottom))}.shamel-contact--right{right:.75rem}.shamel-contact--left{left:.75rem}.shamel-contact__details{gap:.5rem}.shamel-contact__promo{max-width:10.5rem;padding:.58rem .72rem;font-size:.75rem}.shamel-contact__menu{max-width:7.2rem;gap:.35rem}.shamel-contact__link{width:3.1rem;height:3.1rem}.shamel-contact__link i,.shamel-contact__glyph{font-size:1.3rem}}
   </style>
 {% endif %}
 
