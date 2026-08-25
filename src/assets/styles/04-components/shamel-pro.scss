@@ -75,7 +75,6 @@
     &.shamel-header-centered {
       .main-nav-container .container > .flex { min-height: 5.5rem; }
       .main-nav-container .navbar-brand { position: absolute; inset-inline-start: 50%; transform: translateX(-50%); margin: 0; }
-      &[dir='rtl'] .main-nav-container .navbar-brand { transform: translateX(50%); }
     }
 
     &.shamel-header-compact {
@@ -99,4 +98,8 @@
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+html[dir='rtl'] .shamel-pro.shamel-header-centered .main-nav-container .navbar-brand {
+  transform: translateX(50%);
 }
