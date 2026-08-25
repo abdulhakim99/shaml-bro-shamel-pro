@@ -158,42 +158,5 @@
     drawer.addEventListener('click', function (event) {
       if (event.target.closest('a')) closeCategories();
     });
-      });
-      var params = new URLSearchParams(window.location.search);
-      var searchField = priceForm.elements.search;
-      var minField = priceForm.elements.min_price;
-      var maxField = priceForm.elements.max_price;
-      if (searchField) searchField.value = params.get('search') || params.get('q') || '';
-      if (minField) minField.value = params.get('min_price') || params.get('price_from') || '';
-      if (maxField) maxField.value = params.get('max_price') || params.get('price_to') || '';
-
-      priceForm.querySelectorAll('input[name="price_range"]').forEach(function (radio) {
-        radio.addEventListener('change', function () {
-          var parts = radio.value.split('-');
-          minField.value = parts[0] || '';
-          maxField.value = parts[1] || '';
-        });
-      });
-      priceForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var next = new URL(window.location.href);
-        ['min_price','max_price','price_from','price_to','search','q'].forEach(function (key) { next.searchParams.delete(key); });
-        if (searchField && searchField.value.trim()) next.searchParams.set('search', searchField.value.trim());
-        if (minField && minField.value !== '') {
-          next.searchParams.set('min_price', minField.value);
-          next.searchParams.set('price_from', minField.value);
-        }
-        if (maxField && maxField.value !== '') {
-          next.searchParams.set('max_price', maxField.value);
-          next.searchParams.set('price_to', maxField.value);
-        }
-        window.location.href = next.toString();
-      });
-      if (priceClear) priceClear.addEventListener('click', function () {
-        var next = new URL(window.location.href);
-        ['min_price','max_price','price_from','price_to','search','q'].forEach(function (key) { next.searchParams.delete(key); });
-        window.location.href = next.toString();
-      });
-    }
   });
 </script>
