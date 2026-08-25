@@ -859,6 +859,70 @@
       "value": false,
       "selected": false
     },
+
+    {
+      "type": "boolean",
+      "label": "إظهار Google Pay",
+      "id": "shamel_payment_googlepay",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار MIS Pay",
+      "id": "shamel_payment_mispay",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار مدفوع",
+      "id": "shamel_payment_madfu",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار إمكان",
+      "id": "shamel_payment_emkan",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار التحويل البنكي",
+      "id": "shamel_payment_bank_transfer",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار التحويل السريع (سريع)",
+      "id": "shamel_payment_sarie",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "boolean",
+      "label": "إظهار الدفع عند الاستلام",
+      "id": "shamel_payment_cod",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
     {
       "id": "shamel_announcement_speed",
       "type": "items",
