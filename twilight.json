@@ -542,6 +542,24 @@
       "value": "#f8fafc"
     },
     {
+      "type": "boolean",
+      "format": "switch",
+      "id": "shamel_header_categories_enabled",
+      "label": "إظهار أقسام المتجر في رأس الصفحة",
+      "description": "عند التعطيل تختفي قائمة الأقسام العلوية فقط، ويبقى الشعار والبحث والحساب والسلة.",
+      "value": true,
+      "required": false
+    },
+    {
+      "type": "string",
+      "format": "color",
+      "id": "shamel_color_categories_bg",
+      "label": "خلفية قائمة الأقسام العلوية",
+      "description": "يُطبق اللون على خلفية قائمة الأقسام وحدها، وليس على الشريط العلوي كاملًا.",
+      "value": "#f8fafc",
+      "required": true
+    },
+    {
       "type": "string",
       "label": "خلفية الهيدر",
       "id": "shamel_color_header_bg",
@@ -552,8 +570,8 @@
       "type": "string",
       "format": "color",
       "id": "shamel_color_header_dark_bg",
-      "label": "خلفية رأس الأقسام في الوضع الليلي",
-      "description": "لون مساحة الشعار والأقسام والبحث في أعلى المتجر عند تشغيل الوضع الليلي.",
+      "label": "خلفية قائمة الأقسام في الوضع الليلي",
+      "description": "يُطبق على خلفية قائمة الأقسام وحدها عند تشغيل الوضع الليلي.",
       "value": "#0b1120",
       "required": true
     },
