@@ -97,7 +97,7 @@
     {# tracking services, custom css feature. #}
     {% hook 'head:end' %}
 </head>
-<body id="app" class="theme-raed overflow-x-hidden {% hook 'body:classes' %}
+<body id="app" class="theme-raed shamel-pro shamel-mode-{{ theme.settings.get('shamel_store_mode', 'general') }} shamel-style-{{ theme.settings.get('shamel_ui_style', 'modern') }} shamel-header-{{ theme.settings.get('shamel_header_layout', 'classic') }} shamel-radius-{{ theme.settings.get('shamel_surface_radius', 'soft') }} shamel-density-{{ theme.settings.get('shamel_product_density', 'comfortable') }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
