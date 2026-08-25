@@ -108,6 +108,12 @@
 
       .shamel-compare-add{display:grid;place-items:center;flex:0 0 2.85rem;width:2.85rem;height:2.85rem;border:1px solid #cbd5e1;border-radius:.72rem;background:#fff;color:var(--sp-primary,#0f4c6b);cursor:pointer;transition:.18s}
       .shamel-compare-add:hover{border-color:var(--sp-primary,#0f4c6b);background:var(--sp-primary,#0f4c6b);color:#fff;transform:translateY(-2px)}
+      body.shamel-dark-mode{--sp-page-bg:#070b14!important;--sp-text:#cbd5e1!important;--sp-heading:#f8fafc!important;--sp-card-bg:#111827!important;--sp-header-bg:#0b1120!important;--sp-header-text:#f8fafc!important;background:#070b14!important;color:#cbd5e1!important;color-scheme:dark}
+      body.shamel-dark-mode header,body.shamel-dark-mode .navbar,body.shamel-dark-mode .main-menu,body.shamel-dark-mode .s-block,body.shamel-dark-mode .product-entry,body.shamel-dark-mode .product-card,body.shamel-dark-mode .s-product-card-entry,body.shamel-dark-mode .shamel-compare-drawer{background-color:var(--sp-card-bg,#111827)!important;color:var(--sp-text,#cbd5e1)!important}
+      body.shamel-dark-mode h1,body.shamel-dark-mode h2,body.shamel-dark-mode h3,body.shamel-dark-mode h4,body.shamel-dark-mode h5,body.shamel-dark-mode h6,body.shamel-dark-mode a:not(.shamel-contact__link):not(.shamel-side-tools a){color:var(--sp-heading,#f8fafc)}
+      body.shamel-dark-mode input,body.shamel-dark-mode select,body.shamel-dark-mode textarea{background:#172033!important;border-color:#334155!important;color:#f8fafc!important}
+      body.shamel-dark-mode .shamel-compare-item{border-color:#334155;background:#111827}body.shamel-dark-mode .shamel-compare-item img{background:#172033}
+      .shamel-side-tools [data-shamel-dark-toggle][aria-pressed="true"]{background:var(--sp-primary,#0f4c6b)}
       .shamel-side-tools{position:fixed;top:44%;z-index:88;display:flex;flex-direction:column;align-items:stretch;overflow:hidden;border:1px solid rgba(148,163,184,.25);border-radius:0 .8rem .8rem 0;background:#0f172a;color:#fff;box-shadow:0 18px 45px rgba(15,23,42,.25)}
       .shamel-side-tools--left{left:0}.shamel-side-tools--right{right:0;border-radius:.8rem 0 0 .8rem}
       .shamel-side-tools button,.shamel-side-tools a{position:relative;display:flex;align-items:center;justify-content:center;gap:.45rem;min-width:3rem;min-height:3rem;padding:.65rem;border:0;border-bottom:1px solid rgba(255,255,255,.12);background:transparent;color:inherit;text-decoration:none;cursor:pointer}
@@ -331,6 +337,9 @@
     {% if theme.settings.get('shamel_side_wishlist_enabled', true) %}
       <a href="{{ link('wishlist') }}" title="المفضلة"><i class="sicon-heart" aria-hidden="true"></i><span class="shamel-side-tools__label">المفضلة</span></a>
     {% endif %}
+    {% if theme.settings.get('shamel_dark_mode_enabled', true) %}
+      <button type="button" data-shamel-dark-toggle aria-pressed="false" title="الوضع الليلي"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.7 15.1A8.5 8.5 0 0 1 8.9 3.3 9 9 0 1 0 20.7 15Z"/></svg><span class="shamel-side-tools__label" data-shamel-dark-label>الوضع الليلي</span></button>
+    {% endif %}
     <button type="button" data-shamel-tools-close aria-label="إغلاق شريط الأدوات" title="إغلاق">×</button>
   </nav>
   {% if theme.settings.get('shamel_compare_enabled', true) %}
@@ -343,6 +352,25 @@
     document.addEventListener('DOMContentLoaded', function(){
       var toolsBar=document.querySelector('[data-shamel-side-tools]');
       if(!toolsBar)return;
+      var darkButton=toolsBar.querySelector('[data-shamel-dark-toggle]');
+      var darkKey='shamel_dark_mode';
+      function applyDarkMode(enabled){
+        document.body.classList.toggle('shamel-dark-mode',enabled);
+        if(darkButton){
+          darkButton.setAttribute('aria-pressed',enabled?'true':'false');
+          darkButton.title=enabled?'الوضع الفاتح':'الوضع الليلي';
+          var label=darkButton.querySelector('[data-shamel-dark-label]');
+          if(label)label.textContent=enabled?'الوضع الفاتح':'الوضع الليلي';
+        }
+      }
+      var savedDark=localStorage.getItem(darkKey);
+      var darkEnabled=savedDark===null?window.matchMedia('(prefers-color-scheme:dark)').matches:savedDark==='dark';
+      applyDarkMode(darkEnabled);
+      if(darkButton)darkButton.addEventListener('click',function(){
+        darkEnabled=!document.body.classList.contains('shamel-dark-mode');
+        localStorage.setItem(darkKey,darkEnabled?'dark':'light');
+        applyDarkMode(darkEnabled);
+      });
       var key='shamel_compare_products',items=[];
       try{items=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){items=[]}
       var drawer=document.querySelector('[data-shamel-compare-drawer]');
