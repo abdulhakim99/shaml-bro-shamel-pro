@@ -294,6 +294,11 @@ class ProductCard extends HTMLElement {
                 <span>${this.product.add_to_cart_label ? this.product.add_to_cart_label : this.getAddButtonLabel() }</span>
               </salla-add-product-button>
 
+              ${window.shamel_compare_enabled ? `
+                <button type="button" class="shamel-compare-add" aria-label="أضف المنتج للمقارنة" title="أضف للمقارنة">
+                  <i class="sicon-compare"></i>
+                </button>` : ``}
+              
               ${this.horizontal || this.fullImage ?
                 `<salla-button 
                   shape="icon" 
@@ -320,6 +325,22 @@ class ProductCard extends HTMLElement {
             .setAttribute("donating-amount", e.target.value); 
         });
       })
+
+
+      const compareButton = this.querySelector('.shamel-compare-add');
+      if (compareButton) {
+        compareButton.addEventListener('click', () => {
+          window.dispatchEvent(new CustomEvent('shamel:compare:add', {
+            detail: {
+              id: this.product.id,
+              name: this.product.name,
+              url: this.product.url,
+              image: this.product?.image?.url || this.product?.thumbnail || '',
+              price: this.getPriceFormat(this.product.sale_price || this.product.price || this.product.starting_price)
+            }
+          }));
+        });
+      }
 
       if (this.product?.quantity && this.isSpecial) {
         this.initCircleBar();
