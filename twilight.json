@@ -529,6 +529,20 @@
     },
     {
       "type": "string",
+      "label": "خلفية الأقسام الأساسية",
+      "id": "shamel_color_section_bg",
+      "format": "color",
+      "value": "#ffffff"
+    },
+    {
+      "type": "string",
+      "label": "خلفية الأقسام البديلة",
+      "id": "shamel_color_section_alt_bg",
+      "format": "color",
+      "value": "#f8fafc"
+    },
+    {
+      "type": "string",
       "label": "خلفية الهيدر",
       "id": "shamel_color_header_bg",
       "format": "color",
