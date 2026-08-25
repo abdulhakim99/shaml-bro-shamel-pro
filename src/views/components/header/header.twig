@@ -3,6 +3,7 @@
 | Merchants manage main/sub categories once from the store navigation screen.
 #}
 {% set shamel_show_header_categories = theme.settings.get('shamel_header_categories_enabled_v2', true) %}
+{% set shamel_show_drawer_price_filter = theme.settings.get('shamel_drawer_price_filter_enabled', true) %}
 <header data-testid="store-header" class="store-header shamel-store-header">
   <div class="lg:hidden">
     <salla-bullet-delivery-tag></salla-bullet-delivery-tag>
@@ -65,6 +66,35 @@
       <nav class="shamel-categories-drawer__nav" aria-label="الأقسام الرئيسية والفرعية">
         <custom-main-menu></custom-main-menu>
       </nav>
+      {% if shamel_show_drawer_price_filter %}
+        <section class="shamel-drawer-price" aria-labelledby="shamel-price-filter-title">
+          <button type="button" class="shamel-drawer-price__toggle" data-shamel-price-toggle aria-expanded="true">
+            <span id="shamel-price-filter-title">فلترة حسب السعر</span>
+            <span aria-hidden="true">−</span>
+          </button>
+          <form class="shamel-drawer-price__body" data-shamel-price-form>
+            <label class="shamel-drawer-price__search">
+              <span>ابحث بالاسم</span>
+              <input type="search" name="search" placeholder="اسم المنتج">
+            </label>
+            <div class="shamel-drawer-price__ranges" role="radiogroup" aria-label="نطاق السعر">
+              <label><input type="radio" name="price_range" value="0-400"><span>أقل من 400 ر.س</span></label>
+              <label><input type="radio" name="price_range" value="400-1000"><span>من 400 إلى 1000 ر.س</span></label>
+              <label><input type="radio" name="price_range" value="1000-1500"><span>من 1000 إلى 1500 ر.س</span></label>
+              <label><input type="radio" name="price_range" value="1500-2500"><span>من 1500 إلى 2500 ر.س</span></label>
+              <label><input type="radio" name="price_range" value="2500-"><span>أكثر من 2500 ر.س</span></label>
+            </div>
+            <div class="shamel-drawer-price__manual">
+              <label><span>من</span><input type="number" min="0" step="1" inputmode="numeric" name="min_price" placeholder="ر.س"></label>
+              <label><span>إلى</span><input type="number" min="0" step="1" inputmode="numeric" name="max_price" placeholder="ر.س"></label>
+            </div>
+            <div class="shamel-drawer-price__actions">
+              <button type="submit">تطبيق الفلتر</button>
+              <button type="button" data-shamel-price-clear>مسح</button>
+            </div>
+          </form>
+        </section>
+      {% endif %}
     </aside>
   {% endif %}
 </header>
@@ -86,6 +116,29 @@
   .shamel-categories-drawer__search{margin:1rem 0}
   .shamel-categories-drawer__nav{padding:.25rem 0}
   .shamel-categories-drawer__nav custom-main-menu{display:block;min-height:0}
+  .shamel-drawer-price{margin-top:1.1rem;padding:1rem;border:1px solid #dbe4ee;border-radius:18px;background:linear-gradient(145deg,#f8fafc,#eef5fb)}
+  .shamel-drawer-price__toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 0 .9rem;border:0;border-bottom:1px solid #dbe4ee;background:transparent;color:#0f172a;font-size:1rem;font-weight:800}
+  .shamel-drawer-price__toggle span:last-child{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#0b1f3a;color:#fff;font-size:1.2rem}
+  .shamel-drawer-price__body{padding-top:1rem}
+  .shamel-drawer-price__body[hidden]{display:none}
+  .shamel-drawer-price__search{display:grid;gap:.4rem;font-size:.82rem;font-weight:700}
+  .shamel-drawer-price input[type="search"],.shamel-drawer-price input[type="number"]{width:100%;height:44px;padding:.65rem .8rem;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;outline:0}
+  .shamel-drawer-price input:focus{border-color:#0b1f3a;box-shadow:0 0 0 3px rgba(11,31,58,.1)}
+  .shamel-drawer-price__ranges{display:grid;gap:.35rem;margin:1rem 0}
+  .shamel-drawer-price__ranges label{display:flex;align-items:center;gap:.65rem;padding:.55rem .65rem;border-radius:10px;cursor:pointer;transition:background .18s ease}
+  .shamel-drawer-price__ranges label:hover{background:rgba(11,31,58,.06)}
+  .shamel-drawer-price__ranges input{accent-color:#0b1f3a}
+  .shamel-drawer-price__manual{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+  .shamel-drawer-price__manual label{display:grid;gap:.35rem;font-size:.78rem;font-weight:700}
+  .shamel-drawer-price__actions{display:grid;grid-template-columns:1fr auto;gap:.6rem;margin-top:1rem}
+  .shamel-drawer-price__actions button{height:42px;padding:0 1rem;border:0;border-radius:12px;font-weight:800}
+  .shamel-drawer-price__actions button[type="submit"]{background:#0b1f3a;color:#fff}
+  .shamel-drawer-price__actions button[type="button"]{background:#e2e8f0;color:#334155}
+  body.shamel-dark-mode .shamel-drawer-price{border-color:rgba(255,255,255,.1);background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025))}
+  body.shamel-dark-mode .shamel-drawer-price__toggle{border-color:rgba(255,255,255,.1);color:#fff}
+  body.shamel-dark-mode .shamel-drawer-price input[type="search"],body.shamel-dark-mode .shamel-drawer-price input[type="number"]{border-color:rgba(255,255,255,.14);background:#0d2742;color:#fff}
+  body.shamel-dark-mode .shamel-drawer-price__ranges label:hover{background:rgba(255,255,255,.07)}
+  body.shamel-dark-mode .shamel-drawer-price__actions button[type="button"]{background:rgba(255,255,255,.1);color:#fff}
   .shamel-categories-drawer__nav .main-menu{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;gap:.35rem!important}
   .shamel-categories-drawer__nav .main-menu>li{display:block!important;width:100%!important}
   .shamel-categories-drawer__nav .main-menu>li>a{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;padding:.85rem 1rem!important;border:1px solid #e2e8f0!important;border-radius:14px!important;background:#f8fafc!important;color:#0f172a!important;font-weight:700!important}
@@ -158,5 +211,52 @@
     drawer.addEventListener('click', function (event) {
       if (event.target.closest('a')) closeCategories();
     });
+
+    var priceToggle = drawer.querySelector('[data-shamel-price-toggle]');
+    var priceForm = drawer.querySelector('[data-shamel-price-form]');
+    var priceClear = drawer.querySelector('[data-shamel-price-clear]');
+    if (priceToggle && priceForm) {
+      priceToggle.addEventListener('click', function () {
+        var collapsed = !priceForm.hidden;
+        priceForm.hidden = collapsed;
+        priceToggle.setAttribute('aria-expanded', String(!collapsed));
+        priceToggle.lastElementChild.textContent = collapsed ? '+' : '−';
+      });
+      var params = new URLSearchParams(window.location.search);
+      var searchField = priceForm.elements.search;
+      var minField = priceForm.elements.min_price;
+      var maxField = priceForm.elements.max_price;
+      if (searchField) searchField.value = params.get('search') || params.get('q') || '';
+      if (minField) minField.value = params.get('min_price') || params.get('price_from') || '';
+      if (maxField) maxField.value = params.get('max_price') || params.get('price_to') || '';
+
+      priceForm.querySelectorAll('input[name="price_range"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+          var parts = radio.value.split('-');
+          minField.value = parts[0] || '';
+          maxField.value = parts[1] || '';
+        });
+      });
+      priceForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var next = new URL(window.location.href);
+        ['min_price','max_price','price_from','price_to','search','q'].forEach(function (key) { next.searchParams.delete(key); });
+        if (searchField && searchField.value.trim()) next.searchParams.set('search', searchField.value.trim());
+        if (minField && minField.value !== '') {
+          next.searchParams.set('min_price', minField.value);
+          next.searchParams.set('price_from', minField.value);
+        }
+        if (maxField && maxField.value !== '') {
+          next.searchParams.set('max_price', maxField.value);
+          next.searchParams.set('price_to', maxField.value);
+        }
+        window.location.href = next.toString();
+      });
+      if (priceClear) priceClear.addEventListener('click', function () {
+        var next = new URL(window.location.href);
+        ['min_price','max_price','price_from','price_to','search','q'].forEach(function (key) { next.searchParams.delete(key); });
+        window.location.href = next.toString();
+      });
+    }
   });
 </script>
