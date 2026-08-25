@@ -26,8 +26,8 @@
             <div class="shamel-header-search-trigger" title="البحث">
               <salla-search data-testid="store-header-search"></salla-search>
             </div>
-            {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-              <div class="shamel-header-localization">
+            {% if store.settings.is_multilingual %}
+              <div class="shamel-header-localization" title="اللغة والعملة">
                 <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
               </div>
             {% endif %}
