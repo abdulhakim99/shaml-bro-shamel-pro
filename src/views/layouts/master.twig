@@ -323,7 +323,7 @@
   {% set shamel_tools_position = shamel_tools_position_raw is iterable ? (shamel_tools_position_raw|first).value : shamel_tools_position_raw %}
   <nav class="shamel-side-tools shamel-side-tools--{{ shamel_tools_position }}" aria-label="أدوات المتجر" data-shamel-side-tools>
     {% if theme.settings.get('shamel_compare_enabled', true) %}
-      <button type="button" data-shamel-compare-open title="مقارنة المنتجات"><i class="sicon-compare" aria-hidden="true"></i><span class="shamel-side-tools__label">المقارنة</span><span class="shamel-side-tools__count" data-shamel-compare-count>0</span></button>
+      <button type="button" data-shamel-compare-open title="مقارنة المنتجات"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M7 3h2v14h3l-4 4-4-4h3V3Zm10 18h-2V7h-3l4-4 4 4h-3v14Z"/></svg><span class="shamel-side-tools__label">المقارنة</span><span class="shamel-side-tools__count" data-shamel-compare-count>0</span></button>
     {% endif %}
     {% if theme.settings.get('shamel_side_newsletter_enabled', true) and theme.settings.get('shamel_popup_enabled') and theme.settings.get('shamel_popup_action_url') %}
       <button type="button" data-shamel-newsletter-open title="اشترك في نشرتنا"><i class="sicon-mail" aria-hidden="true"></i><span class="shamel-side-tools__label">النشرة البريدية</span></button>
@@ -343,7 +343,6 @@
     document.addEventListener('DOMContentLoaded', function(){
       var toolsBar=document.querySelector('[data-shamel-side-tools]');
       if(!toolsBar)return;
-      if(sessionStorage.getItem('shamel_tools_closed')==='1')toolsBar.hidden=true;
       var key='shamel_compare_products',items=[];
       try{items=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){items=[]}
       var drawer=document.querySelector('[data-shamel-compare-drawer]');
@@ -366,7 +365,7 @@
       document.querySelectorAll('[data-shamel-compare-open]').forEach(function(btn){btn.addEventListener('click',function(){if(drawer)drawer.hidden=false})});
       document.querySelectorAll('[data-shamel-compare-close]').forEach(function(btn){btn.addEventListener('click',function(){if(drawer)drawer.hidden=true})});
       document.querySelectorAll('[data-shamel-newsletter-open]').forEach(function(btn){btn.addEventListener('click',function(){var popup=document.getElementById('shamel-marketing-popup');if(popup)popup.hidden=false})});
-      var close=toolsBar.querySelector('[data-shamel-tools-close]');if(close)close.addEventListener('click',function(){toolsBar.hidden=true;sessionStorage.setItem('shamel_tools_closed','1')});
+      var close=toolsBar.querySelector('[data-shamel-tools-close]');if(close)close.addEventListener('click',function(){toolsBar.hidden=true});
       render();
     });
   </script>
