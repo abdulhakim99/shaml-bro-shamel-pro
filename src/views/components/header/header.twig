@@ -13,7 +13,15 @@
       <div class="container">
         <div class="shamel-pro-header-shell">
           <div class="shamel-header-main__grid shamel-header-main__grid--drawer">
-            <div class="shamel-header-main__account" aria-label="اللغة والعملة والسلة والحساب">
+            <div class="shamel-header-main__account" aria-label="البحث واللغة والعملة والسلة والحساب">
+              <div class="shamel-header-search-trigger" data-shamel-header-search>
+                <button type="button" class="shamel-header-icon-button shamel-header-search-button" data-shamel-header-search-button aria-label="فتح البحث" aria-expanded="false">
+                  <i class="sicon-search" aria-hidden="true"></i>
+                </button>
+                <div class="shamel-header-search-panel">
+                  <salla-search data-testid="store-header-search" inline oval height="48" aria-label="البحث عن المنتجات"></salla-search>
+                </div>
+              </div>
               {% if store.settings.is_multilingual %}
                 <div class="shamel-header-localization" title="اللغة والعملة">
                   <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
@@ -30,15 +38,7 @@
               {% if is_page('index') %}<h1 class="sr-only">{{ store.name }}</h1>{% else %}<h2 class="sr-only">{{ store.name }}</h2>{% endif %}
             </a>
 
-            <div class="shamel-header-main__tools" aria-label="البحث والوضع الليلي وأقسام المنتجات">
-              <div class="shamel-header-search-trigger" data-shamel-header-search>
-                <button type="button" class="shamel-header-icon-button shamel-header-search-button" data-shamel-header-search-button aria-label="فتح البحث" aria-expanded="false">
-                  <i class="sicon-search" aria-hidden="true"></i>
-                </button>
-                <div class="shamel-header-search-panel">
-                  <salla-search data-testid="store-header-search" inline oval height="48" aria-label="البحث عن المنتجات"></salla-search>
-                </div>
-              </div>
+            <div class="shamel-header-main__tools" aria-label="الوضع الليلي وأقسام المنتجات">
               {% if theme.settings.get('shamel_dark_mode_enabled', true) %}
                 <button type="button" class="shamel-header-icon-button shamel-header-dark-toggle" data-shamel-dark-toggle aria-pressed="false" title="الوضع الليلي" aria-label="تبديل الوضع الليلي">
                   <i class="sicon-moon" aria-hidden="true"></i>
@@ -162,7 +162,7 @@
   }
   .shamel-header-main__grid--drawer{
     display:grid!important;
-    grid-template-columns:minmax(190px,1fr) minmax(210px,340px) minmax(190px,1fr)!important;
+    grid-template-columns:minmax(250px,1fr) minmax(210px,340px) minmax(120px,1fr)!important;
     grid-template-areas:"account brand tools"!important;
     align-items:center!important;
     gap:20px!important;
@@ -243,7 +243,8 @@
     position:absolute;
     z-index:120;
     top:calc(100% + 14px);
-    right:0;
+    right:auto;
+    left:0;
     width:min(420px,80vw);
     padding:10px;
     border:1px solid rgba(107,231,224,.28);
@@ -272,7 +273,7 @@
     #mainnav.shamel-header-main{padding:8px 0!important}
     .shamel-pro-header-shell{min-height:68px;padding:8px 10px;border-radius:19px}
     .shamel-header-main__grid--drawer{
-      grid-template-columns:minmax(102px,1fr) minmax(82px,128px) minmax(102px,1fr)!important;
+      grid-template-columns:minmax(122px,1fr) minmax(82px,128px) minmax(82px,1fr)!important;
       gap:6px!important;min-height:50px!important
     }
     .shamel-header-main__account,.shamel-header-main__tools{gap:4px!important}
