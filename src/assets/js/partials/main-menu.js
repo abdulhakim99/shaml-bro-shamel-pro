@@ -272,4 +272,71 @@ class NavigationMenu extends HTMLElement {
     }
 }
 
+class ShamelCategoryMenu extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = '<div class="main-menu-skel" aria-hidden="true"></div>';
+
+        salla.onReady()
+            .then(() => salla.lang.onLoaded())
+            .then(() => salla.api.component.getMenus())
+            .then(({ data }) => {
+                this.menus = Array.isArray(data) ? data : [];
+                this.render();
+            })
+            .catch((error) => {
+                salla.logger.error('shamel-category-menu::Error fetching menus', error);
+                this.innerHTML = '';
+            });
+    }
+
+    hasChildren(menu) {
+        return menu?.children?.length > 0;
+    }
+
+    escapeHTML(value = '') {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    getSafeUrl(value) {
+        const url = String(value || '').trim();
+        return /^(https?:|\/|#)/i.test(url) ? url : '#';
+    }
+
+    renderImage(menu) {
+        if (!menu?.image) return '';
+        const title = this.escapeHTML(menu.title || '');
+        return `<img src="${this.escapeHTML(this.getSafeUrl(menu.image))}" width="40" height="40" alt="" aria-hidden="true">`;
+    }
+
+    renderItem(menu) {
+        const title = this.escapeHTML(menu?.title || '');
+        const url = this.escapeHTML(this.getSafeUrl(menu?.url));
+        const image = this.renderImage(menu);
+
+        if (!this.hasChildren(menu)) {
+            return `<li class="shamel-category-menu__item"><a href="${url}" aria-label="${title}">${image}<span>${title}</span></a></li>`;
+        }
+
+        return `<li class="shamel-category-menu__item shamel-category-menu__item--has-children">
+            <details>
+                <summary>${image}<span>${title}</span></summary>
+                <ul>
+                    <li><a href="${url}">${this.escapeHTML(salla.lang.get('blocks.home.display_all'))}</a></li>
+                    ${menu.children.map((child) => this.renderItem(child)).join('')}
+                </ul>
+            </details>
+        </li>`;
+    }
+
+    render() {
+        this.innerHTML = `<ul class="shamel-category-menu__list">${this.menus.map((menu) => this.renderItem(menu)).join('')}</ul>`;
+    }
+}
+
 customElements.define('custom-main-menu', NavigationMenu);
+customElements.define('shamel-category-menu', ShamelCategoryMenu);

@@ -151,6 +151,11 @@ isElementLoaded(selector){
 
 
   initiateMobileMenu() {
+    // Shamel Pro owns mobile category navigation and never renders the
+    // inherited #mobile-menu/mmenu path, including when its drawer is disabled.
+    if (document.body.classList.contains('shamel-pro')) {
+      return;
+    }
 
   this.isElementLoaded('#mobile-menu').then((menu) => {
 

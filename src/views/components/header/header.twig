@@ -44,9 +44,11 @@
                   <i class="sicon-moon" aria-hidden="true"></i>
                 </button>
               {% endif %}
-              <button type="button" class="shamel-header-icon-button shamel-header-menu-toggle" data-shamel-categories-open aria-expanded="false" aria-controls="shamel-categories-drawer" title="أقسام المنتجات" aria-label="فتح أقسام المنتجات">
-                <i class="sicon-menu" aria-hidden="true"></i>
-              </button>
+              {% if shamel_show_header_categories %}
+                <button type="button" class="shamel-header-icon-button shamel-header-menu-toggle" data-shamel-categories-open aria-expanded="false" aria-controls="shamel-categories-drawer" title="أقسام المنتجات" aria-label="فتح أقسام المنتجات">
+                  <i class="sicon-menu" aria-hidden="true"></i>
+                </button>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -57,7 +59,7 @@
 
   {% if shamel_show_header_categories %}
     <div class="shamel-categories-overlay" data-shamel-categories-overlay hidden></div>
-    <aside id="shamel-categories-drawer" class="shamel-categories-drawer" data-shamel-categories-drawer aria-hidden="true" aria-label="أقسام المنتجات">
+    <aside id="shamel-categories-drawer" class="shamel-categories-drawer" data-shamel-categories-drawer aria-hidden="true" aria-modal="true" role="dialog" tabindex="-1" aria-label="أقسام المنتجات">
       <div class="shamel-categories-drawer__head">
         <div>
           <span class="shamel-categories-drawer__eyebrow">تصفّح المتجر</span>
@@ -74,7 +76,7 @@
             <salla-search inline oval height="46" aria-label="ابحث داخل المتجر"></salla-search>
           </div>
           <nav class="shamel-categories-drawer__nav" aria-label="الأقسام الرئيسية والفرعية">
-            <custom-main-menu></custom-main-menu>
+            <shamel-category-menu></shamel-category-menu>
           </nav>
         </div>
       </section>
@@ -109,11 +111,19 @@
   .shamel-categories-drawer__search{margin:0 0 .85rem}
   .shamel-categories-drawer__nav{padding:.25rem 0}
   .shamel-drawer-filters salla-filters{display:block!important;position:static!important;width:100%!important;max-width:none!important}
-  .shamel-categories-drawer__nav custom-main-menu{display:block;min-height:0}
-  .shamel-categories-drawer__nav .main-menu{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;gap:.35rem!important}
-  .shamel-categories-drawer__nav .main-menu>li{display:block!important;width:100%!important}
-  .shamel-categories-drawer__nav .main-menu>li>a{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;padding:.85rem 1rem!important;border:1px solid #e2e8f0!important;border-radius:14px!important;background:#f8fafc!important;color:#0f172a!important;font-weight:700!important}
-  .shamel-categories-drawer__nav .sub-menu{position:static!important;width:100%!important;margin-top:.35rem!important;padding:.35rem!important;border:0!important;border-radius:12px!important;box-shadow:none!important;background:#f8fafc!important}
+  .shamel-categories-drawer__nav shamel-category-menu{display:block;min-height:0}
+  .shamel-category-menu__list,.shamel-category-menu__list ul{display:flex;flex-direction:column;gap:.35rem;width:100%;margin:0;padding:0;list-style:none}
+  .shamel-category-menu__item{display:block;width:100%}
+  .shamel-category-menu__item>a,.shamel-category-menu__item summary{display:flex;align-items:center;gap:.7rem;justify-content:flex-start;width:100%;padding:.85rem 1rem;border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc;color:#0f172a;font-weight:700;text-align:start;cursor:pointer}
+  .shamel-category-menu__item>a img,.shamel-category-menu__item summary img{flex:0 0 40px;border-radius:50%;object-fit:cover}
+  .shamel-category-menu__item details{display:block}
+  .shamel-category-menu__item summary{list-style:none}
+  .shamel-category-menu__item summary::-webkit-details-marker{display:none}
+  .shamel-category-menu__item summary::after{content:'+';margin-inline-start:auto;font-size:1.25rem;line-height:1}
+  .shamel-category-menu__item details[open]>summary::after{content:'−'}
+  .shamel-category-menu__item details>ul{margin-top:.35rem;padding-inline-start:.65rem}
+  .shamel-category-menu__item details>ul a{display:block;padding:.7rem 1rem;border-radius:12px;color:inherit}
+  .shamel-category-menu__item>a:focus-visible,.shamel-category-menu__item summary:focus-visible,.shamel-category-menu__item details>ul a:focus-visible{outline:3px solid var(--shamel-header-ring,#0f8f88);outline-offset:2px}
   body.shamel-categories-locked{overflow:hidden}
   body.shamel-dark-mode .shamel-categories-drawer{background:#071a2f;color:#fff}
   body.shamel-dark-mode .shamel-categories-drawer__head{border-color:rgba(255,255,255,.1)}
@@ -122,7 +132,7 @@
   body.shamel-dark-mode .shamel-drawer-group{border-color:rgba(255,255,255,.12);background:#0b2340}
   body.shamel-dark-mode .shamel-drawer-group__toggle{background:#123b72;color:#fff}
   body.shamel-dark-mode .shamel-drawer-group__toggle b{background:#fff;color:#123b72}
-  body.shamel-dark-mode .shamel-categories-drawer__nav .main-menu>li>a,body.shamel-dark-mode .shamel-categories-drawer__nav .sub-menu{border-color:rgba(255,255,255,.1)!important;background:rgba(255,255,255,.055)!important;color:#fff!important}
+  body.shamel-dark-mode .shamel-category-menu__item>a,body.shamel-dark-mode .shamel-category-menu__item summary,body.shamel-dark-mode .shamel-category-menu__item details>ul a{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.055);color:#fff}
   @media(max-width:640px){
     .shamel-header-main__grid--drawer{grid-template-columns:minmax(74px,1fr) auto minmax(106px,1fr);gap:.35rem;min-height:66px}
     .shamel-header-main__account,.shamel-header-main__tools{gap:.15rem}
@@ -288,32 +298,60 @@
     var overlay = document.querySelector('[data-shamel-categories-overlay]');
     var openButton = document.querySelector('[data-shamel-categories-open]');
     var closeButton = document.querySelector('[data-shamel-categories-close]');
+    var lastFocusedElement = null;
     if (!drawer || !overlay || !openButton) return;
 
+    function getDrawerFocusableElements() {
+      return Array.from(drawer.querySelectorAll('a[href], button:not([disabled]), summary, input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+    }
     function openCategories() {
+      lastFocusedElement = document.activeElement;
       overlay.hidden = false;
+      drawer.classList.add('is-open');
       window.requestAnimationFrame(function () {
         overlay.classList.add('is-open');
-        drawer.classList.add('is-open');
       });
       drawer.setAttribute('aria-hidden', 'false');
       openButton.setAttribute('aria-expanded', 'true');
       document.body.classList.add('shamel-categories-locked');
-      if (closeButton) closeButton.focus();
+      window.setTimeout(function () { (closeButton || drawer).focus(); }, 0);
     }
     function closeCategories() {
+      if (!drawer.classList.contains('is-open')) return;
       overlay.classList.remove('is-open');
       drawer.classList.remove('is-open');
       drawer.setAttribute('aria-hidden', 'true');
       openButton.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('shamel-categories-locked');
       window.setTimeout(function () { overlay.hidden = true; }, 260);
+      (lastFocusedElement && typeof lastFocusedElement.focus === 'function' ? lastFocusedElement : openButton).focus();
     }
     openButton.addEventListener('click', openCategories);
     if (closeButton) closeButton.addEventListener('click', closeCategories);
     overlay.addEventListener('click', closeCategories);
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && drawer.classList.contains('is-open')) closeCategories();
+      if (!drawer.classList.contains('is-open')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeCategories();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      var focusable = getDrawerFocusableElements();
+      if (!focusable.length) {
+        event.preventDefault();
+        drawer.focus();
+        return;
+      }
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
     drawer.addEventListener('click', function (event) {
       if (event.target.closest('a')) closeCategories();

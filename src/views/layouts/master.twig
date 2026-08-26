@@ -68,12 +68,12 @@
 
 
     <script data-cfasync="false">
-        window.header_is_sticky = "{{theme.settings.get('header_is_sticky', 'Default Value')}}"
-        window.imageZoom = "{{theme.settings.get('imageZoom')}}"
+        window.header_is_sticky = {{ theme.settings.get('header_is_sticky', true) ? 'true' : 'false' }}
+        window.imageZoom = {{ theme.settings.get('imageZoom', false) ? 'true' : 'false' }}
         window.can_access_wallet = {{ user.can_access_wallet | json_encode }}
-        window.enable_more_menu = "{{ theme.settings.get('enable_more_menu', true) }}"
-        window.enable_add_product_toast = "{{ theme.settings.get('enable_add_product_toast', true) }}"
-        window.notify_when_available_in_card = "{{ theme.settings.get('notify_when_available_in_card', true) }}"
+        window.enable_more_menu = {{ theme.settings.get('enable_more_menu', true) ? 'true' : 'false' }}
+        window.enable_add_product_toast = {{ theme.settings.get('enable_add_product_toast', true) ? 'true' : 'false' }}
+        window.notify_when_available_in_card = {{ theme.settings.get('notify_when_available_in_card', true) ? 'true' : 'false' }}
         window.shamel_card_discount_badge = {{ theme.settings.get('shamel_card_discount_badge', true) ? 'true' : 'false' }}
         window.shamel_card_type_badge = {{ theme.settings.get('shamel_card_type_badge', true) ? 'true' : 'false' }}
         window.shamel_compare_enabled = {{ theme.settings.get('shamel_compare_enabled', true) ? 'true' : 'false' }}
