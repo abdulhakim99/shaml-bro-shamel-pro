@@ -137,6 +137,14 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('Store features render only populated Salla feature entries', () => {
+  const features = read('src/views/components/home/store-features.twig');
+  assert.match(features, /\{% if items\|length %\}/);
+  assert.match(features, /\{% if item\.title or item\.text %\}/);
+  assert.match(features, /\{% if item\.icon %\}/);
+  assert.match(features, /aria-hidden="true"/);
+});
+
 test('Standard home photo components guard images, links, and loading behavior', () => {
   const slider = read('src/views/components/home/photos-slider.twig');
   const squares = read('src/views/components/home/square-photos.twig');
