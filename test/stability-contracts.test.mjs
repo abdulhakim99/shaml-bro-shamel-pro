@@ -66,3 +66,33 @@ test('Shamel header and shell payloads are compiled through the theme pipeline',
   assert.doesNotMatch(header, /<style>|<script>/);
   assert.equal((master.match(/<style>/g) || []).length, 1);
 });
+
+test('Store Identity exposes the six supported identities and bounded merchant overrides', () => {
+  const config = JSON.parse(read('twilight.json'));
+  const settings = Object.fromEntries(config.settings.filter((setting) => setting.id).map((setting) => [setting.id, setting]));
+  const identity = settings.shamel_store_identity;
+  assert.ok(identity);
+  assert.deepEqual(identity.options.map((option) => option.value), ['general', 'digital', 'perfume', 'fashion', 'electronics', 'gaming']);
+  assert.deepEqual(settings.shamel_surface_mode.options.map((option) => option.value), ['light', 'dark', 'system']);
+  assert.deepEqual(settings.shamel_identity_header_density.options.map((option) => option.value), ['compact', 'standard']);
+  assert.deepEqual(settings.shamel_product_card_detail.options.map((option) => option.value), ['minimal', 'standard', 'rich']);
+  assert.deepEqual(settings.shamel_discovery_style.options.map((option) => option.value), ['auto', 'tiles', 'chips', 'mosaic', 'specs', 'platform']);
+});
+
+test('Store Identity runtime emits tokens without replacing Twilight or Salla contracts', () => {
+  const master = read('src/views/layouts/master.twig');
+  const shell = read('src/assets/js/partials/shamel-shell.js');
+  const styles = read('src/assets/styles/04-components/shamel-identity.scss');
+  const appStyles = read('src/assets/styles/app.scss');
+  assert.match(master, /data-shamel-identity="\{\{ shamel_store_identity \}\}"/);
+  assert.match(master, /data-shamel-surface-mode="\{\{ shamel_surface_mode \}\}"/);
+  assert.match(master, /shamel-card-detail-\{\{ shamel_product_card_detail \}\}/);
+  assert.match(master, /shamel-discovery-\{\{ shamel_discovery_style \}\}/);
+  assert.match(shell, /const surfaceMode = document\.body\.dataset\.shamelSurfaceMode/);
+  assert.match(shell, /const isGamingIdentity = document\.body\.dataset\.shamelIdentity === 'gaming'/);
+  assert.match(shell, /const defaultDark = surfaceMode === 'dark'/);
+  for (const name of ['general', 'digital', 'perfume', 'fashion', 'electronics', 'gaming']) assert.match(styles, new RegExp(`shamel-identity-${name}`));
+  assert.match(styles, /prefers-reduced-motion: reduce/);
+  assert.match(appStyles, /04-components\/shamel-identity/);
+  assert.doesNotMatch(styles, /cart\.addItem|cart\.deleteItem|checkout/);
+});

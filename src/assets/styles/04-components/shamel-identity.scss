@@ -1,0 +1,359 @@
+/*
+ * Shamel Pro Store Identity foundation.
+ * A single token and component-variant layer over Twilight/Salla markup.
+ * Identity never synthesizes product facts; it only changes presentation.
+ */
+.shamel-pro {
+  --si-accent: var(--sp-primary, #0f4c6b);
+  --si-accent-contrast: var(--sp-button-text, #ffffff);
+  --si-page: var(--sp-page-bg, #ffffff);
+  --si-surface: var(--sp-card-bg, #ffffff);
+  --si-alt: var(--sp-section-alt-bg, #f8fafc);
+  --si-text: var(--sp-text, #334155);
+  --si-heading: var(--sp-heading, #0f172a);
+  --si-border: color-mix(in srgb, var(--si-heading) 13%, transparent);
+  --si-shadow: 0 12px 32px rgb(15 23 42 / 8%);
+  --si-radius: 1rem;
+  --si-radius-sm: .75rem;
+  --si-section-space: clamp(2.5rem, 6vw, 5.75rem);
+  --si-card-ratio: 1 / 1;
+  --si-content-max: 76rem;
+  --si-header-height: 88px;
+
+  background: var(--si-page);
+  color: var(--si-text);
+
+  main#main-content {
+    background: var(--si-page);
+  }
+
+  .s-block {
+    margin-top: var(--si-section-space);
+  }
+
+  .s-block__title h2,
+  .s-block h1,
+  .s-block h2,
+  .s-block h3,
+  #main-content > .container h1,
+  #main-content > .container h2 {
+    color: var(--si-heading);
+  }
+
+  .btn--primary,
+  .btn.btn--primary,
+  salla-button[color='primary'] {
+    --color-primary: var(--si-accent);
+    --color-primary-reverse: var(--si-accent-contrast);
+  }
+
+  .s-product-card-entry,
+  .slide--cat-entry,
+  .banner-entry,
+  .s-block--features__item,
+  .sticky-product-bar,
+  .product__description,
+  .shamel-product-trust {
+    border-color: var(--si-border);
+    border-radius: var(--si-radius-sm);
+  }
+
+  .s-product-card-entry {
+    background: var(--si-surface);
+    box-shadow: var(--si-shadow);
+  }
+
+  .s-product-card-image {
+    aspect-ratio: var(--si-card-ratio);
+    height: auto;
+  }
+
+  .s-product-card-image img {
+    object-fit: cover;
+  }
+
+  .s-product-card-content-title a,
+  .s-product-card-price,
+  .s-product-card-starting-price,
+  .product__description,
+  .product-entry__sub-title {
+    color: var(--si-text);
+  }
+
+  .s-product-card-entry :focus-visible,
+  .slide--cat-entry:focus-visible,
+  .banner-entry:focus-visible,
+  .btn:focus-visible,
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--si-accent) 72%, white);
+    outline-offset: 3px;
+  }
+
+  &.shamel-header-density-compact {
+    --si-header-height: 72px;
+
+    .shamel-pro-header-shell { min-height: var(--si-header-height); }
+    .shamel-header-main__grid { min-height: 52px !important; }
+    .shamel-news-wrap { margin-top: -.15rem; }
+  }
+
+  &.shamel-header-density-standard {
+    .shamel-pro-header-shell { min-height: var(--si-header-height); }
+  }
+
+  &.shamel-card-detail-minimal {
+    .s-product-card-content { padding: .7rem .8rem .85rem; }
+    .s-product-card-content-subtitle,
+    .s-product-card-rating { display: none; }
+    .s-product-card-content-title { margin-bottom: .4rem; }
+  }
+
+  &.shamel-card-detail-rich {
+    .s-product-card-content { padding: 1rem; }
+    .s-product-card-content-subtitle { display: block; }
+    .s-product-card-content-sub { margin-bottom: .7rem; }
+  }
+
+  &.shamel-discovery-chips,
+  &.shamel-identity-digital,
+  &.shamel-identity-gaming {
+    .s-block--categories .slide--cat-entry {
+      min-height: 3rem;
+      height: auto;
+      padding: .6rem .9rem;
+      border-radius: 999px;
+      flex-direction: row;
+      gap: .55rem;
+      justify-content: center;
+      background: var(--si-surface);
+    }
+
+    .s-block--categories .slide--cat-entry i {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .s-block--categories .slide--cat-entry img {
+      width: 1.65rem;
+      height: 1.65rem;
+      margin: 0;
+    }
+  }
+
+  &.shamel-discovery-mosaic,
+  &.shamel-identity-fashion {
+    .s-block--categories .slide--cat-entry {
+      min-height: 11rem;
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: start;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .s-block--categories .slide--cat-entry img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border-radius: inherit;
+      object-fit: cover;
+      opacity: .7;
+    }
+
+    .s-block--categories .slide--cat-entry h2 {
+      position: relative;
+      z-index: 1;
+      color: currentColor;
+      background: color-mix(in srgb, var(--si-surface) 84%, transparent);
+      padding: .45rem .65rem;
+      border-radius: .5rem;
+    }
+  }
+
+  &.shamel-discovery-specs,
+  &.shamel-identity-electronics {
+    .s-block--categories .slide--cat-entry {
+      min-height: 5.8rem;
+      height: auto;
+      justify-content: center;
+      gap: .5rem;
+      border-radius: .7rem;
+      border-inline-start: 3px solid var(--si-accent);
+    }
+
+    .s-block--categories .slide--cat-entry i {
+      margin-bottom: .45rem;
+    }
+  }
+
+  /* General is the neutral foundation for mixed catalogues. */
+  &.shamel-identity-general {
+    --si-radius: 1rem;
+    --si-radius-sm: .8rem;
+    --si-section-space: clamp(2.25rem, 5vw, 4.75rem);
+    --si-card-ratio: 1 / 1;
+  }
+
+  /* Digital prioritises a compact, scanning-friendly hierarchy. */
+  &.shamel-identity-digital {
+    --si-alt: #f4f5ff;
+    --si-radius: .9rem;
+    --si-radius-sm: .7rem;
+    --si-card-ratio: 16 / 11;
+
+    .s-block--hero-slider .swiper-slide { min-height: clamp(16rem, 42vw, 29rem); }
+    .s-block--categories { padding-block: .8rem; background: var(--si-alt); }
+    .s-product-card-entry { border: 1px solid color-mix(in srgb, var(--si-accent) 17%, transparent); }
+    .s-product-card-content-title a,
+    .s-product-card-price { font-variant-numeric: tabular-nums; }
+    .container--product-details .main-content { max-width: 42rem; }
+  }
+
+  /* Perfume increases whitespace and makes existing imagery the focal point. */
+  &.shamel-identity-perfume {
+    --si-page: #fffcf7;
+    --si-surface: #fffefa;
+    --si-alt: #f8f1e7;
+    --si-border: rgb(139 107 61 / 22%);
+    --si-shadow: 0 16px 40px rgb(74 50 19 / 10%);
+    --si-radius: 1.4rem;
+    --si-radius-sm: 1.05rem;
+    --si-section-space: clamp(3rem, 7vw, 6.5rem);
+    --si-card-ratio: 4 / 5;
+
+    .s-block__title h2 { letter-spacing: .025em; }
+    .s-block--hero-slider .swiper-slide { min-height: clamp(20rem, 48vw, 36rem); }
+    .s-product-card-content { padding: 1.1rem; }
+    .s-product-card-entry { border: 1px solid var(--si-border); }
+    .banner-entry { min-height: 16rem; }
+  }
+
+  /* Fashion / Abaya uses editorial spacing and portrait treatment for merchant media. */
+  &.shamel-identity-fashion {
+    --si-alt: #f7f6f4;
+    --si-radius: 1.25rem;
+    --si-radius-sm: 1rem;
+    --si-section-space: clamp(3rem, 7vw, 6.75rem);
+    --si-card-ratio: 3 / 4;
+
+    .s-block__title h2 { font-size: clamp(1.25rem, 2.2vw, 2rem); }
+    .s-block--hero-slider .swiper-slide { min-height: clamp(22rem, 55vw, 39rem); }
+    .s-block--banners .banner-entry { min-height: clamp(15rem, 35vw, 26rem); }
+    .s-product-card-content { padding: .9rem .95rem 1.1rem; }
+    .container--product-details .details-slider { border-radius: var(--si-radius); overflow: hidden; }
+  }
+
+  /* Electronics keeps the catalogue dense and structurally separated. */
+  &.shamel-identity-electronics {
+    --si-alt: #f1f5f9;
+    --si-radius: .7rem;
+    --si-radius-sm: .55rem;
+    --si-section-space: clamp(2rem, 4.5vw, 4.5rem);
+    --si-card-ratio: 1 / 1;
+
+    .s-block__title h2 { font-size: clamp(1.05rem, 1.8vw, 1.45rem); }
+    .s-product-card-entry { border: 1px solid var(--si-border); box-shadow: 0 6px 18px rgb(15 23 42 / 6%); }
+    .s-product-card-content { padding: .8rem; }
+    .s-product-card-image { background: #f8fafc; }
+    .container--product-details .main-content > section,
+    .container--product-details .product__description { border: 1px solid var(--si-border); }
+  }
+
+  /* Gaming is dark-first, but the merchant surface override remains authoritative. */
+  &.shamel-identity-gaming {
+    --si-page: #080d19;
+    --si-surface: #111a2b;
+    --si-alt: #0c1424;
+    --si-text: #d9e4f3;
+    --si-heading: #f7fbff;
+    --si-border: rgb(145 190 255 / 22%);
+    --si-shadow: 0 18px 42px rgb(0 0 0 / 30%);
+    --si-radius: .8rem;
+    --si-radius-sm: .6rem;
+    --si-section-space: clamp(2.5rem, 5vw, 5rem);
+    --si-card-ratio: 16 / 10;
+
+    .s-block--hero-slider .swiper-slide { min-height: clamp(19rem, 45vw, 34rem); }
+    .s-block--categories { background: var(--si-alt); padding-block: 1rem; }
+    .s-product-card-entry { border: 1px solid var(--si-border); }
+    .s-product-card-content-title a,
+    .s-product-card-price,
+    .s-product-card-content-subtitle { color: var(--si-heading); }
+    .s-product-card-image { background: #0a1220; }
+    .s-block--features__item,
+    .sticky-product-bar,
+    .product__description,
+    .shamel-product-trust { background: var(--si-surface); color: var(--si-text); }
+  }
+
+  &.shamel-surface-light {
+    --si-page: var(--sp-page-bg, #ffffff);
+    --si-surface: var(--sp-card-bg, #ffffff);
+    --si-alt: var(--sp-section-alt-bg, #f8fafc);
+    --si-text: var(--sp-text, #334155);
+    --si-heading: var(--sp-heading, #0f172a);
+  }
+
+  &.shamel-surface-dark,
+  &.shamel-dark-mode {
+    --si-page: #08111f;
+    --si-surface: #111d2e;
+    --si-alt: #0c1728;
+    --si-text: #d5dfeb;
+    --si-heading: #f8fbff;
+    --si-border: rgb(203 213 225 / 18%);
+    --si-shadow: 0 16px 42px rgb(0 0 0 / 34%);
+
+    .s-product-card-entry,
+    .slide--cat-entry,
+    .s-block--features__item,
+    .sticky-product-bar,
+    .product__description,
+    .shamel-product-trust { background: var(--si-surface); color: var(--si-text); }
+
+    .s-product-card-content-title a,
+    .s-product-card-price,
+    .s-product-card-content-subtitle,
+    .s-block__title h2 { color: var(--si-heading); }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .shamel-pro.shamel-surface-system:not(.shamel-dark-mode) {
+    --si-page: #08111f;
+    --si-surface: #111d2e;
+    --si-alt: #0c1728;
+    --si-text: #d5dfeb;
+    --si-heading: #f8fbff;
+    --si-border: rgb(203 213 225 / 18%);
+  }
+}
+
+@media (max-width: 640px) {
+  .shamel-pro {
+    --si-section-space: clamp(2rem, 10vw, 3.25rem);
+
+    .s-block--hero-slider .swiper-slide { min-height: 18rem; }
+    .s-block--banners .banner-entry { min-height: 11.5rem; }
+    .s-product-card-content { padding: .75rem; }
+
+    &.shamel-identity-fashion,
+    &.shamel-identity-perfume {
+      .s-product-card-image { aspect-ratio: 3 / 4; }
+    }
+
+    &.shamel-header-density-compact .shamel-pro-header-shell { min-height: 68px; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shamel-pro .s-block,
+  .shamel-pro .s-product-card-entry,
+  .shamel-pro .slide--cat-entry,
+  .shamel-pro .banner-entry {
+    transition: none !important;
+  }
+}

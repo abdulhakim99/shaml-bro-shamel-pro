@@ -61,6 +61,8 @@ function initShamelSideTools() {
   const toolsBar = document.querySelector('[data-shamel-side-tools]');
   const darkButton = document.querySelector('.shamel-header-dark-toggle[data-shamel-dark-toggle]');
   const darkKey = 'shamel_dark_mode';
+  const surfaceMode = document.body.dataset.shamelSurfaceMode || 'system';
+  const isGamingIdentity = document.body.dataset.shamelIdentity === 'gaming';
 
   function applyDarkMode(enabled) {
     document.body.classList.toggle('shamel-dark-mode', enabled);
@@ -72,7 +74,9 @@ function initShamelSideTools() {
   }
 
   const savedDark = localStorage.getItem(darkKey);
-  let darkEnabled = savedDark === null ? window.matchMedia('(prefers-color-scheme:dark)').matches : savedDark === 'dark';
+  const preferredDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const defaultDark = surfaceMode === 'dark' || (surfaceMode === 'system' && (isGamingIdentity || preferredDark));
+  let darkEnabled = savedDark === null ? defaultDark : savedDark === 'dark';
   applyDarkMode(darkEnabled);
   if (darkButton) darkButton.addEventListener('click', () => {
     darkEnabled = !document.body.classList.contains('shamel-dark-mode');

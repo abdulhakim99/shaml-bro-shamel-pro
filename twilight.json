@@ -33,6 +33,100 @@
       "variant": "h6"
     },
     {
+      "id": "shamel_store_identity",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "هوية المتجر / Store Identity",
+      "description": "تغيّر طريقة العرض والتنظيم داخل نفس قالب Twilight، من دون إنشاء ثيم منفصل أو تغيير منطق سلة سلة والدفع.",
+      "icon": "sicon-store",
+      "required": true,
+      "selected": [
+        {
+          "label": "General / متجر عام",
+          "value": "general",
+          "key": "shamel-identity-general"
+        }
+      ],
+      "options": [
+        { "label": "General / متجر عام", "value": "general", "key": "shamel-identity-general" },
+        { "label": "Digital / منتجات رقمية", "value": "digital", "key": "shamel-identity-digital" },
+        { "label": "Perfume / عطور", "value": "perfume", "key": "shamel-identity-perfume" },
+        { "label": "Fashion / Abaya / أزياء", "value": "fashion", "key": "shamel-identity-fashion" },
+        { "label": "Electronics / إلكترونيات", "value": "electronics", "key": "shamel-identity-electronics" },
+        { "label": "Gaming / ألعاب", "value": "gaming", "key": "shamel-identity-gaming" }
+      ]
+    },
+    {
+      "id": "shamel_surface_mode",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "نمط الأسطح",
+      "description": "يتحكم في المظهر الافتراضي Light أو Dark أو System، مع بقاء زر التبديل متاحاً للعميل عند تفعيله.",
+      "icon": "sicon-moon",
+      "required": true,
+      "selected": [
+        { "label": "System / حسب الجهاز", "value": "system", "key": "shamel-surface-system" }
+      ],
+      "options": [
+        { "label": "Light / فاتح", "value": "light", "key": "shamel-surface-light" },
+        { "label": "Dark / داكن", "value": "dark", "key": "shamel-surface-dark" },
+        { "label": "System / حسب الجهاز", "value": "system", "key": "shamel-surface-system" }
+      ]
+    },
+    {
+      "id": "shamel_identity_header_density",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "كثافة الرأس",
+      "description": "Compact أو Standard مع الحفاظ على مساحة لمس آمنة وعناصر Salla الرسمية.",
+      "icon": "sicon-list",
+      "required": true,
+      "selected": [
+        { "label": "Standard / قياسية", "value": "standard", "key": "shamel-header-density-standard" }
+      ],
+      "options": [
+        { "label": "Compact / مضغوطة", "value": "compact", "key": "shamel-header-density-compact" },
+        { "label": "Standard / قياسية", "value": "standard", "key": "shamel-header-density-standard" }
+      ]
+    },
+    {
+      "id": "shamel_product_card_detail",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "تفاصيل بطاقة المنتج",
+      "description": "تتحكم في كثافة العرض فقط؛ لا تضيف مواصفات أو شارات غير موجودة في بيانات Salla.",
+      "icon": "sicon-list",
+      "required": true,
+      "selected": [
+        { "label": "Standard / قياسية", "value": "standard", "key": "shamel-card-standard" }
+      ],
+      "options": [
+        { "label": "Minimal / مختصرة", "value": "minimal", "key": "shamel-card-minimal" },
+        { "label": "Standard / قياسية", "value": "standard", "key": "shamel-card-standard" },
+        { "label": "Rich / موسعة عند توفر البيانات", "value": "rich", "key": "shamel-card-rich" }
+      ]
+    },
+    {
+      "id": "shamel_discovery_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "أسلوب اكتشاف المنتجات",
+      "description": "يغيّر عرض التصنيفات والبنرات الموجودة فقط؛ لا ينشئ منصات أو مناطق أو مواصفات من أسماء المنتجات.",
+      "icon": "sicon-filter",
+      "required": true,
+      "selected": [
+        { "label": "Auto / حسب الهوية", "value": "auto", "key": "shamel-discovery-auto" }
+      ],
+      "options": [
+        { "label": "Auto / حسب الهوية", "value": "auto", "key": "shamel-discovery-auto" },
+        { "label": "Tiles / بلاطات", "value": "tiles", "key": "shamel-discovery-tiles" },
+        { "label": "Chips / شرائح", "value": "chips", "key": "shamel-discovery-chips" },
+        { "label": "Mosaic / شبكي تحريري", "value": "mosaic", "key": "shamel-discovery-mosaic" },
+        { "label": "Specs / وظيفي", "value": "specs", "key": "shamel-discovery-specs" },
+        { "label": "Platform / منصات", "value": "platform", "key": "shamel-discovery-platform" }
+      ]
+    },
+    {
       "id": "shamel_store_mode",
       "type": "items",
       "format": "dropdown-list",

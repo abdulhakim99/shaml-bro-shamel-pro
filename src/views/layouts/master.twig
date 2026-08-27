@@ -101,6 +101,11 @@
     {# tracking services, custom css feature. #}
     {% hook 'head:end' %}
 </head>
+{% set shamel_store_identity_raw = theme.settings.get('shamel_store_identity', 'general') %}
+{% set shamel_surface_mode_raw = theme.settings.get('shamel_surface_mode', 'system') %}
+{% set shamel_identity_header_density_raw = theme.settings.get('shamel_identity_header_density', 'standard') %}
+{% set shamel_product_card_detail_raw = theme.settings.get('shamel_product_card_detail', 'standard') %}
+{% set shamel_discovery_style_raw = theme.settings.get('shamel_discovery_style', 'auto') %}
 {% set shamel_store_mode_raw = theme.settings.get('shamel_store_mode', 'general') %}
 {% set shamel_industry_raw = theme.settings.get('shamel_industry_preset', 'universal') %}
 {% set shamel_ui_style_raw = theme.settings.get('shamel_ui_style', 'modern') %}
@@ -109,6 +114,11 @@
 {% set shamel_product_density_raw = theme.settings.get('shamel_product_density', 'comfortable') %}
 {% set shamel_announcement_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
 {% set shamel_popup_capture_raw = theme.settings.get('shamel_popup_capture_type', 'email') %}
+{% set shamel_store_identity = shamel_store_identity_raw is iterable ? (shamel_store_identity_raw|first).value : shamel_store_identity_raw %}
+{% set shamel_surface_mode = shamel_surface_mode_raw is iterable ? (shamel_surface_mode_raw|first).value : shamel_surface_mode_raw %}
+{% set shamel_identity_header_density = shamel_identity_header_density_raw is iterable ? (shamel_identity_header_density_raw|first).value : shamel_identity_header_density_raw %}
+{% set shamel_product_card_detail = shamel_product_card_detail_raw is iterable ? (shamel_product_card_detail_raw|first).value : shamel_product_card_detail_raw %}
+{% set shamel_discovery_style = shamel_discovery_style_raw is iterable ? (shamel_discovery_style_raw|first).value : shamel_discovery_style_raw %}
 {% set shamel_store_mode = shamel_store_mode_raw is iterable ? (shamel_store_mode_raw|first).value : shamel_store_mode_raw %}
 {% set shamel_industry = shamel_industry_raw is iterable ? (shamel_industry_raw|first).value : shamel_industry_raw %}
 {% set shamel_ui_style = shamel_ui_style_raw is iterable ? (shamel_ui_style_raw|first).value : shamel_ui_style_raw %}
@@ -117,7 +127,7 @@
 {% set shamel_product_density = shamel_product_density_raw is iterable ? (shamel_product_density_raw|first).value : shamel_product_density_raw %}
 {% set shamel_announcement_speed = shamel_announcement_speed_raw is iterable ? (shamel_announcement_speed_raw|first).value : shamel_announcement_speed_raw %}
 {% set shamel_popup_capture = shamel_popup_capture_raw is iterable ? (shamel_popup_capture_raw|first).value : shamel_popup_capture_raw %}
-<body id="app" class="theme-raed shamel-pro shamel-mode-{{ shamel_store_mode }} shamel-industry-{{ shamel_industry }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
+<body id="app" data-shamel-identity="{{ shamel_store_identity }}" data-shamel-surface-mode="{{ shamel_surface_mode }}" class="theme-raed shamel-pro shamel-identity-{{ shamel_store_identity }} shamel-surface-{{ shamel_surface_mode }} shamel-header-density-{{ shamel_identity_header_density }} shamel-card-detail-{{ shamel_product_card_detail }} shamel-discovery-{{ shamel_discovery_style }} shamel-mode-{{ shamel_store_mode }} shamel-industry-{{ shamel_industry }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
