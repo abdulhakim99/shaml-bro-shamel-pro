@@ -3,6 +3,10 @@
 .s-reviews {
   &-container {
     @apply lg:overflow-hidden;
+    .s-block--custom-testimonials & .s-reviews-swiper-slide {
+      width: min(830px, 100%);
+      max-width: 100%;
+    }
     .swiper-slide {
       @apply overflow-hidden px-[10px] lg:px-[15px] w-[20%] h-auto;
     }
