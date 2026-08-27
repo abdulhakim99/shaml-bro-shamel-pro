@@ -118,3 +118,17 @@ test('Store Identity variants remain reusable and data-first across shared Twili
   assert.match(product, /salla-add-product-button/);
   assert.doesNotMatch(styles, /delivery promise|warranty|original product/i);
 });
+
+
+test('Marketplace polish keeps hero content data-first and preserves accessible presentation overrides', () => {
+  const hero = read('src/views/components/home/enhanced-slider.twig');
+  const styles = read('src/assets/styles/04-components/shamel-identity.scss');
+  assert.match(hero, /\{% if slide\.title or slide\.description %\}/);
+  assert.match(hero, /\{% if slide\.title %\}/);
+  assert.match(hero, /\{% if slide\.description %\}/);
+  assert.match(styles, /shamel-discovery-platform/);
+  assert.match(styles, /\.banner-entry:focus-within/);
+  assert.match(styles, /\.s-block--hero-slider \[data-swiper-parallax\]/);
+  assert.match(styles, /prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
+});
