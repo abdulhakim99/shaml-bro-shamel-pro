@@ -16,6 +16,7 @@
 {% elseif shamel_identity == 'fashion' %}{% set shamel_hero_variant = 'editorial' %}
 {% elseif shamel_identity == 'electronics' %}{% set shamel_hero_variant = 'collection' %}
 {% elseif shamel_identity == 'gaming' %}{% set shamel_hero_variant = 'platform' %}{% endif %}
+{% if component.slides|length %}
 <section data-testid="store-home-slider" data-shamel-hero-variant="{{ shamel_hero_variant }}" class="s-block s-block--hero-slider s-block--full-bg wide-placeholder shamel-hero--{{ shamel_hero_variant }}">
     <salla-slider 
       id="main-slider-{{ position }}"
@@ -44,4 +45,5 @@
             {% endfor %}
         </div>
     </salla-slider>
-</section> 
+</section>
+{% endif %}

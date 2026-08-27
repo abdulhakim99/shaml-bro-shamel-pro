@@ -144,6 +144,30 @@ test('Enhanced square banners remain data-first and accessible with partial merc
   assert.doesNotMatch(banners, /<h3[^>]*>\{\{banner\.title\}\}<\/h3>/);
 });
 
+test('Seeded home components require merchant content before they render', () => {
+  const config = JSON.parse(read('twilight.json'));
+  const byPath = Object.fromEntries(config.components.map((component) => [component.path, component]));
+  const field = (component, id) => component.fields.find((item) => item.id === id);
+  const hero = byPath['home.enhanced-slider'];
+  const banners = byPath['home.enhanced-square-banners'];
+  const testimonials = byPath['home.custom-testimonials'];
+  const brands = byPath['home.brands'];
+  assert.equal(hero.is_default, false);
+  assert.deepEqual(field(hero, 'slides').value, []);
+  assert.equal(field(hero, 'slides').minLength, 0);
+  assert.equal(banners.is_default, false);
+  assert.deepEqual(field(banners, 'banners').value, []);
+  assert.equal(field(banners, 'banners').minLength, 0);
+  assert.equal(testimonials.is_default, false);
+  assert.deepEqual(field(testimonials, 'items').value, []);
+  assert.equal(field(testimonials, 'items').minLength, 0);
+  assert.equal(field(brands, 'title').value, null);
+  assert.match(read('src/views/components/home/enhanced-slider.twig'), /\{% if component\.slides\|length %\}/);
+  assert.match(read('src/views/components/home/enhanced-square-banners.twig'), /\{% if component\.banners\|length %\}/);
+  assert.match(read('src/views/components/home/custom-testimonials.twig'), /\{% if component\.items\|length %\}/);
+  assert.match(read('src/views/components/home/brands.twig'), /\{% if component\.brands\|length %\}/);
+});
+
 test('Marketplace shell stays data-first and honours the merchant motion setting', () => {
   const product = read('src/views/pages/product/single.twig');
   const master = read('src/views/layouts/master.twig');
