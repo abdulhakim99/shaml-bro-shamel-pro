@@ -130,6 +130,7 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.match(hero, /\{% if slide\.title or slide\.description %\}/);
   assert.match(hero, /\{% if slide\.title %\}/);
   assert.match(hero, /\{% if slide\.description %\}/);
+  assert.match(hero, /<div aria-hidden="true" style="background-image: url\(\{\{ slide\.image \}\}\);/);
   assert.match(styles, /shamel-discovery-platform/);
   assert.match(styles, /\.banner-entry:focus-within/);
   assert.match(styles, /\.s-block--hero-slider \[data-swiper-parallax\]/);
