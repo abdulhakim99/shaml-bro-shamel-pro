@@ -309,6 +309,35 @@
     .container--product-details .details-slider { border-radius: var(--si-radius); overflow: hidden; }
   }
 
+  /* Product-page variants use existing Salla fields only. */
+  .shamel-product--digital-oriented {
+    .main-content > [data-testid='store-product-price'],
+    .main-content > .product-form {
+      border: 1px solid color-mix(in srgb, var(--si-accent) 24%, transparent);
+      border-radius: var(--si-radius-sm);
+      background: var(--si-surface);
+    }
+
+    .main-content > [data-testid='store-product-price'] { padding: .8rem 1rem; }
+    .product__description { order: 2; }
+    digital-files-settings,
+    salla-metadata { display: block; margin-block: 1rem; }
+  }
+
+  .shamel-product--scent-oriented {
+    .details-slider { border-radius: var(--si-radius); overflow: hidden; }
+    .main-content > h1 { margin-bottom: .65rem; }
+    .product-entry__sub-title { margin-bottom: 1rem; line-height: 1.8; }
+    .product__description { padding: 1rem 0; border-block: 1px solid var(--si-border); }
+  }
+
+  .shamel-product--fashion-oriented {
+    .details-slider { border-radius: var(--si-radius); overflow: hidden; }
+    .details-slider .swiper-slide { aspect-ratio: 3 / 4; }
+    .details-slider .swiper-slide img { object-fit: cover; }
+    .main-content > h1 { font-size: clamp(1.35rem, 2.5vw, 2rem); }
+  }
+
   /* Electronics keeps the catalogue dense and structurally separated. */
   &.shamel-identity-electronics {
     --si-alt: #f1f5f9;
