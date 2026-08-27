@@ -189,6 +189,8 @@
 {# Shamel Pro: merchant-controlled floating contact hub #}
 {% if theme.settings.get('shamel_social_enabled', true) %}
   {% set shamel_whatsapp = theme.settings.get('shamel_whatsapp_number') %}
+  {% set shamel_contact_has_links = (theme.settings.get('shamel_whatsapp_enabled', true) and shamel_whatsapp) or (theme.settings.get('shamel_instagram_enabled') and theme.settings.get('shamel_instagram_url')) or (theme.settings.get('shamel_tiktok_enabled') and theme.settings.get('shamel_tiktok_url')) or (theme.settings.get('shamel_snapchat_enabled') and theme.settings.get('shamel_snapchat_url')) or (theme.settings.get('shamel_x_enabled') and theme.settings.get('shamel_x_url')) or (theme.settings.get('shamel_youtube_enabled') and theme.settings.get('shamel_youtube_url')) or (theme.settings.get('shamel_facebook_enabled') and theme.settings.get('shamel_facebook_url')) or (theme.settings.get('shamel_email_enabled') and theme.settings.get('shamel_email')) or (theme.settings.get('shamel_phone_enabled') and theme.settings.get('shamel_phone')) %}
+  {% if shamel_contact_has_links %}
   {% set shamel_position_raw = theme.settings.get('shamel_social_position', 'right') %}
   {% set shamel_position = shamel_position_raw is iterable ? (shamel_position_raw|first).value : shamel_position_raw %}
   <div class="shamel-contact shamel-contact--{{ shamel_position }}" data-testid="shamel-contact">
@@ -227,6 +229,7 @@
       </nav>
     </div>
   </div>
+  {% endif %}
 {% endif %}
 
 
