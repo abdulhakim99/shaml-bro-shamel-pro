@@ -969,7 +969,7 @@
       "id": "shamel_announcement_text",
       "format": "text",
       "required": false,
-      "value": "شحن سريع وآمن | عروض حصرية طوال الأسبوع | تسوق بثقة مع شامل برو",
+      "value": "",
       "placeholder": "شحن سريع | عروض حصرية"
     },
     {
