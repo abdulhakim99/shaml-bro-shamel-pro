@@ -154,6 +154,7 @@ test('Seeded home components require merchant content before they render', () =>
   const banners = byPath['home.enhanced-square-banners'];
   const testimonials = byPath['home.custom-testimonials'];
   const brands = byPath['home.brands'];
+  const discovery = byPath['home.main-links'];
   assert.equal(hero.is_default, false);
   assert.deepEqual(field(hero, 'slides').value, []);
   assert.equal(field(hero, 'slides').minLength, 0);
@@ -166,6 +167,7 @@ test('Seeded home components require merchant content before they render', () =>
   assert.equal(field(testimonials, 'items').fields.find((item) => item.id === 'items.name').required, true);
   assert.equal(field(testimonials, 'items').fields.find((item) => item.id === 'items.text').required, true);
   assert.equal(field(brands, 'title').value, null);
+  assert.equal(discovery.is_default, false);
   assert.match(read('src/views/components/home/enhanced-slider.twig'), /\{% if component\.slides\|length %\}/);
   assert.match(read('src/views/components/home/enhanced-square-banners.twig'), /\{% if component\.banners\|length %\}/);
   assert.match(read('src/views/components/home/custom-testimonials.twig'), /\{% if component\.items\|length %\}/);
