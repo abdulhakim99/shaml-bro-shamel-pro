@@ -40,17 +40,25 @@ export function validateProductOptions() {
  * Observes changes in quantity input for a specific cart item.
  */
 function observeQuantityChanges(quantityComponent, itemId, item) {
-    const observer = new MutationObserver(() => {
+    const bindQuantityInput = () => {
         const quantityInput = quantityComponent.querySelector('input[name="quantity"]');
-        if (quantityInput) {
-            observer.disconnect(); // Stop observing once input is found
-            quantityInput.addEventListener('change', (e) => {
-                if (!item.reportValidity()) return;
-                if (Number(itemId) === Number(e.detail?.productId)) {
-                    appendLoadingOverlay(e.detail?.productId);
-                }
-            });
-        }
+        if (!quantityInput) return false;
+
+        quantityInput.addEventListener('change', () => {
+            if (!item.reportValidity()) return;
+            // A native input change has no CustomEvent detail; the cart item id is already known.
+            appendLoadingOverlay(itemId);
+        });
+
+        return true;
+    };
+
+    // Hydration can finish before this initializer runs, so bind the already-rendered input first.
+    if (bindQuantityInput()) return;
+
+    // Keep a narrow fallback for components that hydrate after the cart script.
+    const observer = new MutationObserver(() => {
+        if (bindQuantityInput()) observer.disconnect();
     });
     observer.observe(quantityComponent, { childList: true, subtree: true });
 }
