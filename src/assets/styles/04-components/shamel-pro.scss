@@ -124,6 +124,33 @@
   &.shamel-motion {
     .s-product-card-entry:hover { transform: translateY(-4px); box-shadow: var(--shamel-shadow); }
   }
+
+  /* This setting covers Shamel-owned presentation motion; Salla controls retain their native contracts. */
+  &:not(.shamel-motion) {
+    .s-product-card-entry,
+    .s-product-card-image img,
+    .banner-entry h3,
+    .banner-entry p,
+    .s-block--features__item,
+    .shamel-follow__links a,
+    .shamel-header-main__account > *,
+    .shamel-header-main__tools > *,
+    .shamel-header-search-panel,
+    .shamel-contact__link {
+      transition: none !important;
+    }
+
+    .s-product-card-entry:hover,
+    .s-product-card-entry:hover .s-product-card-image img,
+    .shamel-header-main__account > *:hover,
+    .shamel-header-main__tools > *:hover,
+    .shamel-follow__links a:hover,
+    .shamel-contact__link:hover {
+      transform: none !important;
+    }
+
+    .s-block--features__item:hover .feature-icon i { animation: none; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

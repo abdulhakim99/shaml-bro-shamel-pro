@@ -136,6 +136,7 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
 test('Marketplace shell stays data-first and honours the merchant motion setting', () => {
   const product = read('src/views/pages/product/single.twig');
   const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
+  const presentationStyles = read('src/assets/styles/04-components/shamel-pro.scss');
   const config = JSON.parse(read('twilight.json'));
   const settings = Object.fromEntries(config.settings.filter((setting) => setting.id).map((setting) => [setting.id, setting]));
   assert.match(product, /shamel_product_trust_enabled[^\n]+shamel_product_trust_one[^\n]+shamel_product_trust_two[^\n]+shamel_product_trust_three/);
@@ -143,4 +144,7 @@ test('Marketplace shell stays data-first and honours the merchant motion setting
   assert.doesNotMatch(shellStyles, /content:"منتج رقمي"/);
   assert.match(shellStyles, /\.shamel-pro:not\(\.shamel-motion\) \.shamel-news__track/);
   assert.match(shellStyles, /\.shamel-pro:not\(\.shamel-motion\) \.shamel-contact__link--whatsapp/);
+  assert.match(presentationStyles, /&:not\(\.shamel-motion\) \{/);
+  assert.match(presentationStyles, /\.s-product-card-entry:hover,/);
+  assert.match(presentationStyles, /transition: none !important/);
 });
