@@ -137,6 +137,15 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('Fixed banners stay accessible with incomplete merchant data', () => {
+  const banner = read('src/views/components/home/fixed-banner.twig');
+  assert.match(banner, /\{% if image\.url %\}/);
+  assert.match(banner, /\{% if url %\}/);
+  assert.match(banner, /alt="\{\{ alt_text \}\}"/);
+  assert.match(banner, /aria-label="\{\{ banner_label\|e\('html_attr'\) \}\}"/);
+  assert.doesNotMatch(banner, /alt_text = image\.alt\|trim \? image\.alt : 'fixed banner'/);
+});
+
 test('Enhanced square banners remain data-first and accessible with partial merchant data', () => {
   const banners = read('src/views/components/home/enhanced-square-banners.twig');
   assert.match(banners, /\{% set banner_has_text = banner\.title or banner\.description %\}/);

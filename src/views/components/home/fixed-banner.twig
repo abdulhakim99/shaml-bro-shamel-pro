@@ -8,27 +8,38 @@
 | position        | Int     | Sorting number start from zero                                   |
 
 #}
+{% if image.url %}
 <section data-testid="store-home-fixed-banner" class="s-block s-block--fixed-banner wide-placeholder">
     <div class="container">
-        {% set alt_text = image.alt|trim ? image.alt : 'fixed banner' %}
-        <a href="{{ url }}" class="banner banner--fixed overflow-hidden" aria-label="Banner {{ alt_text }}">
-            <picture>
-                {% if image.small_url %}
-                    <source
-                        media="(max-width: 767px)"
-                        srcset="{{ image.small_url }}"
+        {% set alt_text = image.alt|trim %}
+        {% set banner_label = alt_text ? alt_text : 'عرض البانر' %}
+        {% if url %}
+            <a href="{{ url }}" class="banner banner--fixed overflow-hidden" aria-label="{{ banner_label|e('html_attr') }}">
+        {% else %}
+            <div class="banner banner--fixed overflow-hidden">
+        {% endif %}
+                <picture>
+                    {% if image.small_url %}
+                        <source
+                            media="(max-width: 767px)"
+                            srcset="{{ image.small_url }}"
+                        />
+                    {% endif %}
+                    <img
+                        width="1200"
+                        height="300"
+                        src="{{ image.url }}"
+                        loading="lazy"
+                        alt="{{ alt_text }}"
+                        style="height:auto;max-width:100%;object-fit: contain;"
+                        fetchpriority="high"
                     />
-                {% endif %}
-                <img
-                    width="1200"
-                    height="300"
-                    src="{{ image.url }}"
-                    loading="lazy"
-                    alt="{{ alt_text }}"
-                    style="height:auto;max-width:100%;object-fit: contain;"
-                    fetchpriority="high"
-                />
-            </picture>
-        </a>
+                </picture>
+        {% if url %}
+            </a>
+        {% else %}
+            </div>
+        {% endif %}
     </div>
 </section>
+{% endif %}
