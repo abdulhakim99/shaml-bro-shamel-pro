@@ -837,7 +837,7 @@
       "id": "shamel_product_trust_one",
       "format": "text",
       "required": false,
-      "value": "دفع آمن وموثوق",
+      "value": "",
       "placeholder": "دفع آمن وموثوق"
     },
     {
@@ -847,7 +847,7 @@
       "id": "shamel_product_trust_two",
       "format": "text",
       "required": false,
-      "value": "خدمة عملاء سريعة",
+      "value": "",
       "placeholder": "خدمة عملاء سريعة"
     },
     {
@@ -857,7 +857,7 @@
       "id": "shamel_product_trust_three",
       "format": "text",
       "required": false,
-      "value": "تجربة شراء سهلة",
+      "value": "",
       "placeholder": "تجربة شراء سهلة"
     },
     {
