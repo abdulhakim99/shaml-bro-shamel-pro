@@ -38,6 +38,8 @@ test('home components expose correct category alt text and local display-all con
   const config = read('twilight.json');
   assert.match(links, /alt="\{\{ cat\.name \}\}"/);
   assert.doesNotMatch(links, /alt="\{\{ menu\.title \}\}"/);
+  assert.match(links, /\{% if link\.title and link\.url %\}/);
+  assert.match(config, /"id": "links"[\s\S]*?"required": false,[\s\S]*?"minLength": 0,[\s\S]*?"value": \[\]/);
   assert.match(brands, /component\.show_all\|default\(true\)/);
   assert.match(config, /"id": "show_all"/);
 });
