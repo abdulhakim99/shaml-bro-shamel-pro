@@ -137,6 +137,12 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('Parallax banner requires a merchant image before it renders', () => {
+  const banner = read('src/views/components/home/parallax-background.twig');
+  assert.match(banner, /\{% if image\.url %\}/);
+  assert.match(banner, /\{% if url and link_text %\}/);
+});
+
 test('Fixed banners stay accessible with incomplete merchant data', () => {
   const banner = read('src/views/components/home/fixed-banner.twig');
   assert.match(banner, /\{% if image\.url %\}/);
