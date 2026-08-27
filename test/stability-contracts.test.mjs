@@ -137,6 +137,12 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('YouTube block requires a merchant video identifier', () => {
+  const youtube = read('src/views/components/home/youtube.twig');
+  assert.match(youtube, /\{% if youtube_id %\}/);
+  assert.match(youtube, /<lite-youtube videoid="\{\{ youtube_id \}\}"/);
+});
+
 test('Store features render only populated Salla feature entries', () => {
   const features = read('src/views/components/home/store-features.twig');
   assert.match(features, /\{% if items\|length %\}/);

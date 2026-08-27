@@ -3,6 +3,7 @@
 | youtube_id  | string |                                                                  |
 | position    | Int    | Sorting number start from zero                                   |
 #}
+{% if youtube_id %}
 <section data-testid="store-home-youtube" class="s-block s-block--video mt-16">
   <div class="container">
     <div class="videoWrapper">
@@ -10,3 +11,4 @@
     </div>
   </div>
 </section>
+{% endif %}
