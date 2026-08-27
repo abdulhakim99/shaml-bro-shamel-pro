@@ -5,11 +5,11 @@
 | component.brands               | Brand[] | list of selected brands @see views/pages/brands/single.twig                  |
 | position                       | int     | Sorting number start from zero                                               |
 #}
-{% set display_all_url = theme.settings.get('is_more_button_enabled') %}
+{% set display_all = component.show_all|default(true) %}
 <section data-testid="store-home-brands" class="s-block s-block--logos-slider s-block--full-bg bg-gray-100 pt-8 sm:pt-12 pb-8 sm:pb-20">
     <div class="container">
     
-        {% if component.title or component.show_all %}
+        {% if component.title or display_all %}
           <div class="s-block__title">
             {% if component.title %}
               <div class="right-side">
@@ -17,7 +17,7 @@
                 {# <p>عنوان فرعي توصيفي صغير</p> #}
               </div>
             {% endif %}
-            {% if display_all_url %}
+            {% if display_all %}
               <a href="{{ link('brands') }}" class="s-block__display-all"> {{ trans('blocks.home.display_all') }} <i class="sicon-arrow-left"></i></a>
             {% endif %}
           </div>

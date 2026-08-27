@@ -22,12 +22,16 @@ class App extends AppHelpers {
     this.initiateModals();
     this.initiateCollapse();
     
-    // Ensure #more-menu-dropdown exists before running changeMenuDirection
+    // Wait briefly for the optional more-menu, then stop polling when it is absent.
+    let menuDirAttempts = 0;
     const menuDirInterval = setInterval(() => {
       if (document.querySelector('#more-menu-dropdown')) {
         this.changeMenuDirection();
         clearInterval(menuDirInterval);
+        return;
       }
+
+      if (++menuDirAttempts >= 50) clearInterval(menuDirInterval);
     }, 100);
 
     initTootTip();
@@ -94,18 +98,24 @@ class App extends AppHelpers {
     }
   }
 
-isElementLoaded(selector){
-  return new Promise((resolve=>{
-    const interval=setInterval(()=>{
-    if(document.querySelector(selector)){
-      clearInterval(interval)
-      return resolve(document.querySelector(selector))
-    }
-   },160)
-}))
-
-  
+  isElementLoaded(selector, timeout = 5000) {
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = (element = null) => {
+        if (settled) return;
+        settled = true;
+        clearInterval(interval);
+        clearTimeout(timer);
+        resolve(element);
+      };
+      const interval = setInterval(() => {
+        const element = document.querySelector(selector);
+        if (element) finish(element);
+      }, 160);
+      const timer = setTimeout(() => finish(), timeout);
+    });
   };
+
 
   copyToClipboard(event) {
     event.preventDefault();
@@ -158,8 +168,8 @@ isElementLoaded(selector){
     }
 
   this.isElementLoaded('#mobile-menu').then((menu) => {
+    if (!menu) return;
 
- 
   const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
 
   salla.lang.onLoaded(() => {
@@ -204,16 +214,31 @@ isElementLoaded(selector){
   }
 
   initiateDropdowns() {
-    this.onClick('.dropdown__trigger', ({ target: btn }) => {
-      btn.parentElement.classList.toggle('is-opened');
-      document.body.classList.toggle('dropdown--is-opened');
-      // Click Outside || Click on close btn
-      window.addEventListener('click', ({ target: element }) => {
-        if (!element.closest('.dropdown__menu') && element !== btn || element.classList.contains('dropdown__close')) {
-          btn.parentElement.classList.remove('is-opened');
-          document.body.classList.remove('dropdown--is-opened');
-        }
-      });
+    const closeDropdowns = () => {
+      document.querySelectorAll('.dropdown.is-opened').forEach(dropdown => dropdown.classList.remove('is-opened'));
+      document.body.classList.remove('dropdown--is-opened');
+    };
+
+    this.onClick('.dropdown__trigger', (event) => {
+      const btn = event.currentTarget;
+      const dropdown = btn.parentElement;
+      const shouldOpen = !dropdown.classList.contains('is-opened');
+      closeDropdowns();
+
+      if (shouldOpen) {
+        dropdown.classList.add('is-opened');
+        document.body.classList.add('dropdown--is-opened');
+      }
+    });
+
+    // Install one document-level close handler instead of a new handler per trigger click.
+    window.addEventListener('click', ({ target }) => {
+      if (target.closest('.dropdown__trigger')) return;
+      if (target.closest('.dropdown__menu') && !target.closest('.dropdown__close')) return;
+      closeDropdowns();
+    });
+    window.addEventListener('keydown', ({ key }) => {
+      if (key === 'Escape') closeDropdowns();
     });
   }
 
