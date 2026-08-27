@@ -133,6 +133,15 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('Enhanced square banners remain data-first and accessible with partial merchant data', () => {
+  const banners = read('src/views/components/home/enhanced-square-banners.twig');
+  assert.match(banners, /\{% set banner_has_text = banner\.title or banner\.description %\}/);
+  assert.match(banners, /\{% if banner\.url %\}/);
+  assert.match(banners, /\{% if banner_has_text %\}/);
+  assert.match(banners, /banner_has_text \? ' role="group"' : ' aria-hidden="true"'/);
+  assert.doesNotMatch(banners, /<h3[^>]*>\{\{banner\.title\}\}<\/h3>/);
+});
+
 test('Marketplace shell stays data-first and honours the merchant motion setting', () => {
   const product = read('src/views/pages/product/single.twig');
   const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
