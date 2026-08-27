@@ -143,14 +143,20 @@
     <main id="main-content" role="main"{{ (page.slug == 'product.single' or page.slug starts with 'product.index') ? ' class="flex flex-col space-y-8 sm:space-y-16"' : '' }}>
     {% block content %}{% endblock %}
     </main>
-    {% if theme.settings.get('shamel_follow_enabled', true) %}
-      <section class="shamel-follow" aria-labelledby="shamel-follow-title" style="--shamel-follow-bg:{{ theme.settings.get('shamel_follow_bg_color', '#071a2f') }};--shamel-follow-text:{{ theme.settings.get('shamel_follow_text_color', '#ffffff') }};--shamel-follow-icon:{{ theme.settings.get('shamel_follow_icon_color', '#ffffff') }}">
+    {% set shamel_follow_title = theme.settings.get('shamel_follow_title') %}
+    {% set shamel_follow_description = theme.settings.get('shamel_follow_description') %}
+    {% set shamel_follow_has_links = (theme.settings.get('shamel_follow_whatsapp_enabled') and theme.settings.get('shamel_follow_whatsapp_url')) or (theme.settings.get('shamel_follow_instagram_enabled') and theme.settings.get('shamel_follow_instagram_url')) or (theme.settings.get('shamel_follow_tiktok_enabled') and theme.settings.get('shamel_follow_tiktok_url')) or (theme.settings.get('shamel_follow_snapchat_enabled') and theme.settings.get('shamel_follow_snapchat_url')) or (theme.settings.get('shamel_follow_x_enabled') and theme.settings.get('shamel_follow_x_url')) or (theme.settings.get('shamel_follow_youtube_enabled') and theme.settings.get('shamel_follow_youtube_url')) or (theme.settings.get('shamel_follow_facebook_enabled') and theme.settings.get('shamel_follow_facebook_url')) %}
+    {% if theme.settings.get('shamel_follow_enabled', true) and (shamel_follow_title or shamel_follow_description or shamel_follow_has_links) %}
+      <section class="shamel-follow" {{ shamel_follow_title ? 'aria-labelledby="shamel-follow-title"' : 'aria-label="تابع المتجر"' }} style="--shamel-follow-bg:{{ theme.settings.get('shamel_follow_bg_color', '#071a2f') }};--shamel-follow-text:{{ theme.settings.get('shamel_follow_text_color', '#ffffff') }};--shamel-follow-icon:{{ theme.settings.get('shamel_follow_icon_color', '#ffffff') }}">
         <div class="container shamel-follow__inner">
-          <div>
-            <h2 id="shamel-follow-title">{{ theme.settings.get('shamel_follow_title', 'تابعنا وكن أول من يعرف') }}</h2>
-            <p>{{ theme.settings.get('shamel_follow_description', 'اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل.') }}</p>
-          </div>
-          <nav class="shamel-follow__links" aria-label="تابع المتجر">
+          {% if shamel_follow_title or shamel_follow_description %}
+            <div>
+              {% if shamel_follow_title %}<h2 id="shamel-follow-title">{{ shamel_follow_title }}</h2>{% endif %}
+              {% if shamel_follow_description %}<p>{{ shamel_follow_description }}</p>{% endif %}
+            </div>
+          {% endif %}
+          {% if shamel_follow_has_links %}
+            <nav class="shamel-follow__links" aria-label="تابع المتجر">
             {% if theme.settings.get('shamel_follow_whatsapp_enabled') and theme.settings.get('shamel_follow_whatsapp_url') %}<a href="{{ theme.settings.get('shamel_follow_whatsapp_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--whatsapp" aria-label="قناة واتساب"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a9.8 9.8 0 0 0-8.5 14.7L2 22l5.4-1.4A10 10 0 1 0 12 2Zm0 17.9a8 8 0 0 1-4.1-1.1l-.3-.2-3.2.8.9-3.1-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.4-1.3-3.3-2.9-.2-.3.2-.4.6-.9.1-.2.1-.3 0-.5l-.7-1.7c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.2 1.8.8 2.5.8 3.4.7 1-.2 1.4-.9 1.6-1.8.2-.8.2-1.5.1-1.7-.2-.2-.4-.2-.7-.3Z"/></svg></a>{% endif %}
             {% if theme.settings.get('shamel_follow_instagram_enabled') and theme.settings.get('shamel_follow_instagram_url') %}<a href="{{ theme.settings.get('shamel_follow_instagram_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--instagram" aria-label="Instagram"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2a5.4 5.4 0 0 1-5.4 5.4H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Zm-.2 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm10.3 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a>{% endif %}
             {% if theme.settings.get('shamel_follow_tiktok_enabled') and theme.settings.get('shamel_follow_tiktok_url') %}<a href="{{ theme.settings.get('shamel_follow_tiktok_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--tiktok" aria-label="TikTok"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.6 3c.4 2.3 1.8 3.8 4.1 4.2v3.2c-1.5 0-2.9-.5-4.1-1.3v6.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.2 2.9V3h3.2Z"/></svg></a>{% endif %}
@@ -158,7 +164,8 @@
             {% if theme.settings.get('shamel_follow_x_enabled') and theme.settings.get('shamel_follow_x_url') %}<a href="{{ theme.settings.get('shamel_follow_x_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--x" aria-label="X"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22H17l-4.9-6.4L6.5 22H3.3l7.3-8.4L2.8 2H9l4.4 5.8L18.9 2Zm-1.1 17.8h1.7L8 4.1H6.2l11.6 15.7Z"/></svg></a>{% endif %}
             {% if theme.settings.get('shamel_follow_youtube_enabled') and theme.settings.get('shamel_follow_youtube_url') %}<a href="{{ theme.settings.get('shamel_follow_youtube_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--youtube" aria-label="YouTube"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.7 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg></a>{% endif %}
             {% if theme.settings.get('shamel_follow_facebook_enabled') and theme.settings.get('shamel_follow_facebook_url') %}<a href="{{ theme.settings.get('shamel_follow_facebook_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--facebook" aria-label="Facebook"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8.5V6.8c0-.8.5-1 1-1h2.8V2.2L15.1 2C11.8 2 10 4 10 6.4v2.1H7v4h3V22h4v-9.5h3.3l.5-4H14Z"/></svg></a>{% endif %}
-          </nav>
+            </nav>
+          {% endif %}
         </div>
       </section>
     {% endif %}
@@ -227,13 +234,13 @@
   {% set shamel_tools_position_raw = theme.settings.get('shamel_side_tools_position_v2', 'left') %}
   {% set shamel_tools_position = shamel_tools_position_raw is iterable ? (shamel_tools_position_raw|first).value : shamel_tools_position_raw %}
   <nav class="shamel-side-tools shamel-side-tools--{{ shamel_tools_position }}" aria-label="أدوات المتجر" data-shamel-side-tools>
-    {% if theme.settings.get('shamel_side_newsletter_enabled', true) %}
+    {% if theme.settings.get('shamel_side_newsletter_enabled', true) and theme.settings.get('shamel_popup_action_url') %}
       <button type="button" data-shamel-newsletter-open title="اشترك في نشرتنا البريدية"><i class="sicon-mail" aria-hidden="true"></i><span class="shamel-side-tools__label">اشترك في نشرتنا</span></button>
     {% endif %}
     <button type="button" data-shamel-tools-close aria-label="طي شريط الأدوات" title="طي الأدوات">×</button>
     <button type="button" data-shamel-tools-open aria-label="فتح شريط الأدوات" title="فتح الأدوات"><span class="shamel-side-tools__open-left">›</span><span class="shamel-side-tools__open-right">‹</span></button>
   </nav>
-  {% if theme.settings.get('shamel_side_newsletter_enabled', true) %}
+  {% if theme.settings.get('shamel_side_newsletter_enabled', true) and theme.settings.get('shamel_popup_action_url') %}
     <section class="shamel-newsletter-drawer" data-shamel-newsletter-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-newsletter-title" tabindex="-1">
       <div class="shamel-newsletter-drawer__card">
         <button type="button" class="shamel-newsletter-drawer__close" data-shamel-newsletter-close aria-label="إغلاق">×</button>
@@ -254,22 +261,27 @@
   {% endif %}
 {% endif %}
 
-{% if theme.settings.get('shamel_popup_enabled') and theme.settings.get('shamel_popup_action_url') %}
-  <div id="shamel-marketing-popup" class="shamel-popup" hidden role="dialog" aria-modal="true" aria-labelledby="shamel-popup-title" tabindex="-1">
-    <div class="shamel-popup__card">
+{% set shamel_popup_image = theme.settings.get('shamel_popup_image') %}
+{% set shamel_popup_eyebrow = theme.settings.get('shamel_popup_eyebrow') %}
+{% set shamel_popup_title = theme.settings.get('shamel_popup_title') %}
+{% set shamel_popup_description = theme.settings.get('shamel_popup_description') %}
+{% set shamel_popup_button = theme.settings.get('shamel_popup_button') %}
+{% if theme.settings.get('shamel_popup_enabled') and theme.settings.get('shamel_popup_action_url') and (shamel_popup_title or shamel_popup_description) %}
+  <div id="shamel-marketing-popup" class="shamel-popup" hidden role="dialog" aria-modal="true" {{ shamel_popup_title ? 'aria-labelledby="shamel-popup-title"' : 'aria-label="نافذة التسجيل"' }} tabindex="-1">
+    <div class="shamel-popup__card{{ shamel_popup_image ? '' : ' shamel-popup__card--no-image' }}">
       <button type="button" class="shamel-popup__close" aria-label="إغلاق">×</button>
-      <div class="shamel-popup__image"{% if theme.settings.get('shamel_popup_image') %} style="background-image:url('{{ theme.settings.get('shamel_popup_image') }}')"{% endif %}></div>
+      {% if shamel_popup_image %}<div class="shamel-popup__image" style="background-image:url('{{ shamel_popup_image }}')"></div>{% endif %}
       <div class="shamel-popup__content">
-        <span class="shamel-popup__eyebrow">{{ theme.settings.get('shamel_popup_eyebrow', 'خصم خاص') }}</span>
-        <h2 id="shamel-popup-title">{{ theme.settings.get('shamel_popup_title', 'احصل على خصم على أول طلب لك') }}</h2>
-        <p>{{ theme.settings.get('shamel_popup_description', 'سجّل بياناتك لتصلك أحدث العروض والإصدارات.') }}</p>
+        {% if shamel_popup_eyebrow %}<span class="shamel-popup__eyebrow">{{ shamel_popup_eyebrow }}</span>{% endif %}
+        {% if shamel_popup_title %}<h2 id="shamel-popup-title">{{ shamel_popup_title }}</h2>{% endif %}
+        {% if shamel_popup_description %}<p>{{ shamel_popup_description }}</p>{% endif %}
         <form action="{{ theme.settings.get('shamel_popup_action_url') }}" method="post" target="shamel-popup-target">
           {% if shamel_popup_capture == 'phone' %}
             <input type="tel" name="phone" autocomplete="tel" required placeholder="أدخل رقم الجوال">
           {% else %}
             <input type="email" name="email" autocomplete="email" required placeholder="أدخل بريدك الإلكتروني">
           {% endif %}
-          <button type="submit">{{ theme.settings.get('shamel_popup_button', 'احصل على العرض') }}</button>
+          <button type="submit">{{ shamel_popup_button ? shamel_popup_button : 'إرسال' }}</button>
           <small class="shamel-popup__privacy">بالتسجيل أنت توافق على استلام الرسائل التسويقية، ويمكنك إلغاء الاشتراك لاحقًا.</small>
         </form>
         <iframe name="shamel-popup-target" title="استقبال التسجيل" hidden></iframe>

@@ -144,12 +144,18 @@ test('Enhanced square banners remain data-first and accessible with partial merc
 
 test('Marketplace shell stays data-first and honours the merchant motion setting', () => {
   const product = read('src/views/pages/product/single.twig');
+  const master = read('src/views/layouts/master.twig');
   const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
   const presentationStyles = read('src/assets/styles/04-components/shamel-pro.scss');
   const config = JSON.parse(read('twilight.json'));
   const settings = Object.fromEntries(config.settings.filter((setting) => setting.id).map((setting) => [setting.id, setting]));
   assert.match(product, /shamel_product_trust_enabled[^\n]+shamel_product_trust_one[^\n]+shamel_product_trust_two[^\n]+shamel_product_trust_three/);
-  for (const setting of ['shamel_product_trust_one', 'shamel_product_trust_two', 'shamel_product_trust_three']) assert.equal(settings[setting].value, '');
+  for (const setting of ['shamel_product_trust_one', 'shamel_product_trust_two', 'shamel_product_trust_three', 'shamel_popup_eyebrow', 'shamel_popup_title', 'shamel_popup_description', 'shamel_popup_button', 'shamel_follow_title', 'shamel_follow_description']) assert.equal(settings[setting].value, '');
+  assert.match(master, /shamel_follow_has_links/);
+  assert.match(master, /shamel_side_newsletter_enabled', true\) and theme\.settings\.get\('shamel_popup_action_url'\)/);
+  assert.match(master, /shamel_popup_enabled'\) and theme\.settings\.get\('shamel_popup_action_url'\) and \(shamel_popup_title or shamel_popup_description\)/);
+  assert.match(master, /shamel-popup__card--no-image/);
+  assert.match(shellStyles, /\.shamel-popup__card--no-image/);
   assert.doesNotMatch(shellStyles, /content:"منتج رقمي"/);
   assert.match(shellStyles, /\.shamel-pro:not\(\.shamel-motion\) \.shamel-news__track/);
   assert.match(shellStyles, /\.shamel-pro:not\(\.shamel-motion\) \.shamel-contact__link--whatsapp/);

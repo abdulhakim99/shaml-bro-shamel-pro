@@ -1086,7 +1086,7 @@
       "id": "shamel_popup_eyebrow",
       "format": "text",
       "required": false,
-      "value": "خصم خاص"
+      "value": ""
     },
     {
       "type": "string",
@@ -1094,7 +1094,7 @@
       "id": "shamel_popup_title",
       "format": "text",
       "required": false,
-      "value": "احصل على خصم على أول طلب لك"
+      "value": ""
     },
     {
       "type": "string",
@@ -1102,7 +1102,7 @@
       "id": "shamel_popup_description",
       "format": "text",
       "required": false,
-      "value": "سجّل بياناتك لتصلك أحدث العروض والإصدارات."
+      "value": ""
     },
     {
       "type": "string",
@@ -1110,7 +1110,7 @@
       "id": "shamel_popup_button",
       "format": "text",
       "required": false,
-      "value": "احصل على العرض"
+      "value": ""
     },
     {
       "type": "string",
@@ -1143,7 +1143,7 @@
       "id": "shamel_follow_title",
       "format": "text",
       "required": false,
-      "value": "تابعنا وكن أول من يعرف"
+      "value": ""
     },
     {
       "type": "string",
@@ -1151,7 +1151,7 @@
       "id": "shamel_follow_description",
       "format": "text",
       "required": false,
-      "value": "اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل."
+      "value": ""
     },
     {
       "type": "string",
