@@ -137,6 +137,20 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('Standard home photo components guard images, links, and loading behavior', () => {
+  const slider = read('src/views/components/home/photos-slider.twig');
+  const squares = read('src/views/components/home/square-photos.twig');
+  assert.match(slider, /\{% if items\|length %\}/);
+  assert.match(slider, /\{% if item\.image\.url %\}/);
+  assert.match(slider, /\{% if item\.url %\}/);
+  assert.match(slider, /loading="\{\{ loop\.first \? 'eager' : 'lazy' \}\}"/);
+  assert.doesNotMatch(slider, /\{\{store\.name\}\} image-slider/);
+  assert.match(squares, /\{% if items\|length %\}/);
+  assert.match(squares, /\{% if item\.image\.url %\}/);
+  assert.match(squares, /\{% if item\.url %\}/);
+  assert.match(squares, /aria-hidden="true"/);
+});
+
 test('Parallax banner requires a merchant image before it renders', () => {
   const banner = read('src/views/components/home/parallax-background.twig');
   assert.match(banner, /\{% if image\.url %\}/);

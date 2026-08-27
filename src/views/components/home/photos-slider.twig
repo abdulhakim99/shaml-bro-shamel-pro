@@ -8,22 +8,36 @@
 | items[].image.alt | string  |                                                                  |
 | position          | Int     | Sorting number start from zero                                   |
 #}
+{% if items|length %}
 <section data-testid="store-home-photos-slider" class="s-block s-block--photos-slider {{ is_repeated ? 'repeated-block' : '' }}">
-    <salla-slider 
-      type="carousel" 
+    <salla-slider
+      type="carousel"
       class="home-slider photos-slider"
-      centered 
-      auto-play 
+      centered
+      auto-play
       pagination
-      id="photos-{{ position }}-slider"> 
+      id="photos-{{ position }}-slider">
       <div slot="items">
-        {% for index, item in items %}
-          <div class="swiper-slide">
-            <a href="{{item.url}}">
-              <img loading="eager" src="{{ item.image.url }}" class="w-full object-contain rounded-md" height="300" width="1200" alt="{{store.name}} image-slider-{{index}}"></img>
-            </a>
-          </div>
+        {% for item in items %}
+          {% if item.image.url %}
+            {% set image_alt = item.image.alt|default('') %}
+            {% set image_label = image_alt ? image_alt : 'عرض الصورة' %}
+            <div class="swiper-slide">
+              {% if item.url %}
+                <a href="{{ item.url }}" aria-label="{{ image_label|e('html_attr') }}"{% if item.link_type == 'external_link' %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              {% else %}
+                <div>
+              {% endif %}
+                  <img loading="{{ loop.first ? 'eager' : 'lazy' }}" src="{{ item.image.url }}" class="w-full object-contain rounded-md" height="300" width="1200" alt="{{ image_alt }}">
+              {% if item.url %}
+                </a>
+              {% else %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
         {% endfor %}
       </div>
     </salla-slider>
-</section> 
+</section>
+{% endif %}
