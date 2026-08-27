@@ -96,3 +96,24 @@ test('Store Identity runtime emits tokens without replacing Twilight or Salla co
   assert.match(appStyles, /04-components\/shamel-identity/);
   assert.doesNotMatch(styles, /cart\.addItem|cart\.deleteItem|checkout/);
 });
+
+test('Store Identity variants remain reusable and data-first across shared Twilight components', () => {
+  const header = read('src/views/components/header/header.twig');
+  const hero = read('src/views/components/home/enhanced-slider.twig');
+  const discovery = read('src/views/components/home/main-links.twig');
+  const product = read('src/views/pages/product/single.twig');
+  const productOptions = read('src/views/pages/partials/product/options.twig');
+  const footer = read('src/views/components/footer/footer.twig');
+  const styles = read('src/assets/styles/04-components/shamel-identity.scss');
+  assert.match(header, /data-shamel-header-variant/);
+  assert.match(hero, /data-shamel-hero-variant/);
+  assert.match(discovery, /data-shamel-discovery-variant/);
+  assert.match(product, /data-shamel-product-variant/);
+  assert.match(footer, /data-shamel-footer-variant/);
+  for (const variant of ['compact', 'sensory', 'editorial', 'specs', 'gaming']) assert.match(styles, new RegExp(`shamel-header-variant--${variant}`));
+  for (const variant of ['platform', 'campaign', 'editorial', 'collection']) assert.match(styles, new RegExp(`shamel-hero--${variant}`));
+  assert.match(product, /include 'pages\.partials\.product\.options'/);
+  assert.match(productOptions, /salla-product-options/);
+  assert.match(product, /salla-add-product-button/);
+  assert.doesNotMatch(styles, /delivery promise|warranty|original product/i);
+});

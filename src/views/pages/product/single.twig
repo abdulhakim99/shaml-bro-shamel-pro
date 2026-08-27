@@ -84,6 +84,14 @@
 | product.currency                       | string                      |                                                                        |
 #}
 {% extends "layouts.master" %}
+{% set shamel_identity_raw = theme.settings.get('shamel_store_identity', 'general') %}
+{% set shamel_identity = shamel_identity_raw is iterable ? (shamel_identity_raw|first).value : shamel_identity_raw %}
+{% set shamel_product_variant = 'standard' %}
+{% if shamel_identity == 'digital' %}{% set shamel_product_variant = 'digital-oriented' %}
+{% elseif shamel_identity == 'perfume' %}{% set shamel_product_variant = 'scent-oriented' %}
+{% elseif shamel_identity == 'fashion' %}{% set shamel_product_variant = 'fashion-oriented' %}
+{% elseif shamel_identity == 'electronics' %}{% set shamel_product_variant = 'specs-oriented' %}
+{% elseif shamel_identity == 'gaming' %}{% set shamel_product_variant = 'gaming-oriented' %}{% endif %}
 {% block content %}
     {% if theme.settings.get('product_show_breadcrumbs', true) %}
       <div class="container container--breadcrumbs">
@@ -101,7 +109,7 @@
     #}
     <div class="s-blocks-wrapper s-before-product-info !mt-0">{% hook 'product.single.before_product_info' %}</div>
 
-    <div class="container container--product-details">
+    <div class="container container--product-details shamel-product--{{ shamel_product_variant }}" data-shamel-product-variant="{{ shamel_product_variant }}">
         <div class="flex flex-col items-start md:flex-row" id="product-{{ product.id }}">
             <div class="sidebar md:sticky top-24 w-full md:!w-2/4 rtl:ml-8 ltr:mr-8 mb-5 md:mb-0 overflow-hidden shrink-0">
                 {% set has_many_images = product.images|length > 1 %}

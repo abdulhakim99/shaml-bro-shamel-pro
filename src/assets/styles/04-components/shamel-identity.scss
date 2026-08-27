@@ -189,6 +189,69 @@
     }
   }
 
+  /* Reusable component variants, mapped by Twig but independent from identity names. */
+  .shamel-header-variant--compact .shamel-pro-header-shell {
+    min-height: 74px;
+    border-radius: .85rem;
+    box-shadow: 0 8px 24px rgb(15 23 42 / 8%);
+  }
+
+  .shamel-header-variant--sensory .shamel-pro-header-shell {
+    border-radius: 1.45rem;
+    border-color: var(--si-border);
+    box-shadow: var(--si-shadow);
+  }
+
+  .shamel-header-variant--editorial .shamel-pro-header-shell {
+    border-radius: 1.25rem;
+    border-inline-start-width: 3px;
+    border-inline-start-color: var(--si-accent);
+  }
+
+  .shamel-header-variant--specs .shamel-pro-header-shell {
+    border-radius: .65rem;
+    box-shadow: 0 6px 16px rgb(15 23 42 / 7%);
+  }
+
+  .shamel-header-variant--gaming .shamel-pro-header-shell {
+    border-radius: .75rem;
+    border-color: var(--si-border);
+    box-shadow: 0 14px 38px rgb(0 0 0 / 28%);
+  }
+
+  .shamel-hero--platform .home-slider__content > div {
+    max-width: 34rem;
+    text-align: start;
+    margin-inline-start: 0;
+  }
+
+  .shamel-hero--campaign .home-slider__content > div {
+    max-width: 31rem;
+    padding: clamp(1rem, 4vw, 2.25rem);
+    background: rgb(15 23 42 / 36%);
+    border-radius: var(--si-radius);
+    backdrop-filter: blur(3px);
+  }
+
+  .shamel-hero--editorial .home-slider__content > div {
+    max-width: 36rem;
+    text-align: start;
+    margin-inline-start: 0;
+    padding-inline: clamp(1rem, 4vw, 3rem);
+  }
+
+  .shamel-hero--collection .home-slider__content > div {
+    max-width: 36rem;
+    padding: 1rem 1.25rem;
+    border-inline-start: 4px solid var(--si-accent);
+    text-align: start;
+    margin-inline-start: 0;
+  }
+
+  .shamel-footer--service { border-top: 3px solid var(--si-accent); }
+  .shamel-footer--editorial { border-top: 1px solid var(--si-border); }
+  .shamel-footer--technical { border-top: 2px solid var(--si-accent); }
+
   /* General is the neutral foundation for mixed catalogues. */
   &.shamel-identity-general {
     --si-radius: 1rem;

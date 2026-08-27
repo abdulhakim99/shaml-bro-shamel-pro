@@ -1,5 +1,8 @@
 <footer data-testid="store-footer" class="store-footer">
-	<div aria-label="footer" class="store-footer__inner">
+{% set shamel_identity_raw = theme.settings.get('shamel_store_identity', 'general') %}
+{% set shamel_identity = shamel_identity_raw is iterable ? (shamel_identity_raw|first).value : shamel_identity_raw %}
+{% set shamel_footer_variant = shamel_identity == 'perfume' or shamel_identity == 'fashion' ? 'editorial' : (shamel_identity == 'digital' ? 'service' : (shamel_identity == 'electronics' or shamel_identity == 'gaming' ? 'technical' : 'general')) %}
+		<div aria-label="footer" data-shamel-footer-variant="{{ shamel_footer_variant }}" class="store-footer__inner shamel-footer--{{ shamel_footer_variant }}">
 		<div class="container grid grid-col-1 lg:grid-cols-6 gap-8 lg:gap-6">
 			<div class="lg:col-span-2 rtl:lg:pl-20 ltr:lg:pr-20">
 				<a href="{{ link('/') }}" class="flex items-center m-0">

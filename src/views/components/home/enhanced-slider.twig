@@ -8,7 +8,15 @@
 | component.slides               | object[] | list of slides                                                               |
 | position                       | int      | Sorting number start from zero                                               |
 #}
-<section data-testid="store-home-slider" class="s-block s-block--hero-slider s-block--full-bg wide-placeholder"> 
+{% set shamel_identity_raw = theme.settings.get('shamel_store_identity', 'general') %}
+{% set shamel_identity = shamel_identity_raw is iterable ? (shamel_identity_raw|first).value : shamel_identity_raw %}
+{% set shamel_hero_variant = 'split' %}
+{% if shamel_identity == 'digital' %}{% set shamel_hero_variant = 'platform' %}
+{% elseif shamel_identity == 'perfume' %}{% set shamel_hero_variant = 'campaign' %}
+{% elseif shamel_identity == 'fashion' %}{% set shamel_hero_variant = 'editorial' %}
+{% elseif shamel_identity == 'electronics' %}{% set shamel_hero_variant = 'collection' %}
+{% elseif shamel_identity == 'gaming' %}{% set shamel_hero_variant = 'platform' %}{% endif %}
+<section data-testid="store-home-slider" data-shamel-hero-variant="{{ shamel_hero_variant }}" class="s-block s-block--hero-slider s-block--full-bg wide-placeholder shamel-hero--{{ shamel_hero_variant }}">
     <salla-slider 
       id="main-slider-{{ position }}"
       auto-play

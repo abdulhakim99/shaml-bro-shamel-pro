@@ -10,7 +10,14 @@
 | component.links[].url              | string   |                                                                              |
 | position                           | int      | Sorting number start from zero                                               |
 #}
-<section data-testid="store-home-main-links" class="s-block s-block--categories {{ component.merge_with_top_component and position ?'merge-with-top-component' : '' }} {{ not component.title and component.merge_with_top_component ? 'merged-has-no-title' : '' }}">
+{% set shamel_identity_raw = theme.settings.get('shamel_store_identity', 'general') %}
+{% set shamel_identity = shamel_identity_raw is iterable ? (shamel_identity_raw|first).value : shamel_identity_raw %}
+{% set shamel_discovery_raw = theme.settings.get('shamel_discovery_style', 'auto') %}
+{% set shamel_discovery_variant = shamel_discovery_raw is iterable ? (shamel_discovery_raw|first).value : shamel_discovery_raw %}
+{% if shamel_discovery_variant == 'auto' %}
+  {% set shamel_discovery_variant = shamel_identity == 'digital' or shamel_identity == 'gaming' ? 'platform' : (shamel_identity == 'fashion' ? 'mosaic' : (shamel_identity == 'electronics' ? 'specs' : (shamel_identity == 'perfume' ? 'tiles' : 'tiles'))) %}
+{% endif %}
+<section data-testid="store-home-main-links" data-shamel-discovery-variant="{{ shamel_discovery_variant }}" class="s-block s-block--categories shamel-discovery--{{ shamel_discovery_variant }} {{ component.merge_with_top_component and position ?'merge-with-top-component' : '' }} {{ not component.title and component.merge_with_top_component ? 'merged-has-no-title' : '' }}">
     <div class="container">
       <salla-slider  
         type="carousel"

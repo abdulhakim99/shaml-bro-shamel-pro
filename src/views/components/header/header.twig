@@ -3,7 +3,15 @@
 | Merchants manage main/sub categories once from the store navigation screen.
 #}
 {% set shamel_show_header_categories = theme.settings.get('shamel_header_categories_enabled_v2', true) %}
-<header data-testid="store-header" class="store-header shamel-store-header">
+{% set shamel_identity_raw = theme.settings.get('shamel_store_identity', 'general') %}
+{% set shamel_identity = shamel_identity_raw is iterable ? (shamel_identity_raw|first).value : shamel_identity_raw %}
+{% set shamel_header_variant = 'general' %}
+{% if shamel_identity == 'digital' %}{% set shamel_header_variant = 'compact' %}
+{% elseif shamel_identity == 'perfume' %}{% set shamel_header_variant = 'sensory' %}
+{% elseif shamel_identity == 'fashion' %}{% set shamel_header_variant = 'editorial' %}
+{% elseif shamel_identity == 'electronics' %}{% set shamel_header_variant = 'specs' %}
+{% elseif shamel_identity == 'gaming' %}{% set shamel_header_variant = 'gaming' %}{% endif %}
+<header data-testid="store-header" data-shamel-header-variant="{{ shamel_header_variant }}" class="store-header shamel-store-header shamel-header-variant--{{ shamel_header_variant }}">
   <div class="lg:hidden">
     <salla-bullet-delivery-tag></salla-bullet-delivery-tag>
   </div>
