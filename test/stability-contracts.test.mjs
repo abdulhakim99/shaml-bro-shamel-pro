@@ -40,6 +40,8 @@ test('home components expose correct category alt text and local display-all con
   assert.doesNotMatch(links, /alt="\{\{ menu\.title \}\}"/);
   assert.match(links, /\{% if link\.title and link\.url %\}/);
   assert.match(config, /"id": "links"[\s\S]*?"required": false,[\s\S]*?"minLength": 0,[\s\S]*?"value": \[\]/);
+  assert.match(config, /"id": "links\.title"[\s\S]*?"required": true/);
+  assert.match(config, /"id": "links\.url"[\s\S]*?"required": true/);
   assert.match(brands, /component\.show_all\|default\(true\)/);
   assert.match(config, /"id": "show_all"/);
 });
@@ -161,11 +163,14 @@ test('Seeded home components require merchant content before they render', () =>
   assert.equal(testimonials.is_default, false);
   assert.deepEqual(field(testimonials, 'items').value, []);
   assert.equal(field(testimonials, 'items').minLength, 0);
+  assert.equal(field(testimonials, 'items').fields.find((item) => item.id === 'items.name').required, true);
+  assert.equal(field(testimonials, 'items').fields.find((item) => item.id === 'items.text').required, true);
   assert.equal(field(brands, 'title').value, null);
   assert.match(read('src/views/components/home/enhanced-slider.twig'), /\{% if component\.slides\|length %\}/);
   assert.match(read('src/views/components/home/enhanced-square-banners.twig'), /\{% if component\.banners\|length %\}/);
   assert.match(read('src/views/components/home/custom-testimonials.twig'), /\{% if component\.items\|length %\}/);
   assert.match(read('src/views/components/home/brands.twig'), /\{% if component\.brands\|length %\}/);
+  assert.match(read('src/views/components/home/main-links.twig'), /\{% if shamel_discovery_has_items %\}/);
 });
 
 test('Marketplace shell stays data-first and honours the merchant motion setting', () => {

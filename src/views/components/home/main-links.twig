@@ -17,6 +17,8 @@
 {% if shamel_discovery_variant == 'auto' %}
   {% set shamel_discovery_variant = shamel_identity == 'digital' or shamel_identity == 'gaming' ? 'platform' : (shamel_identity == 'fashion' ? 'mosaic' : (shamel_identity == 'electronics' ? 'specs' : (shamel_identity == 'perfume' ? 'tiles' : 'tiles'))) %}
 {% endif %}
+{% set shamel_discovery_has_items = component.show_cats ? component.categories|length : component.links|length %}
+{% if shamel_discovery_has_items %}
 <section data-testid="store-home-main-links" data-shamel-discovery-variant="{{ shamel_discovery_variant }}" class="s-block s-block--categories shamel-discovery--{{ shamel_discovery_variant }} {{ component.merge_with_top_component and position ?'merge-with-top-component' : '' }} {{ not component.title and component.merge_with_top_component ? 'merged-has-no-title' : '' }}">
     <div class="container">
       <salla-slider  
@@ -56,4 +58,5 @@
           </div>
       </salla-slider>
     </div>
-</section> 
+</section>
+{% endif %}
