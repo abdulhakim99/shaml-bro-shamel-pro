@@ -3,6 +3,8 @@ import Swal from 'sweetalert2';
 import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
+import { initShamelHeader } from './partials/shamel-header';
+import { initShamelShell } from './partials/shamel-shell';
 
 class App extends AppHelpers {
   constructor() {
@@ -21,6 +23,8 @@ class App extends AppHelpers {
     this.initiateDropdowns();
     this.initiateModals();
     this.initiateCollapse();
+    initShamelHeader();
+    initShamelShell();
     
     // Wait briefly for the optional more-menu, then stop polling when it is absent.
     let menuDirAttempts = 0;
