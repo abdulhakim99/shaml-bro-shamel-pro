@@ -112,6 +112,7 @@ test('Store Identity variants remain reusable and data-first across shared Twili
   assert.match(footer, /data-shamel-footer-variant/);
   for (const variant of ['compact', 'sensory', 'editorial', 'specs', 'gaming']) assert.match(styles, new RegExp(`shamel-header-variant--${variant}`));
   for (const variant of ['platform', 'campaign', 'editorial', 'collection']) assert.match(styles, new RegExp(`shamel-hero--${variant}`));
+  for (const variant of ['digital-oriented', 'scent-oriented', 'fashion-oriented', 'specs-oriented', 'gaming-oriented']) assert.match(styles, new RegExp(`shamel-product--${variant}`));
   assert.match(product, /include 'pages\.partials\.product\.options'/);
   assert.match(productOptions, /salla-product-options/);
   assert.match(product, /salla-add-product-button/);

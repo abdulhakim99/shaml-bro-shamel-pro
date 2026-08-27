@@ -339,6 +339,28 @@
   }
 
   /* Electronics keeps the catalogue dense and structurally separated. */
+  .shamel-product--specs-oriented {
+    .main-content > [data-testid='store-product-price'],
+    .main-content > .product-form {
+      border: 1px solid var(--si-border);
+      border-radius: var(--si-radius-sm);
+      background: var(--si-surface);
+    }
+
+    salla-metadata { display: block; margin-block: 1rem; }
+    .product__description { border-block: 1px solid var(--si-border); padding-block: .85rem; }
+    .sticky-product-bar { border: 1px solid var(--si-border); }
+  }
+
+  .shamel-product--gaming-oriented {
+    .details-slider { border: 1px solid var(--si-border); border-radius: var(--si-radius); overflow: hidden; }
+    .main-content > [data-testid='store-product-price'],
+    .main-content > .product-form,
+    .sticky-product-bar { background: var(--si-surface); color: var(--si-text); }
+    .main-content > h1 { color: var(--si-heading); }
+    .product__description { border-block: 1px solid var(--si-border); padding-block: 1rem; }
+  }
+
   &.shamel-identity-electronics {
     --si-alt: #f1f5f9;
     --si-radius: .7rem;
