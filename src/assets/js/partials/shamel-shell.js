@@ -22,7 +22,7 @@ function createDialogController(dialog, onClose = () => {}) {
   const open = (trigger = document.activeElement) => {
     opener = trigger;
     dialog.hidden = false;
-    window.requestAnimationFrame(() => (focusableElements()[0] || dialog).focus());
+    window.setTimeout(() => (focusableElements()[0] || dialog).focus(), 0);
   };
 
   dialog.addEventListener('click', (event) => {

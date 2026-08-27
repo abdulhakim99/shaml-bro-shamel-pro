@@ -54,10 +54,15 @@ test('Shamel header and shell payloads are compiled through the theme pipeline',
   const styles = read('src/assets/styles/app.scss');
   const header = read('src/views/components/header/header.twig');
   const master = read('src/views/layouts/master.twig');
+  const shell = read('src/assets/js/partials/shamel-shell.js');
   assert.match(app, /initShamelHeader/);
   assert.match(app, /initShamelShell/);
   assert.match(styles, /04-components\/shamel-header/);
   assert.match(styles, /04-components\/shamel-shell/);
+  assert.match(shell, /function createDialogController/);
+  assert.match(shell, /event\.key === 'Escape'/);
+  assert.match(shell, /window\.setTimeout\(\(\) => \(focusableElements\(\)\[0\] \|\| dialog\)\.focus\(\), 0\)/);
+  assert.match(master, /data-shamel-newsletter-drawer[^>]+tabindex="-1"/);
   assert.doesNotMatch(header, /<style>|<script>/);
   assert.equal((master.match(/<style>/g) || []).length, 1);
 });

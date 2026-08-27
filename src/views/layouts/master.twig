@@ -224,7 +224,7 @@
     <button type="button" data-shamel-tools-open aria-label="فتح شريط الأدوات" title="فتح الأدوات"><span class="shamel-side-tools__open-left">›</span><span class="shamel-side-tools__open-right">‹</span></button>
   </nav>
   {% if theme.settings.get('shamel_side_newsletter_enabled', true) %}
-    <section class="shamel-newsletter-drawer" data-shamel-newsletter-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-newsletter-title">
+    <section class="shamel-newsletter-drawer" data-shamel-newsletter-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-newsletter-title" tabindex="-1">
       <div class="shamel-newsletter-drawer__card">
         <button type="button" class="shamel-newsletter-drawer__close" data-shamel-newsletter-close aria-label="إغلاق">×</button>
         <h2 id="shamel-newsletter-title">اشترك في نشرتنا البريدية</h2>
@@ -237,7 +237,7 @@
     </section>
   {% endif %}
   {% if theme.settings.get('shamel_compare_enabled', true) %}
-    <section class="shamel-compare-drawer" data-shamel-compare-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-compare-title">
+    <section class="shamel-compare-drawer" data-shamel-compare-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-compare-title" tabindex="-1">
       <header class="shamel-compare-drawer__head"><h2 id="shamel-compare-title">مقارنة المنتجات</h2><button type="button" class="shamel-compare-drawer__close" data-shamel-compare-close aria-label="إغلاق">×</button></header>
       <div class="shamel-compare-drawer__items" data-shamel-compare-items></div>
     </section>
@@ -245,7 +245,7 @@
 {% endif %}
 
 {% if theme.settings.get('shamel_popup_enabled') and theme.settings.get('shamel_popup_action_url') %}
-  <div id="shamel-marketing-popup" class="shamel-popup" hidden role="dialog" aria-modal="true" aria-labelledby="shamel-popup-title">
+  <div id="shamel-marketing-popup" class="shamel-popup" hidden role="dialog" aria-modal="true" aria-labelledby="shamel-popup-title" tabindex="-1">
     <div class="shamel-popup__card">
       <button type="button" class="shamel-popup__close" aria-label="إغلاق">×</button>
       <div class="shamel-popup__image"{% if theme.settings.get('shamel_popup_image') %} style="background-image:url('{{ theme.settings.get('shamel_popup_image') }}')"{% endif %}></div>
