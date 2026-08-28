@@ -207,7 +207,7 @@ class ProductCard extends HTMLElement {
                 ? this.fitImageHeight
                 : 'cover'}"
               src="${this.product?.image?.url || this.product?.thumbnail || this.placeholder || ''}"
-              alt="${this.escapeHTML(this.product?.image?.alt || this.product.name)}"
+              alt="${productAlt}"
               loading="lazy"
             />
             ${!this.fullImage && !this.minimal ? this.getProductBadge() : ''}

@@ -57,6 +57,7 @@ test('Product cards escape product names before inserting accessible HTML', () =
   assert.match(productCard, /const productName = this\.escapeHTML\(this\.product\?\.name \|\| ''\);/);
   assert.match(productCard, /const productAlt = this\.escapeHTML\(this\.product\?\.image\?\.alt \|\| this\.product\?\.name \|\| ''\);/);
   assert.match(productCard, /aria-label="\$\{productAlt\}"/);
+  assert.match(productCard, /alt="\$\{productAlt\}"/);
   assert.match(productCard, /aria-label="\$\{productName\}" class="s-product-card-overlay"/);
   assert.doesNotMatch(productCard, /escapeHTML\(this\.product\?\.image\?\.alt \|\| productName\)/);
   assert.match(productCard, /<a href="\$\{productUrl\}">\$\{productName\}<\/a>/);
