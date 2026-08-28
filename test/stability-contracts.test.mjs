@@ -298,6 +298,24 @@ test('Marketplace shell stays data-first and honours the merchant motion setting
   assert.match(presentationStyles, /transition: none !important/);
 });
 
+test('Marketplace visual surfaces expose stable header, card, ticker, and contact tokens', () => {
+  const header = read('src/views/components/header/header.twig');
+  const headerStyles = read('src/assets/styles/04-components/shamel-header.scss');
+  const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
+  const buttonStyles = read('src/assets/styles/03-elements/buttons.scss');
+  const account = header.slice(header.indexOf('class="shamel-header-main__account"'), header.indexOf('class="shamel-header-main__brand"'));
+  assert.ok(account.indexOf('data-shamel-header-search') < account.indexOf('shamel-header-localization'));
+  assert.ok(account.indexOf('shamel-header-localization') < account.indexOf('store-header-cart'));
+  assert.ok(account.indexOf('store-header-cart') < account.indexOf('store-header-user-menu'));
+  assert.match(account, /shamel-header-localization__value/);
+  assert.match(headerStyles, /max-width:calc\(100vw - 2rem\)/);
+  assert.match(headerStyles, /inset-inline-end:0/);
+  assert.match(shellStyles, /\.shamel-news__label\{[^}]*max-width:42%/);
+  assert.match(shellStyles, /\.shamel-contact\{[^}]*max-width:calc\(100vw - 1\.5rem\)/);
+  assert.match(shellStyles, /inset-inline-end:max\(\.75rem,env\(safe-area-inset-right\)\)/);
+  assert.match(buttonStyles, /#btn-show-more[\s\S]*\.shamel-dark-mode &/);
+});
+
 test('Product cards keep content and action rows visually aligned across catalog grids', () => {
   const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
   assert.match(shellStyles, /\.shamel-pro \.s-product-card-content\{min-width:0;[^}]*gap:\.7rem/);

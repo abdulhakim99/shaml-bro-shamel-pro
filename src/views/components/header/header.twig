@@ -22,15 +22,6 @@
         <div class="shamel-pro-header-shell">
           <div class="shamel-header-main__grid shamel-header-main__grid--drawer">
             <div class="shamel-header-main__account" aria-label="السلة والحساب واللغة والعملة والبحث">
-              <salla-cart-summary data-testid="store-header-cart">
-                <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-              </salla-cart-summary>
-              <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
-              {% if store.settings.is_multilingual %}
-                <div class="shamel-header-localization" title="اللغة والعملة">
-                  <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
-                </div>
-              {% endif %}
               <div class="shamel-header-search-trigger" data-shamel-header-search>
                 <button type="button" class="shamel-header-icon-button shamel-header-search-button" data-shamel-header-search-button aria-label="فتح البحث" aria-expanded="false">
                   <i class="sicon-search" aria-hidden="true"></i>
@@ -39,6 +30,16 @@
                   <salla-search data-testid="store-header-search" inline oval height="48" aria-label="البحث عن المنتجات"></salla-search>
                 </div>
               </div>
+              {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                <div class="shamel-header-localization" title="اللغة والعملة" aria-label="اللغة والعملة">
+                  <span class="shamel-header-localization__value">{{ language.name|default(language.code)|upper }}{% if store.currency %} | {{ store.currency }}{% endif %}</span>
+                  <salla-localization-modal data-testid="store-header-localization" show-trigger></salla-localization-modal>
+                </div>
+              {% endif %}
+              <salla-cart-summary data-testid="store-header-cart">
+                <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+              </salla-cart-summary>
+              <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
             </div>
 
             <a data-testid="store-header-logo" class="navbar-brand shamel-header-main__brand" href="{{ store.url }}">

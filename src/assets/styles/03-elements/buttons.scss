@@ -190,7 +190,21 @@ salla-button {
 }
 
 #btn-show-more {
-  @apply transition;
+  @apply inline-flex items-center justify-center min-h-11 px-4 py-2 border border-primary rounded-md bg-white text-primary font-bold transition;
+
+  &:hover,
+  &:focus-visible {
+    @apply bg-primary text-white border-primary;
+  }
+
+  .shamel-dark-mode & {
+    @apply bg-gray-800 text-white border-gray-500;
+  }
+
+  .shamel-dark-mode &:hover,
+  .shamel-dark-mode &:focus-visible {
+    @apply bg-primary text-white border-primary;
+  }
 
   &.is-expanded {
     @apply opacity-0 pointer-events-none;
