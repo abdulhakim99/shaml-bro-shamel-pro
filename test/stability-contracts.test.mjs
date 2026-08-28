@@ -138,6 +138,16 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.doesNotMatch(hero, /delivery promise|warranty|original product/i);
 });
 
+test('Header search mirrors outward in RTL without changing mobile search layout', () => {
+  const headerStyles = read('src/assets/styles/04-components/shamel-header.scss');
+  assert.match(headerStyles, /@media\(min-width:641px\)/);
+  assert.match(headerStyles, /html\[dir='rtl'\] \.shamel-pro \.shamel-header-search-panel/);
+  assert.match(headerStyles, /right:calc\(100% \+ 10px\)!important/);
+  assert.match(headerStyles, /transform-origin:right center/);
+  assert.match(headerStyles, /@media\(max-width:430px\)/);
+  assert.match(headerStyles, /\.shamel-header-search-trigger\.is-open \.shamel-header-search-panel\{width:min\(46vw,185px\)\}/);
+});
+
 test('YouTube block requires a merchant video identifier', () => {
   const youtube = read('src/views/components/home/youtube.twig');
   assert.match(youtube, /\{% if youtube_id %\}/);

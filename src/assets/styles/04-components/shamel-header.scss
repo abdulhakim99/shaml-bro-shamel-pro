@@ -150,3 +150,11 @@
     .shamel-pro-header-shell.is-search-open .shamel-header-main__brand,
     .shamel-pro-header-shell.is-search-open .shamel-header-main__tools{opacity:.12;pointer-events:none}
   }
+
+  @media(min-width:641px){
+    html[dir='rtl'] .shamel-pro .shamel-header-search-panel{
+      left:auto!important;
+      right:calc(100% + 10px)!important;
+      transform-origin:right center;
+    }
+  }
