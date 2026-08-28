@@ -154,6 +154,13 @@ test('Header search mirrors outward in RTL without changing mobile search layout
   assert.match(headerStyles, /\.shamel-header-search-trigger\.is-open \.shamel-header-search-panel\{width:min\(46vw,185px\)\}/);
 });
 
+test('Header search restores focus to its trigger after Escape dismissal', () => {
+  const headerScript = read('src/assets/js/partials/shamel-header.js');
+  assert.match(headerScript, /function setHeaderSearch\(open, restoreFocus\)/);
+  assert.match(headerScript, /if \(!open && restoreFocus && searchButton\) searchButton\.focus\(\);/);
+  assert.match(headerScript, /if \(event\.key === 'Escape'\) setHeaderSearch\(false, true\);/);
+});
+
 test('Product gallery falls back to the product name when image alt text is unavailable', () => {
   const product = read('src/views/pages/product/single.twig');
   assert.match(product, /\{% set image_alt = image\.alt\|default\(product\.name\) %\}/);

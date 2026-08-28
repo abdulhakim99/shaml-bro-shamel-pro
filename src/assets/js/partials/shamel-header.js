@@ -14,13 +14,14 @@ if (searchWrap) {
       if (field) field.focus();
     }
   }
-  function setHeaderSearch(open) {
+  function setHeaderSearch(open, restoreFocus) {
     searchWrap.classList.toggle('is-open', open);
     if (searchShell) searchShell.classList.toggle('is-search-open', open);
     if (searchButton) {
       searchButton.setAttribute('aria-expanded', open ? 'true' : 'false');
       searchButton.setAttribute('aria-label', open ? 'إغلاق البحث' : 'فتح البحث');
     }
+    if (!open && restoreFocus && searchButton) searchButton.focus();
     if (open) {
       window.setTimeout(focusHeaderSearch, 80);
       window.setTimeout(focusHeaderSearch, 240);
@@ -39,7 +40,7 @@ if (searchWrap) {
     if (!searchWrap.contains(event.target)) setHeaderSearch(false);
   });
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') setHeaderSearch(false);
+    if (event.key === 'Escape') setHeaderSearch(false, true);
   });
 }
 
