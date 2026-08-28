@@ -297,3 +297,11 @@ test('Marketplace shell stays data-first and honours the merchant motion setting
   assert.match(presentationStyles, /\.s-product-card-entry:hover,/);
   assert.match(presentationStyles, /transition: none !important/);
 });
+
+test('Product cards keep content and action rows visually aligned across catalog grids', () => {
+  const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
+  assert.match(shellStyles, /\.shamel-pro \.s-product-card-content\{min-width:0;[^}]*gap:\.7rem/);
+  assert.match(shellStyles, /\.shamel-pro \.s-product-card-content-main\{min-width:0;min-height:4\.7rem\}/);
+  assert.match(shellStyles, /\.shamel-pro \.s-product-card-content-footer\{min-height:2\.85rem\}/);
+  assert.match(shellStyles, /\.shamel-pro \.s-product-card-content-main\{min-height:4\.35rem\}/);
+});

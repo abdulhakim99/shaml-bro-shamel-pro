@@ -158,10 +158,12 @@
       .shamel-pro .s-product-card-image{overflow:hidden;background:#f8fafc}
       .shamel-pro .s-product-card-image img{transition:transform .35s ease}
       .shamel-pro .s-product-card-entry:hover .s-product-card-image img{transform:scale(1.035)}
-      .shamel-pro .s-product-card-content{padding-bottom:.85rem}
+      .shamel-pro .s-product-card-content{min-width:0;padding-bottom:.85rem;gap:.7rem}
+      .shamel-pro .s-product-card-content-main{min-width:0;min-height:4.7rem}
       .shamel-pro .s-product-card-content-title{font-weight:800;line-height:1.55}
       .shamel-pro .s-product-card-content-title a{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-      .shamel-pro .s-product-card-content-sub{align-items:center;min-height:2.4rem}
+      .shamel-pro .s-product-card-content-sub{align-items:center;min-height:2.4rem;margin-bottom:0}
+      .shamel-pro .s-product-card-content-footer{min-height:2.85rem}
       .shamel-pro .s-product-card-price,.shamel-pro .s-product-card-sale-price h4{color:var(--sp-primary,#0f4c6b);font-size:1.08rem;font-weight:900}
       .shamel-pro .s-product-card-sale-price span{text-decoration-thickness:1.5px;color:#94a3b8}
       .shamel-pro .s-product-card-rating{display:inline-flex;align-items:center;gap:.25rem;padding:.22rem .45rem;border-radius:999px;background:#fff7ed;color:#9a3412;font-weight:800}
@@ -171,7 +173,8 @@
       .shamel-pro .s-product-card-wishlist-btn:hover{transform:scale(1.08)}
       @media(max-width:640px){
         .shamel-pro .s-product-card-entry:hover{transform:none}
-        .shamel-pro .s-product-card-content{padding-bottom:.65rem}
+        .shamel-pro .s-product-card-content{padding-bottom:.65rem;gap:.5rem}
+        .shamel-pro .s-product-card-content-main{min-height:4.35rem}
         .shamel-pro .s-product-card-content-title{font-size:.9rem}
         .shamel-pro .s-product-card-price,.shamel-pro .s-product-card-sale-price h4{font-size:1rem}
         .is-sticky-product-bar .product-form{padding-bottom:max(.35rem,env(safe-area-inset-bottom))}
