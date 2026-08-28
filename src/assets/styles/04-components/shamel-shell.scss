@@ -132,7 +132,7 @@
       .shamel-newsletter-drawer__card{position:relative;width:min(31rem,100%);padding:2rem;border-radius:1rem;background:var(--sp-card-bg,#fff);color:var(--sp-text,#334155);box-shadow:0 30px 90px rgba(2,6,23,.4);text-align:center}
       .shamel-newsletter-drawer__card h2{margin:0 0 .45rem;color:var(--sp-heading,#0f172a);font-size:1.55rem;font-weight:900}.shamel-newsletter-drawer__card p{margin:0 0 1rem}
       .shamel-newsletter-drawer__form{display:flex;gap:.55rem}.shamel-newsletter-drawer__form input{flex:1;min-width:0;padding:.85rem 1rem;border:1px solid #cbd5e1;border-radius:.65rem}.shamel-newsletter-drawer__form button{padding:.85rem 1.15rem;border:0;border-radius:.65rem;background:var(--sp-primary,#0f4c6b);color:var(--sp-button-text,#fff);font-weight:800;cursor:pointer}
-      .shamel-newsletter-drawer__close{position:absolute;top:.6rem;left:.75rem;border:0;background:transparent;color:inherit;font-size:1.7rem;cursor:pointer}@media(max-width:480px){.shamel-newsletter-drawer__form{flex-direction:column}}
+      .shamel-newsletter-drawer__close{position:absolute;top:.6rem;inset-inline-start:.75rem;display:grid;place-items:center;width:2.75rem;height:2.75rem;padding:0;border:0;background:transparent;color:inherit;font-size:1.7rem;line-height:1;cursor:pointer}@media(max-width:480px){.shamel-newsletter-drawer__form{flex-direction:column}}
       .shamel-side-tools{transition:transform .28s ease,box-shadow .28s ease,width .28s ease,height .28s ease}
       .shamel-side-tools.is-collapsed{width:1.45rem;height:3.8rem;min-width:0;min-height:0;transform:none;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.2)}
       .shamel-side-tools--left.is-collapsed{border-radius:0 .55rem .55rem 0}

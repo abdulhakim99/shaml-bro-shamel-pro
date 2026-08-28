@@ -161,6 +161,13 @@ test('Header search restores focus to its trigger after Escape dismissal', () =>
   assert.match(headerScript, /if \(event\.key === 'Escape'\) setHeaderSearch\(false, true\);/);
 });
 
+test('Newsletter close control respects RTL placement and touch target sizing', () => {
+  const shellStyles = read('src/assets/styles/04-components/shamel-shell.scss');
+  assert.match(shellStyles, /\.shamel-newsletter-drawer__close\{[^}]*inset-inline-start:\.75rem/);
+  assert.match(shellStyles, /\.shamel-newsletter-drawer__close\{[^}]*width:2\.75rem;height:2\.75rem/);
+  assert.doesNotMatch(shellStyles, /\.shamel-newsletter-drawer__close\{[^}]*left:/);
+});
+
 test('Product gallery falls back to the product name when image alt text is unavailable', () => {
   const product = read('src/views/pages/product/single.twig');
   assert.match(product, /\{% set image_alt = image\.alt\|default\(product\.name\) %\}/);
