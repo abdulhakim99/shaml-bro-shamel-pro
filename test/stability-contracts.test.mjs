@@ -55,8 +55,10 @@ test('Discovery icons remain decorative while category names label their links',
 test('Product cards escape product names before inserting accessible HTML', () => {
   const productCard = read('src/assets/js/partials/product-card.js');
   assert.match(productCard, /const productName = this\.escapeHTML\(this\.product\?\.name \|\| ''\);/);
+  assert.match(productCard, /const productAlt = this\.escapeHTML\(this\.product\?\.image\?\.alt \|\| this\.product\?\.name \|\| ''\);/);
+  assert.match(productCard, /aria-label="\$\{productAlt\}"/);
   assert.match(productCard, /aria-label="\$\{productName\}" class="s-product-card-overlay"/);
-  assert.match(productCard, /<a href="\$\{productUrl\}" aria-label="\$\{this\.escapeHTML\(this\.product\?\.image\?\.alt \|\| productName\)\}">/);
+  assert.doesNotMatch(productCard, /escapeHTML\(this\.product\?\.image\?\.alt \|\| productName\)/);
   assert.match(productCard, /<a href="\$\{productUrl\}">\$\{productName\}<\/a>/);
   assert.doesNotMatch(productCard, /aria-label=\$\{this\.product\.name\}/);
   assert.doesNotMatch(productCard, /<a href="\$\{this\.product\?\.url\}"\>\$\{this\.product\?\.name\}</);

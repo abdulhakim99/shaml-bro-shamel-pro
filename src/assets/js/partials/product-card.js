@@ -182,6 +182,7 @@ class ProductCard extends HTMLElement {
     this.classList.add('s-product-card-entry'); 
     this.setAttribute('id', this.product.id);
     const productName = this.escapeHTML(this.product?.name || '');
+    const productAlt = this.escapeHTML(this.product?.image?.alt || this.product?.name || '');
     const productUrl = this.escapeHTML(this.product?.url || '#');
     !this.horizontal && !this.fullImage && !this.minimal? this.classList.add('s-product-card-vertical') : '';
     this.horizontal && !this.fullImage && !this.minimal? this.classList.add('s-product-card-horizontal') : '';
@@ -198,7 +199,7 @@ class ProductCard extends HTMLElement {
       : this.product.status;
       this.innerHTML = `
         <div class="${!this.fullImage ? 's-product-card-image' : 's-product-card-image-full'}">
-          <a href="${productUrl}" aria-label="${this.escapeHTML(this.product?.image?.alt || productName)}">
+          <a href="${productUrl}" aria-label="${productAlt}">
            <img 
               class="s-product-card-image-${salla.url.is_placeholder(this.product?.image?.url)
                 ? 'contain'
