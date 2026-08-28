@@ -151,6 +151,8 @@ test('Marketplace polish keeps hero content data-first and preserves accessible 
   assert.match(hero, /\{% if slide\.description %\}/);
   assert.match(hero, /<div aria-hidden="true" style="background-image: url\(\{\{ slide\.image \}\}\);/);
   assert.match(styles, /shamel-discovery-platform/);
+  assert.match(styles, /\.shamel-hero--platform \.home-slider__content > div/);
+  assert.match(styles, /border-inline-start: 3px solid var\(--si-accent\)/);
   assert.match(styles, /\.banner-entry:focus-within/);
   assert.match(styles, /\.s-block--hero-slider \[data-swiper-parallax\]/);
   assert.match(styles, /prefers-reduced-motion: reduce/);
