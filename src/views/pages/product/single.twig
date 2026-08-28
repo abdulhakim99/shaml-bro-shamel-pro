@@ -146,13 +146,14 @@
 
                     <div slot="items">
                         {% for image in product.images %}
+                            {% set image_alt = image.alt|default(product.name) %}
                             {% if image.three_d_image_url %}
                                 <model-viewer style="min-height: 500px;" class="swiper-slide model-entry w-full h-full"
                                     loading="eager" camera-controls
                                     touch-action="pan-y" auto-rotate
                                     poster="{{ image.url }}"
                                     src="{{ image.three_d_image_url }}"
-                                    shadow-intensity="1" alt="{{ image.alt }}">
+                                    shadow-intensity="1" alt="{{ image_alt }}">
                                 </model-viewer>
                                     {% else %}
                                 <a data-fslightbox="product_{{ product.id }}"
@@ -162,16 +163,16 @@
                                    data-infinite="false"
                                    data-type="{{ image.video_type ?? 'image' }}"
                                    href="{{ (image.video_url is iterable ? image.video_url|first : image.video_url)|default(image.url) }}"
-                                   aria-label="{{ product.name }}"
+                                   aria-label="{{ image_alt }}"
                                    class="swiper-slide magnify-wrapper homeslider__slide {{ image.video_url?'video-entry':'' }}">
                                     {% if loop.first %}
                                         <img id="{{image.id}}" fetchpriority="high" loading="eager" src="{{ image.url }}"
-                                             alt="{{ image.alt }}"
+                                             alt="{{ image_alt }}"
                                              class="h-full object-{{ theme.settings.get('slider_background_size') }} w-full {{ image.three_d_image_url ? 'model-poster' : '' }}">
                                     {% else %}
                                         <img id="{{image.id}}" src="{{ image.url }}"
                                              loading="lazy"
-                                             alt="{{ image.alt }}"
+                                             alt="{{ image_alt }}"
                                              class="h-full object-{{ theme.settings.get('slider_background_size') }} w-full {{ image.three_d_image_url ? 'model-poster' : '' }}">
                                     {% endif %}
                                 </a>
@@ -187,14 +188,14 @@
                                         <img src="{{ image.url }}"
                                              loading="eager"
                                              class="object-cover w-full h-full bg-gray-100 rounded-md overflow-hidden"
-                                             title="{{ image.alt }}"
-                                             alt="{{ image.alt }}"/>
+                                             title="{{ image_alt }}"
+                                             alt="{{ image_alt }}"/>
                                     {% else %}
                                         <img src="{{ image.url }}"
                                              loading="lazy"
                                              class="object-cover w-full h-full bg-gray-100 rounded-md overflow-hidden"
-                                             title="{{ image.alt }}"
-                                             alt="{{ image.alt }}"/>
+                                             title="{{ image_alt }}"
+                                             alt="{{ image_alt }}"/>
                                     {% endif %}
                                 </div>
                             {% endfor %}

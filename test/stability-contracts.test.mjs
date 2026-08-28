@@ -148,6 +148,14 @@ test('Header search mirrors outward in RTL without changing mobile search layout
   assert.match(headerStyles, /\.shamel-header-search-trigger\.is-open \.shamel-header-search-panel\{width:min\(46vw,185px\)\}/);
 });
 
+test('Product gallery falls back to the product name when image alt text is unavailable', () => {
+  const product = read('src/views/pages/product/single.twig');
+  assert.match(product, /\{% set image_alt = image\.alt\|default\(product\.name\) %\}/);
+  assert.match(product, /alt="\{\{ image_alt \}\}"/);
+  assert.match(product, /aria-label="\{\{ image_alt \}\}"/);
+  assert.doesNotMatch(product, /alt="\{\{ image\.alt \}\}"/);
+});
+
 test('YouTube block requires a merchant video identifier', () => {
   const youtube = read('src/views/components/home/youtube.twig');
   assert.match(youtube, /\{% if youtube_id %\}/);
