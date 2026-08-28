@@ -46,6 +46,12 @@ test('home components expose correct category alt text and local display-all con
   assert.match(config, /"id": "show_all"/);
 });
 
+test('Discovery icons remain decorative while category names label their links', () => {
+  const links = read('src/views/components/home/main-links.twig');
+  assert.match(links, /<i class="\{\{ cat\.icon \}\}" aria-hidden="true"><\/i>/);
+  assert.match(links, /<i class="\{\{ link\.icon \}\}" aria-hidden="true"><\/i>/);
+});
+
 test('optional menu initialisation cannot poll or multiply close handlers indefinitely', () => {
   const app = read('src/assets/js/app.js');
   assert.match(app, /menuDirAttempts >= 50/);

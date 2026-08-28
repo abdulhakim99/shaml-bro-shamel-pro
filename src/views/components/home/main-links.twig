@@ -37,7 +37,7 @@
                             {% if cat.image %}
                               <img src="{{ cat.image ? cat.image : 'images/placeholder.png' | asset }}" class="w-16 h-16 object-cover rounded-full mb-2.5 {{ cat.image ? '' : 'has-placeholder'}}" width="64" height="64" alt="{{ cat.name }}"/>
                             {% else %}
-                              <i class="{{ cat.icon }}"></i>
+                              <i class="{{ cat.icon }}" aria-hidden="true"></i>
                             {% endif %}
                             <h2>{{ cat.name }}</h2>
                         </a>
@@ -48,7 +48,7 @@
                   {% if link.title and link.url %}
                     <div class="swiper-slide slide--one-sixth">
                         <a href="{{ link.url }}" class="slide--cat-entry">
-                            <i class="{{ link.icon }}"></i>
+                          <i class="{{ link.icon }}" aria-hidden="true"></i>
                             <h2>{{ link.title }}</h2>
                         </a>
                     </div>
