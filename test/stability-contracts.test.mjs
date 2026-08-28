@@ -182,7 +182,7 @@ test('Newsletter close control respects RTL placement and touch target sizing', 
 
 test('Product gallery falls back to the product name when image alt text is unavailable', () => {
   const product = read('src/views/pages/product/single.twig');
-  assert.match(product, /\{% set image_alt = image\.alt\|default\(product\.name\) %\}/);
+  assert.equal((product.match(/\{% set image_alt = image\.alt\|default\(product\.name\) %\}/g) || []).length, 2);
   assert.match(product, /alt="\{\{ image_alt \}\}"/);
   assert.match(product, /aria-label="\{\{ image_alt \}\}"/);
   assert.doesNotMatch(product, /alt="\{\{ image\.alt \}\}"/);
