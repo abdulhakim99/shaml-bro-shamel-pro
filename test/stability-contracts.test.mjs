@@ -52,6 +52,16 @@ test('Discovery icons remain decorative while category names label their links',
   assert.match(links, /<i class="\{\{ link\.icon \}\}" aria-hidden="true"><\/i>/);
 });
 
+test('Product cards escape product names before inserting accessible HTML', () => {
+  const productCard = read('src/assets/js/partials/product-card.js');
+  assert.match(productCard, /const productName = this\.escapeHTML\(this\.product\?\.name \|\| ''\);/);
+  assert.match(productCard, /aria-label="\$\{productName\}" class="s-product-card-overlay"/);
+  assert.match(productCard, /<a href="\$\{productUrl\}" aria-label="\$\{this\.escapeHTML\(this\.product\?\.image\?\.alt \|\| productName\)\}">/);
+  assert.match(productCard, /<a href="\$\{productUrl\}">\$\{productName\}<\/a>/);
+  assert.doesNotMatch(productCard, /aria-label=\$\{this\.product\.name\}/);
+  assert.doesNotMatch(productCard, /<a href="\$\{this\.product\?\.url\}"\>\$\{this\.product\?\.name\}</);
+});
+
 test('optional menu initialisation cannot poll or multiply close handlers indefinitely', () => {
   const app = read('src/assets/js/app.js');
   assert.match(app, /menuDirAttempts >= 50/);

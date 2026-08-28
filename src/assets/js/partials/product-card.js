@@ -181,6 +181,8 @@ class ProductCard extends HTMLElement {
   render(){
     this.classList.add('s-product-card-entry'); 
     this.setAttribute('id', this.product.id);
+    const productName = this.escapeHTML(this.product?.name || '');
+    const productUrl = this.escapeHTML(this.product?.url || '#');
     !this.horizontal && !this.fullImage && !this.minimal? this.classList.add('s-product-card-vertical') : '';
     this.horizontal && !this.fullImage && !this.minimal? this.classList.add('s-product-card-horizontal') : '';
     this.fitImageHeight && !this.isSpecial && !this.fullImage && !this.minimal? this.classList.add('s-product-card-fit-height') : '';
@@ -196,7 +198,7 @@ class ProductCard extends HTMLElement {
       : this.product.status;
       this.innerHTML = `
         <div class="${!this.fullImage ? 's-product-card-image' : 's-product-card-image-full'}">
-          <a href="${this.product?.url}" aria-label="${this.escapeHTML(this.product?.image?.alt || this.product.name)}">
+          <a href="${productUrl}" aria-label="${this.escapeHTML(this.product?.image?.alt || productName)}">
            <img 
               class="s-product-card-image-${salla.url.is_placeholder(this.product?.image?.url)
                 ? 'contain'
@@ -210,7 +212,7 @@ class ProductCard extends HTMLElement {
             ${!this.fullImage && !this.minimal ? this.getProductBadge() : ''}
             ${this.getShamelBadges()}
           </a>
-          ${this.fullImage ? `<a href="${this.product?.url}" aria-label=${this.product.name} class="s-product-card-overlay"></a>`:''}
+          ${this.fullImage ? `<a href="${productUrl}" aria-label="${productName}" class="s-product-card-overlay"></a>`:''}
           ${window.shamel_wishlist_enabled && !this.horizontal && !this.fullImage ?
             `<salla-button
               shape="icon"
@@ -241,7 +243,7 @@ class ProductCard extends HTMLElement {
 
           <div class="s-product-card-content-main ${this.isSpecial ? 's-product-card-content-extra-padding' : ''}">
             <h3 class="s-product-card-content-title">
-              <a href="${this.product?.url}">${this.product?.name}</a>
+              <a href="${productUrl}">${productName}</a>
             </h3>
 
             ${this.product?.subtitle && !this.minimal ?
