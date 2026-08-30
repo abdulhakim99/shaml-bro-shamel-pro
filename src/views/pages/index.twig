@@ -7,6 +7,40 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
+    {% if theme.settings.get('shamel_announcement_enabled', true) and theme.settings.get('shamel_announcement_text') %}
+      {% set shamel_news_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
+      {% set shamel_news_speed = shamel_news_speed_raw is iterable ? (shamel_news_speed_raw|first).value : shamel_news_speed_raw %}
+      <div class="shamel-news-wrap container">
+        <aside class="shamel-news shamel-news--{{ shamel_news_speed }}" aria-label="إعلانات المتجر ووسائل الدفع">
+          <div class="shamel-news__row"><span class="shamel-news__label"><i class="sicon-megaphone"></i><span>جديد المتجر</span></span><div class="shamel-news__viewport"><div class="shamel-news__track">
+              <span class="shamel-news__sequence">
+                <span class="shamel-news__message">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
+                {% if theme.settings.get('shamel_custom_payments', [])|length %}<span class="shamel-news__payment-set">
+                  {% for payment in theme.settings.get('shamel_custom_payments', []) %}
+                    {% if payment['shamel_custom_payments.logo'] %}
+                      <span class="shamel-pay-logo shamel-pay-logo--custom" title="{{ payment['shamel_custom_payments.name'] }}">
+                        <img src="{{ payment['shamel_custom_payments.logo'] }}" alt="{{ payment['shamel_custom_payments.name'] }}">
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </span>{% endif %}
+              </span>
+              <span class="shamel-news__sequence" aria-hidden="true">
+                <span class="shamel-news__message">{{ theme.settings.get('shamel_announcement_text')|replace({'|':' • '}) }}</span>
+                {% if theme.settings.get('shamel_custom_payments', [])|length %}<span class="shamel-news__payment-set">
+                  {% for payment in theme.settings.get('shamel_custom_payments', []) %}
+                    {% if payment['shamel_custom_payments.logo'] %}
+                      <span class="shamel-pay-logo shamel-pay-logo--custom" title="{{ payment['shamel_custom_payments.name'] }}">
+                        <img src="{{ payment['shamel_custom_payments.logo'] }}" alt="{{ payment['shamel_custom_payments.name'] }}">
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </span>{% endif %}
+              </span>
+          </div></div></div>
+        </aside>
+      </div>
+    {% endif %}
     {% component home %}
 {% endblock %}
 {% block scripts %}

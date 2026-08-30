@@ -1,97 +1,147 @@
 {#
-| Variable                   | Type        | Description                                                          |
-|----------------------------|-------------|----------------------------------------------------------------------|
-| page                       | object      |                                                                      |
-| page.title                 | string      | *could be html                                                       |
-| page.slug                  | string      | ex: "cat.show"                                                       |
-| category                   | ?Category   |                                                                      |
-| category.name              | string      |                                                                      |
-| category.url               | string      |                                                                      |
-| category.sub_categories    | ?Category[] |                                                                      |
-| category.image             | ?string     |                                                                      |
-| filters                     | bool        | is filters allowed here or not                                        |
-| sort_options[]             | SortList[]  |                                                                      |
-| sort_options[].id          | string      | ourSuggest, bestSell, topRated, priceFromTopToLow, priceFromLowToTop |
-| sort_options[].name        | string      |                                                                      |
-| sort_options[].is_selected | bool        | Is current page sorted by it                                         |
-| search_query               | ?string     |                                                                      |
+| Products index / category / search page.
+| Shamel Pro keeps product filters in an independent panel; the header hamburger stays for categories only.
 #}
 {% extends "layouts.master" %}
 {% block content %}
-	{% if theme.settings.get('product_index_show_breadcrumbs', true) %}
-		<div
-			class="container container--breadcrumbs">
-			{# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
-			<nav class="breadcrumbs w-full py-5">
-				<salla-breadcrumb></salla-breadcrumb>
-			</nav>
-		</div>
-	{% endif %}
+  {% set shamel_catalog_filters_enabled = theme.settings.get('shamel_catalog_filters_panel_enabled', true) %}
 
-	{#
-    Hook: product.index.before_products_group_with_filter
-    Fires before the products grid and filter sidebar wrapper.
-    Use this hook to inject content above the products listing area.
-  #}
-	<div class="s-blocks-wrapper s-before-products-list !mt-0">{% hook 'product.index.before_products_group_with_filter' %}</div>
+  {% if theme.settings.get('product_index_show_breadcrumbs', true) %}
+    <div class="container container--breadcrumbs">
+      <nav class="breadcrumbs w-full py-5">
+        <salla-breadcrumb></salla-breadcrumb>
+      </nav>
+    </div>
+  {% endif %}
 
-	<div class="container container--products-list flex items-start flex-col md:flex-row">
-		{% if filters %}
-			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
-			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-20 flex-none" id="filters-menu"></salla-filters>
-		{% endif %}
+  <div class="s-blocks-wrapper s-before-products-list !mt-0">{% hook 'product.index.before_products_group_with_filter' %}</div>
 
-		<div class="main-content flex-1 w-full {{ filters ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
-			<div class="mb-4 sm:mb-6 flex justify-between items-center">
-				<h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3" id="page-main-title">{{ page.title|raw }}</h1>
-				<div class="flex items-center space-x-2 rtl:space-x-reverse">
-					{% if filters %}
-						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger bg-border-color text-primary lg:hidden mt-2">
-							<i class="sicon-filter text-gray-text text-2xl me-2.5"></i>
-						</a>
-					{% endif %}
-					{% if sort_options|length %}
-						<div class="flex items-center">
-							<label class="hidden sm:block rtl:ml-3 ltr:mr-3 whitespace-nowrap" for="product-filter">{{ trans('pages.categories.sorting') }}</label>
-							<select id="product-filter" class="form-input pt-0 pb-1 rtl:md:pl-10 ltr:md:pr-10">
-								{% for sort in sort_options %}
-									<option value="{{ sort.id }}" {{ sort.is_selected?'selected':'' }}>{{ sort.name }}</option>
-								{% endfor %}
-							</select>
-						</div>
-					{% endif %}
-				</div>
-			</div>
+  <div class="container container--products-list flex items-start flex-col md:flex-row">
+    {% if filters and not shamel_catalog_filters_enabled %}
+      <button class="btn--close-sm close-filters sicon-cancel hidden"></button>
+      <salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-20 flex-none" id="filters-menu"></salla-filters>
+    {% endif %}
 
-			{% hook 'product:index.items.start' %}
+    <div class="main-content flex-1 w-full {{ filters and not shamel_catalog_filters_enabled ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
+      <div class="mb-4 sm:mb-6 flex justify-between items-center gap-3">
+        <h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3" id="page-main-title">{{ page.title|raw }}</h1>
+        <div class="flex items-center gap-2">
+          {% if filters and shamel_catalog_filters_enabled %}
+            <button type="button" class="shamel-catalog-filter-trigger" data-shamel-filter-open aria-controls="shamel-catalog-filter-panel" aria-expanded="false">
+              <i class="sicon-filter" aria-hidden="true"></i>
+              <span>فلترة</span>
+            </button>
+          {% elseif filters %}
+            <a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger bg-border-color text-primary lg:hidden mt-2">
+              <i class="sicon-filter text-gray-text text-2xl me-2.5"></i>
+            </a>
+          {% endif %}
 
-			<div class="flex">
-				<salla-products-list data-testid="store-products-list" class="flex-1 min-w-0" source="{{ page.slug }}" source-value="{{ page.id }}" {{ filters ?'filters-Results':'' }}></salla-products-list>
-			</div>
+          {% if sort_options|length %}
+            <div class="flex items-center">
+              <label class="hidden sm:block rtl:ml-3 ltr:mr-3 whitespace-nowrap" for="product-filter">{{ trans('pages.categories.sorting') }}</label>
+              <select id="product-filter" class="form-input pt-0 pb-1 rtl:md:pl-10 ltr:md:pr-10">
+                {% for sort in sort_options %}
+                  <option value="{{ sort.id }}" {{ sort.is_selected?'selected':'' }}>{{ sort.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endif %}
+        </div>
+      </div>
 
-			{% hook 'product:index.items.end' %}
-		</div>
-	</div>
+      {% hook 'product:index.items.start' %}
+      <div class="flex">
+        <salla-products-list data-testid="store-products-list" class="flex-1 min-w-0" source="{{ page.slug }}" source-value="{{ page.id }}" {{ filters ?'filters-Results':'' }}></salla-products-list>
+      </div>
+      {% hook 'product:index.items.end' %}
+    </div>
+  </div>
 
-	{#
-    Hook: product.index.after_products_group_with_filter
-    Fires after the products grid and filter sidebar wrapper.
-    Use this hook to inject content below the products listing area.
-  #}
-	<div class="s-blocks-wrapper s-after-products-list">{% hook 'product.index.after_products_group_with_filter' %}</div>
+  {% if filters and shamel_catalog_filters_enabled %}
+    <div class="shamel-filter-panel-overlay" data-shamel-filter-close hidden></div>
+    <aside id="shamel-catalog-filter-panel" class="shamel-catalog-filter-panel" aria-hidden="true" aria-labelledby="shamel-filter-panel-title">
+      <div class="shamel-catalog-filter-panel__head">
+        <div>
+          <span class="shamel-catalog-filter-panel__eyebrow">تصفية دقيقة</span>
+          <h2 id="shamel-filter-panel-title">فلترة المنتجات</h2>
+        </div>
+        <button type="button" data-shamel-filter-close aria-label="إغلاق الفلاتر"><i class="sicon-cancel"></i></button>
+      </div>
+      <p class="shamel-catalog-filter-panel__hint">اختر العلامة التجارية أو السعر أو التصنيف والمواصفات المتاحة في المتجر.</p>
+      <div class="shamel-catalog-filter-panel__body">
+        <salla-filters data-testid="store-products-filters" id="filters-menu"></salla-filters>
+      </div>
+    </aside>
 
-	{% if store.settings.category.testimonial_enabled %}
-		{% component 'home.testimonials' %}
-	{% endif %}
+    <style>
+      .shamel-catalog-filter-trigger{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:42px;padding:.65rem 1rem;border:1px solid #d9e2ec;border-radius:13px;background:#fff;color:#0b1f3a;font-weight:800;box-shadow:0 8px 24px rgba(15,23,42,.06);transition:.2s ease}
+      .shamel-catalog-filter-trigger:hover{transform:translateY(-1px);border-color:#0b1f3a;box-shadow:0 12px 28px rgba(15,23,42,.12)}
+      .shamel-catalog-filter-trigger i{font-size:1.1rem}
+      .shamel-filter-panel-overlay{position:fixed;inset:0;z-index:998;background:rgba(2,8,23,.52);backdrop-filter:blur(3px)}
+      .shamel-catalog-filter-panel{position:fixed;top:0;bottom:0;inset-inline-end:0;z-index:999;width:min(430px,94vw);padding:1.25rem;background:#fff;color:#0f172a;box-shadow:-24px 0 60px rgba(2,8,23,.2);overflow:auto;transform:translateX(110%);transition:transform .28s ease}
+      [dir="ltr"] .shamel-catalog-filter-panel{transform:translateX(110%)}
+      [dir="rtl"] .shamel-catalog-filter-panel{transform:translateX(-110%)}
+      .shamel-catalog-filter-panel.is-open{transform:translateX(0)}
+      .shamel-catalog-filter-panel__head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0}
+      .shamel-catalog-filter-panel__eyebrow{display:block;margin-bottom:.25rem;color:#64748b;font-size:.75rem;font-weight:700}
+      .shamel-catalog-filter-panel__head h2{margin:0;font-size:1.35rem;font-weight:900}
+      .shamel-catalog-filter-panel__head button{display:grid;place-items:center;width:42px;height:42px;border:0;border-radius:13px;background:#eef3f8;color:#0b1f3a}
+      .shamel-catalog-filter-panel__hint{margin:.9rem 0;color:#64748b;font-size:.82rem;line-height:1.7}
+      .shamel-catalog-filter-panel__body salla-filters{display:block;width:100%;position:static!important}
+      body.shamel-filter-panel-open{overflow:hidden}
+      body.shamel-dark-mode .shamel-catalog-filter-trigger{border-color:rgba(255,255,255,.14);background:#112942;color:#fff}
+      body.shamel-dark-mode .shamel-catalog-filter-panel{background:#071a2f;color:#fff}
+      body.shamel-dark-mode .shamel-catalog-filter-panel__head{border-color:rgba(255,255,255,.12)}
+      body.shamel-dark-mode .shamel-catalog-filter-panel__head button{background:rgba(255,255,255,.09);color:#fff}
+      body.shamel-dark-mode .shamel-catalog-filter-panel__eyebrow,body.shamel-dark-mode .shamel-catalog-filter-panel__hint{color:#cbd5e1}
+      @media(max-width:640px){.shamel-catalog-filter-trigger span{display:none}.shamel-catalog-filter-trigger{width:42px;padding:0}.shamel-catalog-filter-panel{width:100%;padding:1rem}}
+      @media(prefers-reduced-motion:reduce){.shamel-catalog-filter-panel,.shamel-catalog-filter-trigger{transition:none}}
+    </style>
+  {% endif %}
 
-	{#
-    Hook: product.index.after_testimonials
-    Fires after the testimonials (store reviews) section.
-    Use this hook to inject content below the testimonials area.
-  #}
-	<div class="s-blocks-wrapper s-after-testimonials">{% hook 'product.index.after_testimonials' %}</div>
+  <div class="s-blocks-wrapper s-after-products-list">{% hook 'product.index.after_products_group_with_filter' %}</div>
+
+  {% if store.settings.category.testimonial_enabled %}
+    {% component 'home.testimonials' %}
+  {% endif %}
+
+  <div class="s-blocks-wrapper s-after-testimonials">{% hook 'product.index.after_testimonials' %}</div>
 {% endblock %}
 
 {% block scripts %}
-	<script defer src="{{ 'product.js' | asset }}"></script>
+  <script defer src="{{ 'product.js' | asset }}"></script>
+  {% if filters and shamel_catalog_filters_enabled %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var panel = document.getElementById('shamel-catalog-filter-panel');
+        var overlay = document.querySelector('.shamel-filter-panel-overlay');
+        var triggers = document.querySelectorAll('[data-shamel-filter-open]');
+        var closers = document.querySelectorAll('[data-shamel-filter-close]');
+        if (!panel || !overlay) return;
+
+        function openPanel() {
+          panel.classList.add('is-open');
+          panel.setAttribute('aria-hidden', 'false');
+          overlay.hidden = false;
+          document.body.classList.add('shamel-filter-panel-open');
+          triggers.forEach(function (trigger) { trigger.setAttribute('aria-expanded', 'true'); });
+        }
+
+        function closePanel() {
+          panel.classList.remove('is-open');
+          panel.setAttribute('aria-hidden', 'true');
+          overlay.hidden = true;
+          document.body.classList.remove('shamel-filter-panel-open');
+          triggers.forEach(function (trigger) { trigger.setAttribute('aria-expanded', 'false'); });
+        }
+
+        triggers.forEach(function (trigger) { trigger.addEventListener('click', openPanel); });
+        closers.forEach(function (closer) { closer.addEventListener('click', closePanel); });
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && panel.classList.contains('is-open')) closePanel();
+        });
+      });
+    </script>
+  {% endif %}
 {% endblock %}

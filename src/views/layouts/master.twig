@@ -74,6 +74,10 @@
         window.enable_more_menu = "{{ theme.settings.get('enable_more_menu', true) }}"
         window.enable_add_product_toast = "{{ theme.settings.get('enable_add_product_toast', true) }}"
         window.notify_when_available_in_card = "{{ theme.settings.get('notify_when_available_in_card', true) }}"
+        window.shamel_card_discount_badge = {{ theme.settings.get('shamel_card_discount_badge', true) ? 'true' : 'false' }}
+        window.shamel_card_type_badge = {{ theme.settings.get('shamel_card_type_badge', true) ? 'true' : 'false' }}
+        window.shamel_compare_enabled = {{ theme.settings.get('shamel_compare_enabled', true) ? 'true' : 'false' }}
+        window.shamel_wishlist_enabled = {{ theme.settings.get('shamel_side_wishlist_enabled', true) ? 'true' : 'false' }}
     </script>
     
     {% hook 'head:start' %}
@@ -94,14 +98,265 @@
             --s-radius: .75rem;
         }
     </style>
+    <style>
+      .shamel-pro{background:var(--sp-page-bg,#fff);color:var(--sp-text,#334155)}
+      .shamel-pro h1,.shamel-pro h2,.shamel-pro h3,.shamel-pro h4{color:var(--sp-heading,#0f172a)}
+      .shamel-pro .main-nav-container,.shamel-pro .top-navbar{background:var(--sp-header-bg,#fff);color:var(--sp-header-text,#0f172a)}
+      /* Shamel Pro — clean single-row header */
+      .shamel-store-header .top-navbar{display:none!important}
+      .shamel-header-main{min-height:4.8rem;border-bottom:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 9%,transparent)}
+      .shamel-header-main__grid{display:grid;grid-template-columns:minmax(6.5rem,9rem) minmax(0,1fr) auto;align-items:center;gap:1rem;min-height:4.8rem}
+      .shamel-header-main__grid--no-menu{grid-template-columns:minmax(6.5rem,1fr) auto}
+      .shamel-header-main__brand,.shamel-header-main__actions{display:flex;align-items:center}
+      .shamel-header-main__brand{justify-content:flex-start;gap:.65rem}
+      .shamel-header-main__brand .navbar-brand{margin:0;max-width:8rem}
+      .shamel-header-main__menu{display:flex;align-items:center;justify-content:center;min-width:0;overflow:visible;padding:0;border:0;border-radius:0;background:transparent}
+      .shamel-header-main__menu custom-main-menu{display:block;width:100%;min-width:0}
+      .shamel-header-main__menu .main-menu{display:flex!important;align-items:center;justify-content:center;flex-wrap:nowrap!important;gap:.38rem;white-space:nowrap;background:transparent!important}
+      .shamel-header-main__menu .main-menu>li{position:relative}
+      .shamel-header-main__menu .main-menu>li>a{display:flex;align-items:center;min-height:2.6rem;padding:.55rem .9rem!important;border:1px solid transparent;border-radius:.72rem;background:transparent;color:var(--sp-header-text,#0f172a);font-weight:800;transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+      .shamel-header-main__menu .main-menu>li>a:hover,.shamel-header-main__menu .main-menu>li:hover>a,.shamel-header-main__menu .main-menu>li.active>a,.shamel-header-main__menu .main-menu>li.is-active>a{background:var(--sp-categories-bg,#f1f5f9);border-color:color-mix(in srgb,var(--sp-primary,#0f4c6b) 22%,transparent);color:var(--sp-primary,#0f4c6b);box-shadow:0 7px 18px rgba(15,23,42,.08);transform:translateY(-1px)}
+      .shamel-header-main__actions{justify-content:flex-end;gap:.55rem;white-space:nowrap}
+      .shamel-header-search-trigger{display:flex;align-items:center;width:2.75rem;height:2.75rem;overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 28%,transparent);border-radius:999px;background:color-mix(in srgb,var(--sp-header-bg,#fff) 88%,var(--sp-header-text,#0f172a));transition:width .28s ease,border-color .2s,box-shadow .2s;position:relative;z-index:4}
+      .shamel-header-search-trigger:hover,.shamel-header-search-trigger:focus-within,.shamel-header-search-trigger.is-open{width:min(17rem,34vw);border-color:var(--sp-primary,#0f4c6b);box-shadow:0 8px 24px rgba(2,6,23,.12)}
+      .shamel-header-search-trigger salla-search{display:block;width:100%!important;min-width:2.75rem;--color-primary:var(--sp-header-text,#0f172a);--color-text:var(--sp-header-text,#0f172a)}
+      .shamel-header-dark-toggle{display:grid;place-items:center;flex:0 0 2.75rem;width:2.75rem;height:2.75rem;padding:0;border:1px solid color-mix(in srgb,var(--sp-header-text,#0f172a) 28%,transparent);border-radius:50%;background:color-mix(in srgb,var(--sp-header-bg,#fff) 90%,var(--sp-header-text,#0f172a));color:var(--sp-header-text,#0f172a);cursor:pointer;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
+      .shamel-header-dark-toggle:hover{transform:translateY(-2px);background:var(--sp-primary,#0f4c6b);color:#fff;box-shadow:0 8px 20px rgba(15,76,107,.22)}
+      .shamel-header-dark-toggle[aria-pressed="true"]{background:#f8fafc;color:#0f172a}
+      body.shamel-dark-mode .shamel-header-search-trigger{border-color:rgba(255,255,255,.5)!important;background:#172033!important;color:#fff!important;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+      body.shamel-dark-mode .shamel-header-dark-toggle{border-color:rgba(255,255,255,.45);background:#f8fafc;color:#0f172a}
+      body.shamel-dark-mode .shamel-header-search-trigger salla-search{color:#fff!important;--color-primary:#fff}
+      body.shamel-dark-mode .shamel-header-main__menu{background:transparent!important;border-color:transparent!important}
+      body.shamel-dark-mode .shamel-header-main__menu .main-menu>li>a{background:transparent!important;color:#f8fafc!important}
+      body.shamel-dark-mode .shamel-header-main__menu .main-menu>li>a:hover,body.shamel-dark-mode .shamel-header-main__menu .main-menu>li:hover>a,body.shamel-dark-mode .shamel-header-main__menu .main-menu>li.active>a,body.shamel-dark-mode .shamel-header-main__menu .main-menu>li.is-active>a{background:var(--sp-categories-dark-bg,#1e293b)!important;border-color:rgba(255,255,255,.16)!important;color:#fff!important;box-shadow:0 8px 20px rgba(0,0,0,.28)}
+      body.shamel-dark-mode .shamel-header-main__actions salla-search,
+      body.shamel-dark-mode .shamel-header-main__actions salla-user-menu,
+      body.shamel-dark-mode .shamel-header-main__actions salla-cart-summary{color:#fff!important;--color-primary:#fff!important;--color-text:#fff!important;--color-gray-700:#fff!important}
+      body.shamel-dark-mode .shamel-header-main__actions .header-btn__icon,
+      body.shamel-dark-mode .shamel-header-main__actions i,
+      body.shamel-dark-mode .shamel-header-main__actions svg,
+      body.shamel-dark-mode .shamel-header-main__actions button{color:#fff!important;stroke:#fff!important}
+      body.shamel-dark-mode .shamel-header-main__actions salla-search::part(trigger),
+      body.shamel-dark-mode .shamel-header-main__actions salla-user-menu::part(trigger),
+      body.shamel-dark-mode .shamel-header-main__actions salla-cart-summary::part(trigger){color:#fff!important}
+
+      .shamel-header-main salla-cart-summary{margin:0!important}
+      @media(max-width:1023px){
+        .shamel-header-main{min-height:4.25rem}
+        .shamel-header-main__grid{grid-template-columns:1fr auto;gap:.5rem;min-height:4.25rem}
+        .shamel-header-main__brand .navbar-brand{max-width:6.5rem}
+        .shamel-header-main__menu{display:none}
+        .shamel-header-main__actions{gap:.35rem}
+        .shamel-header-localization{display:none}
+      }
+      @media(max-width:420px){.shamel-header-main__brand .navbar-brand{max-width:5.4rem}}
+      .shamel-pro .s-product-card-entry{background:var(--sp-card-bg,#fff)}
+
+      /* Shamel Pro — identity controls: each editor option produces a visible result. */
+      .shamel-style-modern{--sp-style-shadow:0 12px 30px rgba(15,23,42,.09);--sp-style-border:color-mix(in srgb,var(--sp-primary,#0f4c6b) 12%,transparent)}
+      .shamel-style-luxury{--sp-style-shadow:0 18px 45px rgba(70,45,20,.13);--sp-style-border:color-mix(in srgb,#b38b4d 35%,transparent)}
+      .shamel-style-luxury .s-product-card-entry{border:1px solid var(--sp-style-border)!important;box-shadow:var(--sp-style-shadow)!important}
+      .shamel-style-luxury .s-product-card-content-title,.shamel-style-luxury h1,.shamel-style-luxury h2{letter-spacing:.015em}
+      .shamel-style-luxury .btn--primary,.shamel-style-luxury salla-button[color=primary]{filter:saturate(.82)}
+      .shamel-style-minimal{--sp-style-shadow:none;--sp-style-border:color-mix(in srgb,var(--sp-text,#334155) 14%,transparent)}
+      .shamel-style-minimal .s-product-card-entry{border:1px solid var(--sp-style-border)!important;box-shadow:none!important}
+      .shamel-style-minimal .s-product-card-content{padding:.75rem!important}
+      .shamel-style-modern .s-product-card-entry{box-shadow:var(--sp-style-shadow)}
+
+      .shamel-radius-square{--s-radius:0rem}
+      .shamel-radius-soft{--s-radius:.85rem}
+      .shamel-radius-rounded{--s-radius:1.5rem}
+      .shamel-radius-square .s-product-card-entry,.shamel-radius-square .s-product-card-image,.shamel-radius-square button,.shamel-radius-square .btn,.shamel-radius-square input,.shamel-radius-square select{border-radius:0!important}
+      .shamel-radius-soft .s-product-card-entry,.shamel-radius-soft .s-product-card-image{border-radius:.85rem!important}
+      .shamel-radius-soft button,.shamel-radius-soft .btn,.shamel-radius-soft input,.shamel-radius-soft select{border-radius:.7rem!important}
+      .shamel-radius-rounded .s-product-card-entry,.shamel-radius-rounded .s-product-card-image{border-radius:1.5rem!important}
+      .shamel-radius-rounded button,.shamel-radius-rounded .btn,.shamel-radius-rounded input,.shamel-radius-rounded select{border-radius:999px!important}
+
+      .shamel-header-centered .shamel-header-main__grid{grid-template-columns:1fr auto 1fr}
+      .shamel-header-centered .shamel-header-main__brand{grid-column:2;justify-content:center}
+      .shamel-header-centered .shamel-header-main__menu{grid-column:1;grid-row:1;justify-content:flex-start}
+      .shamel-header-centered .shamel-header-main__actions{grid-column:3;grid-row:1}
+      .shamel-header-compact .shamel-header-main,.shamel-header-compact .shamel-header-main__grid{min-height:3.75rem}
+      .shamel-header-compact .shamel-header-main__grid{grid-template-columns:minmax(5rem,7rem) minmax(0,1fr) auto;gap:.55rem}
+      .shamel-header-compact .shamel-header-main__brand .navbar-brand{max-width:6.3rem}
+      .shamel-header-compact .shamel-header-main__menu .main-menu>li>a{min-height:2.2rem;padding:.35rem .65rem!important;font-size:.86rem}
+
+      .shamel-density-compact .s-product-card-content{padding:.6rem .7rem .75rem!important}
+      .shamel-density-compact .s-product-card-content-title{font-size:.9rem!important;line-height:1.4!important}
+      .shamel-density-compact .s-products-list-wrapper,.shamel-density-compact .s-products-list-vertical-cards{gap:.65rem!important}
+      .shamel-density-comfortable .s-product-card-content{padding:1rem!important}
+      .shamel-density-comfortable .s-products-list-wrapper,.shamel-density-comfortable .s-products-list-vertical-cards{gap:1.25rem!important}
+
+      .shamel-mode-digital .s-product-card-image{aspect-ratio:16/10!important;padding:1rem;background:color-mix(in srgb,var(--sp-card-bg,#fff) 90%,var(--sp-primary,#0f4c6b))}
+      .shamel-mode-digital .s-product-card-image img{object-fit:contain!important}
+      .shamel-mode-digital .s-product-card-entry:after{content:"منتج رقمي";position:absolute;top:.65rem;inset-inline-start:.65rem;padding:.28rem .55rem;border-radius:999px;background:var(--sp-primary,#0f4c6b);color:var(--sp-button-text,#fff);font-size:.68rem;font-weight:800;z-index:2}
+      .shamel-mode-single main{max-width:78rem;margin-inline:auto}
+      .shamel-mode-single .s-product-card-entry{box-shadow:0 18px 45px rgba(15,23,42,.12)}
+      @media(min-width:1024px){.shamel-mode-single .s-products-list-wrapper{max-width:46rem;margin-inline:auto}.shamel-density-compact .s-products-list-wrapper{column-gap:.75rem!important}}
+      @media(max-width:1023px){.shamel-header-centered .shamel-header-main__grid,.shamel-header-compact .shamel-header-main__grid{grid-template-columns:1fr auto}.shamel-header-centered .shamel-header-main__brand,.shamel-header-centered .shamel-header-main__actions{grid-column:auto;grid-row:auto}}
+
+      /* Shamel Pro — industry presets. Merchant colors and typography remain in control. */
+      .shamel-industry-perfumes .s-product-card-entry{overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-primary,#0f4c6b) 14%,transparent);border-radius:1.15rem;box-shadow:0 12px 32px rgba(15,23,42,.07)}
+      .shamel-industry-perfumes .s-product-card-image{aspect-ratio:4/5;padding:1rem;background:color-mix(in srgb,var(--sp-card-bg,#fff) 92%,#f5efe6)}
+      .shamel-industry-perfumes .s-product-card-image img{object-fit:contain!important}
+      .shamel-industry-perfumes .s-product-card-content{padding:1rem 1.05rem 1.15rem}
+      .shamel-industry-perfumes .s-product-card-content-title{font-weight:800;letter-spacing:.01em}
+
+      .shamel-industry-abayas .s-product-card-entry{overflow:hidden;border-radius:1rem;box-shadow:0 10px 28px rgba(15,23,42,.07)}
+      .shamel-industry-abayas .s-product-card-image{aspect-ratio:3/4;background:color-mix(in srgb,var(--sp-card-bg,#fff) 94%,#f8f3ef)}
+      .shamel-industry-abayas .s-product-card-image img{width:100%;height:100%;object-fit:cover!important;object-position:center top}
+      .shamel-industry-abayas .s-product-card-content{padding:.9rem 1rem 1.05rem}
+
+      .shamel-industry-electronics .s-product-card-entry{overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-text,#334155) 13%,transparent);border-radius:.8rem;box-shadow:0 8px 22px rgba(15,23,42,.06)}
+      .shamel-industry-electronics .s-product-card-image{aspect-ratio:1/1;padding:1rem;background:#fff}
+      .shamel-industry-electronics .s-product-card-image img{object-fit:contain!important}
+      .shamel-industry-electronics .s-product-card-content{padding:.85rem .95rem 1rem}
+      .shamel-industry-electronics .s-product-card-content-title{font-weight:850;line-height:1.55}
+      body.shamel-dark-mode.shamel-industry-electronics .s-product-card-image{background:#f8fafc}
+      @media(max-width:640px){.shamel-industry-perfumes .s-product-card-image{aspect-ratio:1/1.15}.shamel-industry-abayas .s-product-card-image{aspect-ratio:3/4}}
+
+      .shamel-pro main>.s-block:nth-of-type(odd),.shamel-pro main>section:nth-of-type(odd){background-color:var(--sp-section-bg,#fff)}
+      .shamel-pro main>.s-block:nth-of-type(even),.shamel-pro main>section:nth-of-type(even){background-color:var(--sp-section-alt-bg,#f8fafc)}
+
+      .shamel-pro .store-footer,.shamel-pro .store-footer__inner{background:var(--sp-footer-bg,#0f172a);color:var(--sp-footer-text,#fff)}
+      .shamel-pro .btn--primary,.shamel-pro salla-button[color=primary]{--color-primary:var(--sp-primary,#0f4c6b);--color-primary-reverse:var(--sp-button-text,#fff)}
+
+
+      .shamel-compare-add{display:grid;place-items:center;flex:0 0 2.85rem;width:2.85rem;height:2.85rem;border:1px solid #cbd5e1;border-radius:.72rem;background:#fff;color:var(--sp-primary,#0f4c6b);cursor:pointer;transition:.18s}
+      .shamel-compare-add:hover{border-color:var(--sp-primary,#0f4c6b);background:var(--sp-primary,#0f4c6b);color:#fff;transform:translateY(-2px)}
+      body.shamel-dark-mode{--sp-page-bg:#070b14!important;--sp-text:#cbd5e1!important;--sp-heading:#f8fafc!important;--sp-card-bg:#111827!important;--sp-section-bg:#0b1120!important;--sp-section-alt-bg:#111827!important;--sp-header-bg:#0b1120!important;--sp-header-text:#f8fafc!important;background:#070b14!important;color:#cbd5e1!important;color-scheme:dark}
+      body.shamel-dark-mode header,body.shamel-dark-mode .navbar,body.shamel-dark-mode .main-menu,body.shamel-dark-mode .s-block,body.shamel-dark-mode .product-entry,body.shamel-dark-mode .product-card,body.shamel-dark-mode .s-product-card-entry,body.shamel-dark-mode .shamel-compare-drawer{background-color:var(--sp-card-bg,#111827)!important;color:var(--sp-text,#cbd5e1)!important}
+      body.shamel-dark-mode h1,body.shamel-dark-mode h2,body.shamel-dark-mode h3,body.shamel-dark-mode h4,body.shamel-dark-mode h5,body.shamel-dark-mode h6,body.shamel-dark-mode a:not(.shamel-contact__link):not(.shamel-side-tools a){color:var(--sp-heading,#f8fafc)}
+      body.shamel-dark-mode input,body.shamel-dark-mode select,body.shamel-dark-mode textarea{background:#172033!important;border-color:#334155!important;color:#f8fafc!important}
+      body.shamel-dark-mode .shamel-compare-item{border-color:#334155;background:#111827}body.shamel-dark-mode .shamel-compare-item img{background:#172033}
+      .shamel-side-tools[hidden]{display:none!important}
+      .shamel-newsletter-drawer[hidden]{display:none!important}.shamel-newsletter-drawer{position:fixed;inset:0;z-index:101;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
+      .shamel-newsletter-drawer__card{position:relative;width:min(31rem,100%);padding:2rem;border-radius:1rem;background:var(--sp-card-bg,#fff);color:var(--sp-text,#334155);box-shadow:0 30px 90px rgba(2,6,23,.4);text-align:center}
+      .shamel-newsletter-drawer__card h2{margin:0 0 .45rem;color:var(--sp-heading,#0f172a);font-size:1.55rem;font-weight:900}.shamel-newsletter-drawer__card p{margin:0 0 1rem}
+      .shamel-newsletter-drawer__form{display:flex;gap:.55rem}.shamel-newsletter-drawer__form input{flex:1;min-width:0;padding:.85rem 1rem;border:1px solid #cbd5e1;border-radius:.65rem}.shamel-newsletter-drawer__form button{padding:.85rem 1.15rem;border:0;border-radius:.65rem;background:var(--sp-primary,#0f4c6b);color:var(--sp-button-text,#fff);font-weight:800;cursor:pointer}
+      .shamel-newsletter-drawer__close{position:absolute;top:.6rem;left:.75rem;border:0;background:transparent;color:inherit;font-size:1.7rem;cursor:pointer}@media(max-width:480px){.shamel-newsletter-drawer__form{flex-direction:column}}
+      .shamel-side-tools{transition:transform .28s ease,box-shadow .28s ease,width .28s ease,height .28s ease}
+      .shamel-side-tools.is-collapsed{width:1.45rem;height:3.8rem;min-width:0;min-height:0;transform:none;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.2)}
+      .shamel-side-tools--left.is-collapsed{border-radius:0 .55rem .55rem 0}
+      .shamel-side-tools--right.is-collapsed{border-radius:.55rem 0 0 .55rem}
+      .shamel-side-tools [data-shamel-tools-open]{display:none}
+      .shamel-side-tools.is-collapsed>[data-shamel-tools-open]{position:absolute;inset:0;display:flex!important;width:1.45rem;min-width:1.45rem;height:3.8rem;min-height:3.8rem;padding:0;opacity:1;pointer-events:auto;border:0;background:var(--sp-primary,#0f4c6b);font-size:1.15rem;font-weight:900;line-height:1}
+      .shamel-side-tools.is-collapsed>:not([data-shamel-tools-open]){opacity:0;pointer-events:none}
+      .shamel-side-tools__open-right{display:none}.shamel-side-tools--right .shamel-side-tools__open-left{display:none}.shamel-side-tools--right .shamel-side-tools__open-right{display:inline}
+      .shamel-side-tools{position:fixed;top:50%;z-index:88;display:flex;flex-direction:column;align-items:stretch;max-height:calc(100vh - 10rem);overflow:hidden;border:1px solid rgba(148,163,184,.25);border-radius:0 .8rem .8rem 0;background:#0f172a;color:#fff;box-shadow:0 18px 45px rgba(15,23,42,.25);transform:translateY(-50%)}
+      .shamel-side-tools--left{left:0}.shamel-side-tools--right{right:0;border-radius:.8rem 0 0 .8rem}
+      .shamel-side-tools button,.shamel-side-tools a{position:relative;display:flex;align-items:center;justify-content:center;gap:.45rem;min-width:3rem;min-height:3rem;padding:.65rem;border:0;border-bottom:1px solid rgba(255,255,255,.12);background:transparent;color:inherit;text-decoration:none;cursor:pointer}
+      .shamel-side-tools button:hover,.shamel-side-tools a:hover{background:var(--sp-primary,#0f4c6b)}
+      .shamel-side-tools__label{font-size:.76rem;font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg)}
+      .shamel-side-tools__count{position:absolute;top:.25rem;right:.25rem;display:grid;place-items:center;min-width:1.15rem;height:1.15rem;padding:0 .2rem;border-radius:999px;background:#ef4444;color:#fff;font-size:.62rem;font-weight:900}
+      .shamel-compare-drawer[hidden]{display:none}.shamel-compare-drawer{position:fixed;z-index:100;top:50%;left:50%;width:min(54rem,calc(100% - 2rem));max-height:80vh;overflow:auto;transform:translate(-50%,-50%);border-radius:1rem;background:#fff;color:#0f172a;box-shadow:0 30px 90px rgba(2,6,23,.38)}
+      .shamel-compare-drawer__head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;background:#0f172a;color:#fff}.shamel-compare-drawer__head h2{margin:0;color:#fff;font-size:1.2rem;font-weight:900}.shamel-compare-drawer__close{border:0;background:transparent;color:#fff;font-size:1.5rem;cursor:pointer}
+      .shamel-compare-drawer__items{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;padding:1rem}.shamel-compare-item{position:relative;padding:.7rem;border:1px solid #e2e8f0;border-radius:.8rem;text-align:center}.shamel-compare-item img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:.55rem;background:#f8fafc}.shamel-compare-item h3{margin:.55rem 0 .3rem;font-size:.85rem;font-weight:800}.shamel-compare-item strong{color:var(--sp-primary,#0f4c6b)}.shamel-compare-item__remove{position:absolute;top:.35rem;right:.35rem;display:grid;place-items:center;width:1.8rem;height:1.8rem;border:0;border-radius:50%;background:#fff;color:#dc2626;box-shadow:0 3px 10px rgba(15,23,42,.15);cursor:pointer}.shamel-compare-empty{grid-column:1/-1;padding:2rem;text-align:center;color:#64748b}
+      @media(max-width:640px){.shamel-side-tools{top:auto;bottom:max(.35rem,env(safe-area-inset-bottom));left:50%;right:auto;flex-direction:row;transform:translateX(-50%);border-radius:999px}.shamel-side-tools__label{display:none}.shamel-side-tools button,.shamel-side-tools a{border-bottom:0;border-inline-end:1px solid rgba(255,255,255,.12)}.shamel-compare-drawer__items{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+      /* Shamel Pro: conversion-focused product cards */
+      .shamel-pro .s-product-card-entry{overflow:hidden;border:1px solid rgba(148,163,184,.22);border-radius:var(--s-radius,.75rem);box-shadow:0 4px 16px rgba(15,23,42,.05);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+      .shamel-pro .s-product-card-entry:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--sp-primary,#0f4c6b) 35%,transparent);box-shadow:0 16px 34px rgba(15,23,42,.11)}
+      .shamel-pro .s-product-card-image{overflow:hidden;background:#f8fafc}
+      .shamel-pro .s-product-card-image img{transition:transform .35s ease}
+      .shamel-pro .s-product-card-entry:hover .s-product-card-image img{transform:scale(1.035)}
+      .shamel-pro .s-product-card-content{padding-bottom:.85rem}
+      .shamel-pro .s-product-card-content-title{font-weight:800;line-height:1.55}
+      .shamel-pro .s-product-card-content-title a{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+      .shamel-pro .s-product-card-content-sub{align-items:center;min-height:2.4rem}
+      .shamel-pro .s-product-card-price,.shamel-pro .s-product-card-sale-price h4{color:var(--sp-primary,#0f4c6b);font-size:1.08rem;font-weight:900}
+      .shamel-pro .s-product-card-sale-price span{text-decoration-thickness:1.5px;color:#94a3b8}
+      .shamel-pro .s-product-card-rating{display:inline-flex;align-items:center;gap:.25rem;padding:.22rem .45rem;border-radius:999px;background:#fff7ed;color:#9a3412;font-weight:800}
+      .shamel-pro .s-product-card-content-footer salla-add-product-button{flex:1}
+      .shamel-pro .s-product-card-content-footer salla-add-product-button::part(button){min-height:2.85rem;border-radius:.72rem;font-weight:800}
+      .shamel-pro .s-product-card-wishlist-btn{transition:transform .18s ease}
+      .shamel-pro .s-product-card-wishlist-btn:hover{transform:scale(1.08)}
+      @media(max-width:640px){
+        .shamel-pro .s-product-card-entry:hover{transform:none}
+        .shamel-pro .s-product-card-content{padding-bottom:.65rem}
+        .shamel-pro .s-product-card-content-title{font-size:.9rem}
+        .shamel-pro .s-product-card-price,.shamel-pro .s-product-card-sale-price h4{font-size:1rem}
+        .is-sticky-product-bar .product-form{padding-bottom:max(.35rem,env(safe-area-inset-bottom))}
+      }
+
+      .shamel-card-badges{position:absolute;z-index:3;top:.7rem;right:.7rem;display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;pointer-events:none}
+      html[dir=ltr] .shamel-card-badges{right:auto;left:.7rem}
+      .shamel-card-badge{display:inline-flex;align-items:center;min-height:1.65rem;padding:.25rem .55rem;border-radius:999px;color:#fff;font-size:.7rem;font-weight:800;line-height:1;box-shadow:0 5px 14px rgba(15,23,42,.18)}
+      .shamel-card-badge--sale{background:#dc2626}.shamel-card-badge--digital{background:#7c3aed}.shamel-card-badge--service{background:#0369a1}
+      .shamel-product-trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:1.25rem 0}
+      .shamel-product-trust__item{display:flex;align-items:center;justify-content:center;gap:.45rem;min-height:3.4rem;padding:.65rem;border:1px solid #e2e8f0;border-radius:.8rem;background:var(--sp-card-bg,#fff);color:var(--sp-text,#334155);font-size:.78rem;font-weight:700;text-align:center}
+      .shamel-product-trust__item i{color:var(--sp-primary,#0f4c6b);font-size:1.15rem}
+      @media(max-width:640px){.shamel-product-trust{grid-template-columns:1fr}.shamel-product-trust__item{justify-content:flex-start}}
+
+      .shamel-news-wrap{position:relative;margin:1rem auto 1.8rem;padding:0 .75rem}
+      .shamel-news{position:relative;overflow:hidden;border:1px solid color-mix(in srgb,var(--sp-primary,#0f4c6b) 46%,rgba(255,255,255,.2));border-radius:1.15rem;background:linear-gradient(115deg,color-mix(in srgb,var(--sp-news-bg,#071a2f) 90%,#000),var(--sp-news-bg,#071a2f) 52%,color-mix(in srgb,var(--sp-news-bg,#071a2f) 72%,var(--sp-primary,#0f4c6b)));color:var(--sp-news-text,#fff);box-shadow:0 16px 38px rgba(2,6,23,.2),inset 0 1px 0 rgba(255,255,255,.15);white-space:nowrap;isolation:isolate}
+      .shamel-news:before,.shamel-news:after{content:"";position:absolute;pointer-events:none;z-index:-1}.shamel-news:before{inset:-70% auto -70% -8%;width:28%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 68%);animation:shamel-news-glow 6s ease-in-out infinite alternate}.shamel-news:after{inset:0;background:linear-gradient(115deg,transparent 22%,rgba(255,255,255,.09) 43%,transparent 62%);transform:translateX(-110%);animation:shamel-news-shine 7s ease-in-out infinite}
+      .shamel-news__row{display:flex;align-items:center;min-height:3.65rem;padding:.38rem}
+      .shamel-news__label{position:relative;z-index:2;display:inline-flex;align-items:center;gap:.45rem;flex:none;min-height:2.78rem;padding:0 1rem;border-radius:.82rem;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.13);font-size:.78rem;font-weight:900}
+      .shamel-news__label i{color:#fbbf24;font-size:1rem}
+      .shamel-news__viewport{min-width:0;flex:1;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+      .shamel-news__track{display:flex;width:max-content;align-items:center;will-change:transform;animation:shamel-news 28s linear infinite}
+      .shamel-news:hover .shamel-news__track{animation-play-state:paused}
+      .shamel-news--slow .shamel-news__track{animation-duration:42s}.shamel-news--fast .shamel-news__track{animation-duration:18s}
+      .shamel-news__sequence{display:inline-flex;align-items:center;gap:2rem;padding-inline:1.35rem;font-size:.86rem;font-weight:850}
+      .shamel-news__message{display:inline-flex;align-items:center;gap:.6rem}.shamel-news__message:before{content:"✦";color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,.65)}
+      .shamel-news__payment-set{display:inline-flex;align-items:center;gap:.7rem;padding:.25rem .45rem;border-radius:.7rem;background:rgba(255,255,255,.06)}
+      .shamel-pay-logo{display:grid;place-items:center;min-width:3.1rem;height:1.72rem;padding:0 .5rem;border:1px solid rgba(255,255,255,.8);border-radius:.5rem;background:#fff;color:#111827;box-shadow:0 4px 11px rgba(2,6,23,.22);font:900 .65rem/1 Arial,sans-serif;transition:transform .2s}
+      .shamel-pay-logo:hover{transform:translateY(-2px) scale(1.04)}
+      .shamel-pay-logo--custom{min-width:auto;padding:.2rem .52rem}.shamel-pay-logo--custom img{display:block;width:auto;max-width:4.8rem;height:1.2rem;object-fit:contain}
+      @keyframes shamel-news{to{transform:translateX(50%)}}@keyframes shamel-news-shine{0%,35%{transform:translateX(-110%)}70%,100%{transform:translateX(110%)}}@keyframes shamel-news-glow{to{transform:translateX(330%)}}
+      html[dir=ltr] .shamel-news__track{animation-direction:reverse}
+      @media(max-width:720px){.shamel-news-wrap{padding:0 .45rem}.shamel-news__row{min-height:3.25rem;padding:.3rem}.shamel-news__label{padding:0 .7rem;min-height:2.45rem;font-size:.7rem}.shamel-news__sequence{gap:1.35rem;font-size:.77rem}.shamel-pay-logo{min-width:2.65rem;height:1.5rem}.shamel-header-search-trigger:hover,.shamel-header-search-trigger:focus-within{width:min(13rem,58vw)}}
+      .shamel-follow{margin-top:3rem;padding:2.25rem 0;background:var(--shamel-follow-bg,#071a2f);color:var(--shamel-follow-text,#fff)}
+      .shamel-follow__inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;text-align:center}.shamel-follow h2{margin:0 0 .4rem;font-size:1.45rem;font-weight:800}.shamel-follow p{margin:0;color:rgba(255,255,255,.75)}
+      .shamel-follow__links{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem}.shamel-follow__links a{display:grid;place-items:center;width:3rem;height:3rem;border:1px solid currentColor;border-radius:.8rem;background:rgba(255,255,255,.1);color:var(--shamel-follow-icon,#fff);font-size:1.25rem;transition:.2s}.shamel-follow__links a:hover{transform:translateY(-3px);background:var(--shamel-follow-icon,#fff);color:var(--shamel-follow-bg,#071a2f)}
+      .shamel-social-svg{display:block;width:1.5rem;height:1.5rem;overflow:visible;fill:currentColor;filter:drop-shadow(0 1px 1px rgba(0,0,0,.12));transform:translateZ(0)}
+      .shamel-social-svg path{shape-rendering:geometricPrecision}
+      .shamel-follow__links a[class*="shamel-social--"],.shamel-contact__link[class*="shamel-social--"]{isolation:isolate;background:var(--shamel-brand);color:var(--shamel-brand-icon);border-color:rgba(255,255,255,.82);box-shadow:0 8px 22px rgba(15,23,42,.22),inset 0 1px 0 rgba(255,255,255,.28)}
+      .shamel-follow__links a[class*="shamel-social--"]:focus-visible,.shamel-contact__link[class*="shamel-social--"]:focus-visible{outline:3px solid rgba(56,189,248,.7);outline-offset:3px}
+      .shamel-social--whatsapp{--shamel-brand:#25D366;--shamel-brand-icon:#fff}
+      .shamel-social--instagram{--shamel-brand:linear-gradient(135deg,#833AB4,#FD1D1D,#FCAF45);--shamel-brand-icon:#fff}
+      .shamel-social--tiktok{--shamel-brand:#010101;--shamel-brand-icon:#fff}
+      .shamel-social--snapchat{--shamel-brand:#FFFC00;--shamel-brand-icon:#000}
+      .shamel-social--x{--shamel-brand:#000;--shamel-brand-icon:#fff}
+      .shamel-social--youtube{--shamel-brand:#FF0000;--shamel-brand-icon:#fff}
+      .shamel-social--facebook{--shamel-brand:#1877F2;--shamel-brand-icon:#fff}
+      .shamel-follow__links a[class*="shamel-social--"],.shamel-contact__link[class*="shamel-social--"]{background:var(--shamel-brand);color:var(--shamel-brand-icon)}
+      .shamel-follow__links a[class*="shamel-social--"]:hover,.shamel-contact__link[class*="shamel-social--"]:hover{background:var(--shamel-brand);color:var(--shamel-brand-icon)}
+
+      .shamel-popup[hidden]{display:none}.shamel-popup{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:1rem;background:rgba(2,6,23,.66);backdrop-filter:blur(5px)}
+      .shamel-popup__card{position:relative;display:grid;grid-template-columns:minmax(14rem,.85fr) minmax(18rem,1fr);width:min(56rem,100%);overflow:hidden;border-radius:1.4rem;background:var(--sp-popup-bg,#fff);color:var(--sp-popup-text,#0f172a);box-shadow:0 30px 80px rgba(2,6,23,.35)}
+      .shamel-popup__image{min-height:30rem;background:#eef2f7 center/cover no-repeat}.shamel-popup__content{display:flex;flex-direction:column;justify-content:center;padding:2.4rem}
+      .shamel-popup__close{position:absolute;top:.8rem;right:.8rem;z-index:2;width:2.4rem;height:2.4rem;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#0f172a;font-size:1.35rem;cursor:pointer}
+      .shamel-popup__eyebrow{color:#b45309;font-weight:800}.shamel-popup h2{margin:.65rem 0;font-size:2rem;line-height:1.3;font-weight:900;color:var(--sp-popup-text,#0f172a)}.shamel-popup p{color:#64748b;line-height:1.8}
+      .shamel-popup form{display:grid;gap:.75rem;margin-top:1rem}.shamel-popup input{min-height:3.2rem;padding:.8rem 1rem;border:1px solid #cbd5e1;border-radius:.8rem}.shamel-popup button[type=submit]{min-height:3.2rem;border:0;border-radius:.8rem;background:var(--sp-primary,#0f4c6b);color:var(--sp-button-text,#fff);font-weight:800;cursor:pointer}.shamel-popup__privacy{font-size:.72rem;color:#94a3b8}
+      @media(max-width:640px){.shamel-follow__inner{align-items:flex-start;flex-direction:column}.shamel-popup__card{display:block;max-height:92vh;overflow:auto}.shamel-popup__image{min-height:13rem}.shamel-popup__content{padding:1.5rem}.shamel-popup h2{font-size:1.55rem}}
+      @media(prefers-reduced-motion:reduce){.shamel-news__track,.shamel-contact__link--whatsapp,.shamel-contact__link--whatsapp:before,.shamel-contact__link--whatsapp:after{animation:none}}
+    </style>
     {# tracking services, custom css feature. #}
     {% hook 'head:end' %}
 </head>
-<body id="app" class="theme-raed overflow-x-hidden {% hook 'body:classes' %}
+{% set shamel_store_mode_raw = theme.settings.get('shamel_store_mode', 'general') %}
+{% set shamel_industry_raw = theme.settings.get('shamel_industry_preset', 'universal') %}
+{% set shamel_ui_style_raw = theme.settings.get('shamel_ui_style', 'modern') %}
+{% set shamel_header_layout_raw = theme.settings.get('shamel_header_layout', 'classic') %}
+{% set shamel_surface_radius_raw = theme.settings.get('shamel_surface_radius', 'soft') %}
+{% set shamel_product_density_raw = theme.settings.get('shamel_product_density', 'comfortable') %}
+{% set shamel_announcement_speed_raw = theme.settings.get('shamel_announcement_speed', 'normal') %}
+{% set shamel_popup_capture_raw = theme.settings.get('shamel_popup_capture_type', 'email') %}
+{% set shamel_store_mode = shamel_store_mode_raw is iterable ? (shamel_store_mode_raw|first).value : shamel_store_mode_raw %}
+{% set shamel_industry = shamel_industry_raw is iterable ? (shamel_industry_raw|first).value : shamel_industry_raw %}
+{% set shamel_ui_style = shamel_ui_style_raw is iterable ? (shamel_ui_style_raw|first).value : shamel_ui_style_raw %}
+{% set shamel_header_layout = shamel_header_layout_raw is iterable ? (shamel_header_layout_raw|first).value : shamel_header_layout_raw %}
+{% set shamel_surface_radius = shamel_surface_radius_raw is iterable ? (shamel_surface_radius_raw|first).value : shamel_surface_radius_raw %}
+{% set shamel_product_density = shamel_product_density_raw is iterable ? (shamel_product_density_raw|first).value : shamel_product_density_raw %}
+{% set shamel_announcement_speed = shamel_announcement_speed_raw is iterable ? (shamel_announcement_speed_raw|first).value : shamel_announcement_speed_raw %}
+{% set shamel_popup_capture = shamel_popup_capture_raw is iterable ? (shamel_popup_capture_raw|first).value : shamel_popup_capture_raw %}
+<body id="app" class="theme-raed shamel-pro shamel-mode-{{ shamel_store_mode }} shamel-industry-{{ shamel_industry }} shamel-style-{{ shamel_ui_style }} shamel-header-{{ shamel_header_layout }} shamel-radius-{{ shamel_surface_radius }} shamel-density-{{ shamel_product_density }}{{ theme.settings.get('shamel_motion_enabled', true) ? ' shamel-motion' : '' }} overflow-x-hidden {% hook 'body:classes' %}
   {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
   {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
   {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-  ">
+  " style="--sp-primary:{{ theme.settings.get('shamel_color_primary', '#0f4c6b') }};--sp-button-text:{{ theme.settings.get('shamel_color_button_text', '#ffffff') }};--sp-page-bg:{{ theme.settings.get('shamel_color_page_bg', '#ffffff') }};--sp-text:{{ theme.settings.get('shamel_color_text', '#334155') }};--sp-heading:{{ theme.settings.get('shamel_color_heading', '#0f172a') }};--sp-card-bg:{{ theme.settings.get('shamel_color_card_bg', '#ffffff') }};--sp-section-bg:{{ theme.settings.get('shamel_color_section_bg', '#ffffff') }};--sp-section-alt-bg:{{ theme.settings.get('shamel_color_section_alt_bg', '#f8fafc') }};--sp-header-bg:{{ theme.settings.get('shamel_color_header_bg', '#ffffff') }};--sp-categories-bg:{{ theme.settings.get('shamel_color_categories_bg', '#f8fafc') }};--sp-categories-dark-bg:{{ theme.settings.get('shamel_color_header_dark_bg', '#0b1120') }};--sp-header-text:{{ theme.settings.get('shamel_color_header_text', '#0f172a') }};--sp-news-bg:{{ theme.settings.get('shamel_color_news_bg', '#071a2f') }};--sp-news-text:{{ theme.settings.get('shamel_color_news_text', '#ffffff') }};--sp-footer-bg:{{ theme.settings.get('shamel_color_footer_bg', '#0f172a') }};--sp-footer-text:{{ theme.settings.get('shamel_color_footer_text', '#ffffff') }};--sp-popup-bg:{{ theme.settings.get('shamel_color_popup_bg', '#ffffff') }};--sp-popup-text:{{ theme.settings.get('shamel_color_popup_text', '#0f172a') }};--sp-social-bg:{{ theme.settings.get('shamel_color_social_bg', '#0f4c6b') }};--sp-social-icon:{{ theme.settings.get('shamel_color_social_icon', '#ffffff') }};--sp-whatsapp:{{ theme.settings.get('shamel_color_whatsapp', '#22c55e') }};--color-primary:var(--sp-primary);--color-primary-reverse:var(--sp-button-text)">
 <noscript>
     To get full functionality of this site you need to enable JavaScript. Here is how
     <a href="https://www.enable-javascript.com/" rel="noreferrer"
@@ -113,6 +368,25 @@
     <main id="main-content" role="main"{{ (page.slug == 'product.single' or page.slug starts with 'product.index') ? ' class="flex flex-col space-y-8 sm:space-y-16"' : '' }}>
     {% block content %}{% endblock %}
     </main>
+    {% if theme.settings.get('shamel_follow_enabled', true) %}
+      <section class="shamel-follow" aria-labelledby="shamel-follow-title" style="--shamel-follow-bg:{{ theme.settings.get('shamel_follow_bg_color', '#071a2f') }};--shamel-follow-text:{{ theme.settings.get('shamel_follow_text_color', '#ffffff') }};--shamel-follow-icon:{{ theme.settings.get('shamel_follow_icon_color', '#ffffff') }}">
+        <div class="container shamel-follow__inner">
+          <div>
+            <h2 id="shamel-follow-title">{{ theme.settings.get('shamel_follow_title', 'تابعنا وكن أول من يعرف') }}</h2>
+            <p>{{ theme.settings.get('shamel_follow_description', 'اكتشف جديدنا وعروضنا الحصرية عبر منصات التواصل.') }}</p>
+          </div>
+          <nav class="shamel-follow__links" aria-label="تابع المتجر">
+            {% if theme.settings.get('shamel_follow_whatsapp_enabled') and theme.settings.get('shamel_follow_whatsapp_url') %}<a href="{{ theme.settings.get('shamel_follow_whatsapp_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--whatsapp" aria-label="قناة واتساب"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a9.8 9.8 0 0 0-8.5 14.7L2 22l5.4-1.4A10 10 0 1 0 12 2Zm0 17.9a8 8 0 0 1-4.1-1.1l-.3-.2-3.2.8.9-3.1-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.4-1.3-3.3-2.9-.2-.3.2-.4.6-.9.1-.2.1-.3 0-.5l-.7-1.7c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.2 1.8.8 2.5.8 3.4.7 1-.2 1.4-.9 1.6-1.8.2-.8.2-1.5.1-1.7-.2-.2-.4-.2-.7-.3Z"/></svg></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_instagram_enabled') and theme.settings.get('shamel_follow_instagram_url') %}<a href="{{ theme.settings.get('shamel_follow_instagram_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--instagram" aria-label="Instagram"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2a5.4 5.4 0 0 1-5.4 5.4H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Zm-.2 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm10.3 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_tiktok_enabled') and theme.settings.get('shamel_follow_tiktok_url') %}<a href="{{ theme.settings.get('shamel_follow_tiktok_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--tiktok" aria-label="TikTok"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.6 3c.4 2.3 1.8 3.8 4.1 4.2v3.2c-1.5 0-2.9-.5-4.1-1.3v6.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.2 2.9V3h3.2Z"/></svg></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_snapchat_enabled') and theme.settings.get('shamel_follow_snapchat_url') %}<a href="{{ theme.settings.get('shamel_follow_snapchat_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--snapchat" aria-label="Snapchat"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2c3.1 0 5.1 2.4 5.1 5.5 0 1.2-.2 2.2.2 2.5.5.4 1.5-.1 1.9.7.3.7-.6 1.2-1.6 1.6-.5.2-.6.5-.4.9.6 1.3 1.7 2.1 3.2 2.7.5.2.4 1-.1 1.1-.7.2-1.4.2-1.8.5-.5.4-.3 1.3-1.1 1.4-.5.1-1.1-.3-2.1.1-1 .4-1.7 1-3.3 1s-2.3-.6-3.3-1c-1-.4-1.6 0-2.1-.1-.8-.1-.6-1-1.1-1.4-.4-.3-1.1-.3-1.8-.5-.5-.1-.6-.9-.1-1.1 1.5-.6 2.6-1.4 3.2-2.7.2-.4.1-.7-.4-.9-1-.4-1.9-.9-1.6-1.6.4-.8 1.4-.3 1.9-.7.4-.3.2-1.3.2-2.5C6.9 4.4 8.9 2 12 2Z"/></svg></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_x_enabled') and theme.settings.get('shamel_follow_x_url') %}<a href="{{ theme.settings.get('shamel_follow_x_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--x" aria-label="X"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22H17l-4.9-6.4L6.5 22H3.3l7.3-8.4L2.8 2H9l4.4 5.8L18.9 2Zm-1.1 17.8h1.7L8 4.1H6.2l11.6 15.7Z"/></svg></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_youtube_enabled') and theme.settings.get('shamel_follow_youtube_url') %}<a href="{{ theme.settings.get('shamel_follow_youtube_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--youtube" aria-label="YouTube"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.7 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg></a>{% endif %}
+            {% if theme.settings.get('shamel_follow_facebook_enabled') and theme.settings.get('shamel_follow_facebook_url') %}<a href="{{ theme.settings.get('shamel_follow_facebook_url') }}" target="_blank" rel="noopener noreferrer" class="shamel-social--facebook" aria-label="Facebook"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8.5V6.8c0-.8.5-1 1-1h2.8V2.2L15.1 2C11.8 2 10 4 10 6.4v2.1H7v4h3V22h4v-9.5h3.3l.5-4H14Z"/></svg></a>{% endif %}
+          </nav>
+        </div>
+      </section>
+    {% endif %}
     {% component 'footer.footer' %}
 </div>
 {% hook 'body:end' %}
@@ -129,5 +403,218 @@
     <salla-scopes data-testid="store-scopes" selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
 {% endif %}
 {% block scripts %}{% endblock %}
+
+{# Shamel Pro: merchant-controlled floating contact hub #}
+{% if theme.settings.get('shamel_social_enabled', true) %}
+  {% set shamel_whatsapp = theme.settings.get('shamel_whatsapp_number') %}
+  {% set shamel_position_raw = theme.settings.get('shamel_social_position', 'right') %}
+  {% set shamel_position = shamel_position_raw is iterable ? (shamel_position_raw|first).value : shamel_position_raw %}
+  <div class="shamel-contact shamel-contact--{{ shamel_position }}" data-testid="shamel-contact">
+    <div class="shamel-contact__details">
+      {% set shamel_contact_promo = theme.settings.get('shamel_contact_promo') %}{% if shamel_contact_promo|trim %}<span class="shamel-contact__promo">{{ shamel_contact_promo }}</span>{% endif %}
+      <nav class="shamel-contact__menu" aria-label="وسائل التواصل">
+        {% if theme.settings.get('shamel_whatsapp_enabled', true) and shamel_whatsapp %}
+          <a class="shamel-contact__link shamel-contact__link--whatsapp shamel-social--whatsapp" href="https://wa.me/{{ shamel_whatsapp }}" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+            <svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a9.8 9.8 0 0 0-8.5 14.7L2 22l5.4-1.4A10 10 0 1 0 12 2Zm0 17.9a8 8 0 0 1-4.1-1.1l-.3-.2-3.2.8.9-3.1-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.4-1.3-3.3-2.9-.2-.3.2-.4.6-.9.1-.2.1-.3 0-.5l-.7-1.7c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.2 1.8.8 2.5.8 3.4.7 1-.2 1.4-.9 1.6-1.8.2-.8.2-1.5.1-1.7-.2-.2-.4-.2-.7-.3Z"/></svg><span>واتساب</span>
+          </a>
+        {% endif %}
+        {% if theme.settings.get('shamel_instagram_enabled') and theme.settings.get('shamel_instagram_url') %}
+          <a class="shamel-contact__link shamel-social--instagram" href="{{ theme.settings.get('shamel_instagram_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2a5.4 5.4 0 0 1-5.4 5.4H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Zm-.2 2A3.2 3.2 0 0 0 4 7.2v9.6A3.2 3.2 0 0 0 7.2 20h9.6a3.2 3.2 0 0 0 3.2-3.2V7.2A3.2 3.2 0 0 0 16.8 4H7.2Zm10.3 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg><span>Instagram</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_tiktok_enabled') and theme.settings.get('shamel_tiktok_url') %}
+          <a class="shamel-contact__link shamel-social--tiktok" href="{{ theme.settings.get('shamel_tiktok_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.6 3c.4 2.3 1.8 3.8 4.1 4.2v3.2c-1.5 0-2.9-.5-4.1-1.3v6.1a6.2 6.2 0 1 1-5.4-6.1v3.3a3 3 0 1 0 2.2 2.9V3h3.2Z"/></svg><span>TikTok</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_snapchat_enabled') and theme.settings.get('shamel_snapchat_url') %}
+          <a class="shamel-contact__link shamel-social--snapchat" href="{{ theme.settings.get('shamel_snapchat_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2c3.1 0 5.1 2.4 5.1 5.5 0 1.2-.2 2.2.2 2.5.5.4 1.5-.1 1.9.7.3.7-.6 1.2-1.6 1.6-.5.2-.6.5-.4.9.6 1.3 1.7 2.1 3.2 2.7.5.2.4 1-.1 1.1-.7.2-1.4.2-1.8.5-.5.4-.3 1.3-1.1 1.4-.5.1-1.1-.3-2.1.1-1 .4-1.7 1-3.3 1s-2.3-.6-3.3-1c-1-.4-1.6 0-2.1-.1-.8-.1-.6-1-1.1-1.4-.4-.3-1.1-.3-1.8-.5-.5-.1-.6-.9-.1-1.1 1.5-.6 2.6-1.4 3.2-2.7.2-.4.1-.7-.4-.9-1-.4-1.9-.9-1.6-1.6.4-.8 1.4-.3 1.9-.7.4-.3.2-1.3.2-2.5C6.9 4.4 8.9 2 12 2Z"/></svg><span>Snapchat</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_x_enabled') and theme.settings.get('shamel_x_url') %}
+          <a class="shamel-contact__link shamel-social--x" href="{{ theme.settings.get('shamel_x_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22H17l-4.9-6.4L6.5 22H3.3l7.3-8.4L2.8 2H9l4.4 5.8L18.9 2Zm-1.1 17.8h1.7L8 4.1H6.2l11.6 15.7Z"/></svg><span>X</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_youtube_enabled') and theme.settings.get('shamel_youtube_url') %}
+          <a class="shamel-contact__link shamel-social--youtube" href="{{ theme.settings.get('shamel_youtube_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.7 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg><span>YouTube</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_facebook_enabled') and theme.settings.get('shamel_facebook_url') %}
+          <a class="shamel-contact__link shamel-social--facebook" href="{{ theme.settings.get('shamel_facebook_url') }}" target="_blank" rel="noopener noreferrer"><svg class="shamel-social-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8.5V6.8c0-.8.5-1 1-1h2.8V2.2L15.1 2C11.8 2 10 4 10 6.4v2.1H7v4h3V22h4v-9.5h3.3l.5-4H14Z"/></svg><span>Facebook</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_email_enabled') and theme.settings.get('shamel_email') %}
+          <a class="shamel-contact__link" href="mailto:{{ theme.settings.get('shamel_email') }}"><i class="sicon-mail" aria-hidden="true"></i><span>البريد</span></a>
+        {% endif %}
+        {% if theme.settings.get('shamel_phone_enabled') and theme.settings.get('shamel_phone') %}
+          <a class="shamel-contact__link" href="tel:{{ theme.settings.get('shamel_phone') }}"><i class="sicon-phone" aria-hidden="true"></i><span>اتصال</span></a>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+  <style>
+    .shamel-contact{position:fixed;bottom:max(1rem,env(safe-area-inset-bottom));z-index:90;font-family:var(--font-main)}
+    .shamel-contact--right{right:1rem}.shamel-contact--left{left:1rem}
+    /* Keep the floating contact bubble clear of the side tools when both use the same edge. */
+    body:has(.shamel-side-tools--left:not(.is-collapsed)) .shamel-contact--left{left:4.9rem}
+    body:has(.shamel-side-tools--right:not(.is-collapsed)) .shamel-contact--right{right:4.9rem}
+    .shamel-contact__details{display:flex;flex-direction:row-reverse;align-items:center;gap:.7rem;filter:drop-shadow(0 12px 24px rgba(15,23,42,.14))}
+    .shamel-contact__promo{position:relative;max-width:15rem;padding:.72rem 1rem;border:1px solid rgba(148,163,184,.22);border-radius:1rem;background:#fff;color:#0f172a;font-size:.86rem;font-weight:700;line-height:1.45;box-shadow:0 10px 28px rgba(15,23,42,.12)}
+    .shamel-contact--right .shamel-contact__promo:after{content:"";position:absolute;right:-.38rem;top:50%;width:.72rem;height:.72rem;background:#fff;border-top:1px solid rgba(148,163,184,.22);border-right:1px solid rgba(148,163,184,.22);transform:translateY(-50%) rotate(45deg)}
+    .shamel-contact--left .shamel-contact__promo:after{content:"";position:absolute;left:-.38rem;top:50%;width:.72rem;height:.72rem;background:#fff;border-bottom:1px solid rgba(148,163,184,.22);border-left:1px solid rgba(148,163,184,.22);transform:translateY(-50%) rotate(45deg)}
+    .shamel-contact__menu{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:.5rem;max-width:13rem}
+    .shamel-contact--left .shamel-contact__menu{justify-content:flex-start}
+    .shamel-contact__link{position:relative;display:grid;place-items:center;width:3.35rem;height:3.35rem;padding:0;border:3px solid rgba(255,255,255,.95);border-radius:50%;background:var(--sp-social-bg,#0f4c6b);color:var(--sp-social-icon,#fff);text-decoration:none;box-shadow:0 10px 26px rgba(15,76,107,.28);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+    .shamel-contact__link:hover{background:#123f59;transform:translateY(-3px) scale(1.04);box-shadow:0 14px 30px rgba(15,76,107,.34)}
+    .shamel-contact__link i,.shamel-contact__glyph{width:auto;text-align:center;font-size:1.45rem;color:inherit}
+    .shamel-contact__link--whatsapp{isolation:isolate;width:3.8rem;height:3.8rem;background:var(--sp-whatsapp,#22c55e);box-shadow:0 12px 30px rgba(34,197,94,.42),inset 0 1px 0 rgba(255,255,255,.45);animation:shamel-whatsapp-float 2.7s ease-in-out infinite}
+    .shamel-contact__link--whatsapp:before{content:"";position:absolute;z-index:-1;inset:-.42rem;border:2px solid rgba(34,197,94,.38);border-radius:50%;animation:shamel-whatsapp-pulse 2.2s ease-out infinite}
+    .shamel-contact__link--whatsapp:after{content:"";position:absolute;inset:3px;border-radius:50%;background:linear-gradient(120deg,transparent 22%,rgba(255,255,255,.55) 42%,transparent 61%);transform:translateX(-120%);animation:shamel-whatsapp-shine 3.2s ease-in-out infinite;pointer-events:none}
+    .shamel-contact__link--whatsapp i{font-size:1.75rem;text-shadow:0 2px 5px rgba(0,0,0,.14)}
+    .shamel-contact__link--whatsapp:hover{background:linear-gradient(145deg,#4ade80,#15803d);transform:translateY(-4px) scale(1.06)}
+    @keyframes shamel-whatsapp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes shamel-whatsapp-pulse{0%{opacity:.75;transform:scale(.9)}70%,100%{opacity:0;transform:scale(1.28)}}
+    @keyframes shamel-whatsapp-shine{0%,35%{transform:translateX(-120%)}65%,100%{transform:translateX(120%)}}
+    .shamel-contact__link>span:last-child:not(.shamel-contact__glyph){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:640px){body:has(.shamel-side-tools:not(.is-collapsed)) .shamel-contact{bottom:max(4.8rem,calc(env(safe-area-inset-bottom) + 4.1rem))}body:has(.shamel-side-tools--left:not(.is-collapsed)) .shamel-contact--left{left:.75rem}body:has(.shamel-side-tools--right:not(.is-collapsed)) .shamel-contact--right{right:.75rem}}\n    @media(max-width:480px){.shamel-contact{bottom:max(.75rem,env(safe-area-inset-bottom))}.shamel-contact--right{right:.75rem}.shamel-contact--left{left:.75rem}.shamel-contact__details{gap:.5rem}.shamel-contact__promo{max-width:10.5rem;padding:.58rem .72rem;font-size:.75rem}.shamel-contact__menu{max-width:7.2rem;gap:.35rem}.shamel-contact__link{width:3.1rem;height:3.1rem}.shamel-contact__link i,.shamel-contact__glyph{font-size:1.3rem}body:has(.shamel-side-tools:not(.is-collapsed)) .shamel-contact{bottom:max(4.8rem,calc(env(safe-area-inset-bottom) + 4.1rem))}}
+  </style>
+{% endif %}
+
+
+{% if theme.settings.get('shamel_side_tools_enabled', true) %}
+  {% set shamel_tools_position_raw = theme.settings.get('shamel_side_tools_position_v2', 'left') %}
+  {% set shamel_tools_position = shamel_tools_position_raw is iterable ? (shamel_tools_position_raw|first).value : shamel_tools_position_raw %}
+  <nav class="shamel-side-tools shamel-side-tools--{{ shamel_tools_position }}" aria-label="أدوات المتجر" data-shamel-side-tools>
+    {% if theme.settings.get('shamel_side_newsletter_enabled', true) %}
+      <button type="button" data-shamel-newsletter-open title="اشترك في نشرتنا البريدية"><i class="sicon-mail" aria-hidden="true"></i><span class="shamel-side-tools__label">اشترك في نشرتنا</span></button>
+    {% endif %}
+    <button type="button" data-shamel-tools-close aria-label="طي شريط الأدوات" title="طي الأدوات">×</button>
+    <button type="button" data-shamel-tools-open aria-label="فتح شريط الأدوات" title="فتح الأدوات"><span class="shamel-side-tools__open-left">›</span><span class="shamel-side-tools__open-right">‹</span></button>
+  </nav>
+  {% if theme.settings.get('shamel_side_newsletter_enabled', true) %}
+    <section class="shamel-newsletter-drawer" data-shamel-newsletter-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-newsletter-title">
+      <div class="shamel-newsletter-drawer__card">
+        <button type="button" class="shamel-newsletter-drawer__close" data-shamel-newsletter-close aria-label="إغلاق">×</button>
+        <h2 id="shamel-newsletter-title">اشترك في نشرتنا البريدية</h2>
+        <p>كن أول من يعرف بالعروض والمنتجات الجديدة.</p>
+        <form class="shamel-newsletter-drawer__form" data-shamel-newsletter-form{% if theme.settings.get('shamel_popup_action_url') %} action="{{ theme.settings.get('shamel_popup_action_url') }}" method="post"{% endif %}>
+          <input type="email" name="email" autocomplete="email" required placeholder="أدخل بريدك الإلكتروني" aria-label="البريد الإلكتروني">
+          <button type="submit">اشترك الآن</button>
+        </form>
+      </div>
+    </section>
+  {% endif %}
+  {% if theme.settings.get('shamel_compare_enabled', true) %}
+    <section class="shamel-compare-drawer" data-shamel-compare-drawer hidden role="dialog" aria-modal="true" aria-labelledby="shamel-compare-title">
+      <header class="shamel-compare-drawer__head"><h2 id="shamel-compare-title">مقارنة المنتجات</h2><button type="button" class="shamel-compare-drawer__close" data-shamel-compare-close aria-label="إغلاق">×</button></header>
+      <div class="shamel-compare-drawer__items" data-shamel-compare-items></div>
+    </section>
+  {% endif %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      var toolsBar=document.querySelector('[data-shamel-side-tools]');
+      var darkButton=document.querySelector('.shamel-header-dark-toggle[data-shamel-dark-toggle]');
+      var darkKey='shamel_dark_mode';
+      function applyDarkMode(enabled){
+        document.body.classList.toggle('shamel-dark-mode',enabled);
+        if(darkButton){
+          darkButton.setAttribute('aria-pressed',enabled?'true':'false');
+          darkButton.title=enabled?'الوضع الفاتح':'الوضع الليلي';
+          var label=darkButton.querySelector('[data-shamel-dark-label]');
+          if(label)label.textContent=enabled?'الوضع الفاتح':'الوضع الليلي';
+        }
+      }
+      var savedDark=localStorage.getItem(darkKey);
+      var darkEnabled=savedDark===null?window.matchMedia('(prefers-color-scheme:dark)').matches:savedDark==='dark';
+      applyDarkMode(darkEnabled);
+      if(darkButton)darkButton.addEventListener('click',function(){
+        darkEnabled=!document.body.classList.contains('shamel-dark-mode');
+        localStorage.setItem(darkKey,darkEnabled?'dark':'light');
+        applyDarkMode(darkEnabled);
+      });
+      if(!toolsBar)return;
+      var key='shamel_compare_products',items=[];
+      try{items=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){items=[]}
+      var drawer=document.querySelector('[data-shamel-compare-drawer]');
+      var list=document.querySelector('[data-shamel-compare-items]');
+      function safe(value){var div=document.createElement('div');div.textContent=value||'';return div.innerHTML}
+      function cleanPrice(value){
+        var raw=String(value||''),decoder=document.createElement('textarea');
+        decoder.innerHTML=raw;
+        var text=decoder.value
+          .replace(/<\/?i\b[^>]*>/gi,' ')
+          .replace(/<?\/?i\b[^<>\n]*>?/gi,' ')
+          .replace(/\bclass\s*=\s*["']?sicon-[\w-]+["']?/gi,' ')
+          .replace(/[<>]+/g,' ')
+          .replace(/\s+/g,' ')
+          .trim();
+        var amounts=text.match(/[0-9٠-٩]+(?:[.,٬٫][0-9٠-٩]+)?/g);
+        if(amounts&&amounts.length){
+          return amounts.join(' / ')+(/ر\.?\s?س|SAR|ريال/i.test(text)?'':' ر.س');
+        }
+        return text;
+      }
+      function render(){
+        document.querySelectorAll('[data-shamel-compare-count]').forEach(function(el){el.textContent=items.length});
+        if(!list)return;
+        if(!items.length){list.innerHTML='<div class="shamel-compare-empty">أضف منتجات من بطاقات المتجر لتظهر هنا.</div>';return}
+        list.innerHTML=items.map(function(item,index){return '<article class="shamel-compare-item"><button type="button" class="shamel-compare-item__remove" data-remove="'+index+'" aria-label="إزالة">×</button><a href="'+safe(item.url)+'"><img src="'+safe(item.image)+'" alt="'+safe(item.name)+'"><h3>'+safe(item.name)+'</h3></a><strong>'+safe(cleanPrice(item.price))+'</strong></article>'}).join('');
+        list.querySelectorAll('[data-remove]').forEach(function(btn){btn.addEventListener('click',function(){items.splice(Number(btn.dataset.remove),1);localStorage.setItem(key,JSON.stringify(items));render()})});
+      }
+      window.addEventListener('shamel:compare:add',function(e){
+        var product=e.detail;if(!product)return;
+        var exists=items.findIndex(function(x){return String(x.id)===String(product.id)});
+        if(exists>=0){items.splice(exists,1)}else if(items.length<4){items.push(product)}else{if(window.salla&&salla.notify)salla.notify.warning('يمكن مقارنة 4 منتجات كحد أقصى');return}
+        localStorage.setItem(key,JSON.stringify(items));render();
+        if(exists<0&&drawer)drawer.hidden=false;
+        if(window.salla&&salla.notify)salla.notify.success(exists>=0?'تمت إزالة المنتج من المقارنة':'تمت إضافة المنتج للمقارنة');
+      });
+      document.querySelectorAll('[data-shamel-compare-open]').forEach(function(btn){btn.addEventListener('click',function(){if(drawer)drawer.hidden=false})});
+      document.querySelectorAll('[data-shamel-compare-close]').forEach(function(btn){btn.addEventListener('click',function(){if(drawer)drawer.hidden=true})});
+      var newsletterDrawer=document.querySelector('[data-shamel-newsletter-drawer]');
+      document.querySelectorAll('[data-shamel-newsletter-open]').forEach(function(btn){btn.addEventListener('click',function(){if(newsletterDrawer)newsletterDrawer.hidden=false})});
+      document.querySelectorAll('[data-shamel-newsletter-close]').forEach(function(btn){btn.addEventListener('click',function(){if(newsletterDrawer)newsletterDrawer.hidden=true})});
+      if(newsletterDrawer)newsletterDrawer.addEventListener('click',function(e){if(e.target===newsletterDrawer)newsletterDrawer.hidden=true});
+      var newsletterForm=document.querySelector('[data-shamel-newsletter-form]');
+      if(newsletterForm&&!newsletterForm.getAttribute('action'))newsletterForm.addEventListener('submit',function(e){e.preventDefault();if(window.salla&&salla.notify)salla.notify.warning('أضف رابط استقبال الاشتراكات من إعدادات الثيم أولًا')});
+      var close=toolsBar.querySelector('[data-shamel-tools-close]');
+      var open=toolsBar.querySelector('[data-shamel-tools-open]');
+      if(close)close.onclick=function(e){e.preventDefault();e.stopPropagation();toolsBar.classList.add('is-collapsed');toolsBar.setAttribute('aria-expanded','false')};
+      if(open)open.onclick=function(e){e.preventDefault();e.stopPropagation();toolsBar.classList.remove('is-collapsed');toolsBar.setAttribute('aria-expanded','true')};
+      render();
+    });
+  </script>
+{% endif %}
+
+{% if theme.settings.get('shamel_popup_enabled') and theme.settings.get('shamel_popup_action_url') %}
+  <div id="shamel-marketing-popup" class="shamel-popup" hidden role="dialog" aria-modal="true" aria-labelledby="shamel-popup-title">
+    <div class="shamel-popup__card">
+      <button type="button" class="shamel-popup__close" aria-label="إغلاق">×</button>
+      <div class="shamel-popup__image"{% if theme.settings.get('shamel_popup_image') %} style="background-image:url('{{ theme.settings.get('shamel_popup_image') }}')"{% endif %}></div>
+      <div class="shamel-popup__content">
+        <span class="shamel-popup__eyebrow">{{ theme.settings.get('shamel_popup_eyebrow', 'خصم خاص') }}</span>
+        <h2 id="shamel-popup-title">{{ theme.settings.get('shamel_popup_title', 'احصل على خصم على أول طلب لك') }}</h2>
+        <p>{{ theme.settings.get('shamel_popup_description', 'سجّل بياناتك لتصلك أحدث العروض والإصدارات.') }}</p>
+        <form action="{{ theme.settings.get('shamel_popup_action_url') }}" method="post" target="shamel-popup-target">
+          {% if shamel_popup_capture == 'phone' %}
+            <input type="tel" name="phone" autocomplete="tel" required placeholder="أدخل رقم الجوال">
+          {% else %}
+            <input type="email" name="email" autocomplete="email" required placeholder="أدخل بريدك الإلكتروني">
+          {% endif %}
+          <button type="submit">{{ theme.settings.get('shamel_popup_button', 'احصل على العرض') }}</button>
+          <small class="shamel-popup__privacy">بالتسجيل أنت توافق على استلام الرسائل التسويقية، ويمكنك إلغاء الاشتراك لاحقًا.</small>
+        </form>
+        <iframe name="shamel-popup-target" title="استقبال التسجيل" hidden></iframe>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var popup = document.getElementById('shamel-marketing-popup');
+      if (!popup) return;
+      var key = 'shamel_popup_hidden_until';
+      var hiddenUntil = Number(localStorage.getItem(key) || 0);
+      if (Date.now() < hiddenUntil) return;
+      window.setTimeout(function(){ popup.hidden = false; }, 1600);
+      function closePopup(){ popup.hidden = true; localStorage.setItem(key, String(Date.now() + 604800000)); }
+      popup.querySelector('.shamel-popup__close').addEventListener('click', closePopup);
+      popup.addEventListener('click', function(e){ if(e.target === popup) closePopup(); });
+      popup.querySelector('form').addEventListener('submit', function(){ window.setTimeout(closePopup, 250); });
+    });
+  </script>
+{% endif %}
 </body>
 </html>

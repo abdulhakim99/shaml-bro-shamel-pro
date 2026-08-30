@@ -1,0 +1,142 @@
+/**
+ * Shamel Pro visual system
+ * Merchant controlled through twilight.json settings.
+ */
+.shamel-pro {
+  --shamel-radius: .9rem;
+  --shamel-radius-sm: .65rem;
+  --shamel-surface: #fff;
+  --shamel-muted-surface: #f8fafc;
+  --shamel-border: rgba(148, 163, 184, .22);
+  --shamel-shadow: 0 12px 34px rgba(15, 23, 42, .08);
+
+  &.shamel-radius-square { --shamel-radius: .25rem; --shamel-radius-sm: .2rem; }
+  &.shamel-radius-rounded { --shamel-radius: 1.5rem; --shamel-radius-sm: 999px; }
+
+  .btn,
+  button:not(.mburger),
+  input,
+  select,
+  textarea,
+  salla-product-card,
+  .s-product-card-entry,
+  .s-slider-block__display-all,
+  .store-footer__inner {
+    border-radius: var(--shamel-radius-sm);
+  }
+
+  .s-product-card-entry,
+  .swiper-slide > a,
+  .home-block,
+  .has-bg {
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+
+  .s-product-card-entry {
+    overflow: hidden;
+    background: var(--shamel-surface);
+  }
+
+  .s-product-card-image {
+    overflow: hidden;
+    background: var(--shamel-muted-surface);
+  }
+
+  .s-product-card-image img {
+    transition: transform .35s ease;
+  }
+
+  &.shamel-style-modern {
+    .s-product-card-entry {
+      border: 1px solid rgba(15, 76, 107, .12);
+      border-radius: 1.15rem;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .08);
+    }
+    .s-product-card-content { padding: .9rem 1rem 1rem; }
+    .s-product-card-entry:hover .s-product-card-image img { transform: scale(1.035); }
+  }
+
+  &.shamel-style-luxury {
+    --shamel-surface: #fffdf8;
+    --shamel-muted-surface: #faf6ed;
+    --shamel-border: rgba(146, 111, 52, .3);
+    --shamel-shadow: 0 16px 42px rgba(66, 48, 18, .14);
+
+    .main-nav-container,
+    .store-footer__inner { background: var(--shamel-surface); }
+    h1, h2, h3 { letter-spacing: .015em; }
+    .s-product-card-entry {
+      border: 1px solid var(--shamel-border);
+      border-radius: .35rem;
+      box-shadow: var(--shamel-shadow);
+    }
+    .s-product-card-content {
+      padding: 1.05rem;
+      border-top: 2px solid rgba(146, 111, 52, .18);
+    }
+    .s-product-card-entry:hover .s-product-card-image img { transform: scale(1.025); }
+  }
+
+  &.shamel-style-minimal {
+    --shamel-radius: .45rem;
+    --shamel-radius-sm: .35rem;
+
+    .s-product-card-entry {
+      border: 0;
+      border-bottom: 1px solid #dbe1e8;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+    .s-product-card-image { border-radius: .35rem; }
+    .s-product-card-content { padding: .75rem .1rem 1rem; }
+    .shadow-default { box-shadow: none; }
+  }
+
+  &.shamel-density-compact {
+    .s-products-slider-card,
+    .s-product-card-entry { font-size: .92rem; }
+    .s-product-card-content { padding: .65rem; }
+  }
+
+  &.shamel-mode-digital {
+    .s-product-card-image { background: linear-gradient(145deg, #f8fafc, #eef2ff); }
+    .s-product-card-entry { overflow: hidden; }
+  }
+
+  &.shamel-mode-single {
+    main#main-content { max-width: 1440px; width: 100%; margin-inline: auto; }
+  }
+
+  @media (min-width: 1024px) {
+    &.shamel-header-centered {
+      .main-nav-container .container > .flex { min-height: 5.5rem; }
+      .main-nav-container .navbar-brand { position: absolute; inset-inline-start: 50%; transform: translateX(-50%); margin: 0; }
+    }
+
+    &.shamel-header-compact {
+      .top-navbar { display: none; }
+      .main-nav-container .container > .flex { min-height: 4rem; }
+      .navbar-brand img { max-height: 2.75rem; }
+    }
+  }
+
+  &.shamel-motion {
+    .s-product-card-entry:hover { transform: translateY(-4px); box-shadow: var(--shamel-shadow); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shamel-pro *,
+  .shamel-pro *::before,
+  .shamel-pro *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+html[dir='rtl'] .shamel-pro.shamel-header-centered .main-nav-container .navbar-brand {
+  transform: translateX(50%);
+}

@@ -67,6 +67,20 @@ class ProductCard extends HTMLElement {
     return '';
   }
 
+
+  getShamelBadges() {
+    const badges = [];
+    if (window.shamel_card_discount_badge && this.product.is_on_sale && this.product.discount_percentage) {
+      badges.push(`<span class="shamel-card-badge shamel-card-badge--sale">خصم ${this.escapeHTML(this.product.discount_percentage)}</span>`);
+    }
+    if (window.shamel_card_type_badge && ['digital', 'codes'].includes(this.product.type)) {
+      badges.push('<span class="shamel-card-badge shamel-card-badge--digital">تسليم رقمي</span>');
+    } else if (window.shamel_card_type_badge && ['service', 'booking'].includes(this.product.type)) {
+      badges.push('<span class="shamel-card-badge shamel-card-badge--service">خدمة</span>');
+    }
+    return badges.length ? `<div class="shamel-card-badges">${badges.join('')}</div>` : '';
+  }
+
   getPriceFormat(price) {
     if (!price || price == 0) {
       return salla.config.get('store.settings.product.show_price_as_dash')?'-':'';
@@ -194,9 +208,10 @@ class ProductCard extends HTMLElement {
               loading="lazy"
             />
             ${!this.fullImage && !this.minimal ? this.getProductBadge() : ''}
+            ${this.getShamelBadges()}
           </a>
           ${this.fullImage ? `<a href="${this.product?.url}" aria-label=${this.product.name} class="s-product-card-overlay"></a>`:''}
-          ${!this.horizontal && !this.fullImage ?
+          ${window.shamel_wishlist_enabled && !this.horizontal && !this.fullImage ?
             `<salla-button
               shape="icon"
               fill="outline"
@@ -279,7 +294,12 @@ class ProductCard extends HTMLElement {
                 <span>${this.product.add_to_cart_label ? this.product.add_to_cart_label : this.getAddButtonLabel() }</span>
               </salla-add-product-button>
 
-              ${this.horizontal || this.fullImage ?
+              ${window.shamel_compare_enabled ? `
+                <button type="button" class="shamel-compare-add" aria-label="أضف المنتج للمقارنة" title="أضف للمقارنة">
+                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7 3h2v14h3l-4 4-4-4h3V3Zm10 18h-2V7h-3l4-4 4 4h-3v14Z"/></svg>
+                </button>` : ``}
+              
+              ${window.shamel_wishlist_enabled && (this.horizontal || this.fullImage) ?
                 `<salla-button 
                   shape="icon" 
                   fill="outline" 
@@ -305,6 +325,22 @@ class ProductCard extends HTMLElement {
             .setAttribute("donating-amount", e.target.value); 
         });
       })
+
+
+      const compareButton = this.querySelector('.shamel-compare-add');
+      if (compareButton) {
+        compareButton.addEventListener('click', () => {
+          window.dispatchEvent(new CustomEvent('shamel:compare:add', {
+            detail: {
+              id: this.product.id,
+              name: this.product.name,
+              url: this.product.url,
+              image: this.product?.image?.url || this.product?.thumbnail || '',
+              price: this.getPriceFormat(this.product.sale_price || this.product.price || this.product.starting_price)
+            }
+          }));
+        });
+      }
 
       if (this.product?.quantity && this.isSpecial) {
         this.initCircleBar();
