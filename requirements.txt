@@ -1,0 +1,11 @@
+streamlit>=1.40,<2
+requests>=2.32,<3
+pandas>=2.2,<3
+Pillow>=10.4,<12
+pytrends>=4.9.2,<5
+rembg[cpu]>=2.0.60,<3
+onnxruntime>=1.18,<2
+pdf2docx>=0.5.8,<1
+python-docx>=1.1,<2
+reportlab>=4.2,<5
+lxml>=5.3,<6
