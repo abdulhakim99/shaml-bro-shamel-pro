@@ -30,9 +30,13 @@ streamlit run app.py
 1. ارفع مجلد `creator_suite` إلى مستودع GitHub عام أو خاص متاح لحسابك.
 2. افتح [share.streamlit.io](https://share.streamlit.io) وسجّل الدخول بحساب GitHub.
 3. اختر **Create app**، ثم حدّد المستودع، الفرع، والملف الرئيسي `creator_suite/app.py`.
-4. من **Advanced settings** اختر Python 3.11 أو 3.12، ثم انشر التطبيق.
+4. من **Advanced settings** اختر Python 3.12 يدوياً قبل النشر. ملاحظة مهمة: Community Cloud لا يعتمد حالياً على `runtime.txt` لتغيير إصدار Python، لذلك يجب اختيار الإصدار من واجهة Streamlit نفسها.
 5. سيقرأ Streamlit الملف `creator_suite/requirements.txt` تلقائياً إذا كان التطبيق مضبوطاً على هذا المجلد. إذا لم يقرأه، انقل `requirements.txt` إلى جذر المستودع أو اضبط مسار التطبيق وفق بنية المستودع.
 6. بعد النشر، راقب السجلات في حال تأخر أول تشغيل؛ مكتبة `rembg` قد تنزّل نموذجها في أول معالجة للصورة.
+
+## خطأ تثبيت onnxruntime أو rembg
+
+إذا ظهر في السجل إصدار مثل `Python 3.14.7` ثم رسالة `onnxruntime has no wheels with a matching Python ABI`، افتح إعدادات التطبيق واختر **Python 3.12** من إعدادات النشر ثم أعد البناء. حزمة `rembg` ومسار إزالة الخلفية في CreatorSuite يعتمد على عجلات ONNX متوافقة مع Python 3.12، ولا يكفي وجود `runtime.txt` داخل المستودع لأن Community Cloud قد يتجاهله.
 
 ## استكشاف خطأ Node.removeChild في المتصفح
 
